@@ -1,8 +1,8 @@
 {
-  "name": "project",
+  "name": "Automated Glitching",
   "version": "0.1.0",
   "private": true,
-  "description": "Describe your project",
+  "description": "Created a website that allows for quick and easy glitching of images through a randomized, automated system.",
   "engines": {
     "node": "10.15.x"
   },
@@ -17,8 +17,12 @@
   ],
   "keywords": [],
   "contributors": [
-    "Student1 <student1@middlebury.edu>",
-    "Student2 <student2@middlebury.edu>"
+    "William Frazier <wjfrazier@middlebury.edu>",
+    "Angel Ngulumbi <angulumbi@middlebury.edu>",
+    "Trey Oehmler <roehmler@middlebury.edu>",
+    "Calder Birdsey <cbirdsey@middlebury.edu>",
+    "Guanghan Pan <gpan@middlebury.edu>",
+    "Brandon Choe <bchoe@middlebury.edu>"
   ],
   "license": "Apache-2.0",
   "devDependencies": {
