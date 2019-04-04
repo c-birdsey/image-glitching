@@ -1,5 +1,4 @@
 import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
-import logo from './midd.png';
 
 //note: buttons will call callback to update state in App.js
 const Landing = props => {
@@ -26,9 +25,6 @@ const Landing = props => {
       <p className="Landing-buttons">
         <button className="Landing-button">Glitch Single Image</button>
         <button className="Landing-button">Glitch Library of Images</button>
-      </p>
-      <p>
-        <img src={logo} className="Landing-logo" alt="logo" />
       </p>
     </>
   );
