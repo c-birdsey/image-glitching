@@ -1,6 +1,6 @@
 import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 
-const Landing = props => {
+const Landing = () => {
   return (
     <>
       <h1>Welcome to our Image Glitching Research Tool</h1>
