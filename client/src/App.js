@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import LandingPage from './components/Landing';
+//import LandingPage from './components/Landing';
 //import Uploader from './components/Uploader';
 
 /* eslint-disable react/prefer-stateless-function */
@@ -16,11 +16,12 @@ class App extends Component {
   render() {
     let content;
     if (this.state.mode === 'landing') {
-      content = <LandingPage />;
+      content = null;
+      //content = <LandingPage />;
     } else if (this.state.mode === 'upload') {
       //ignore for now, forward compatible with uploading page
       //content = <Uploader />;
-      content = <LandingPage />;
+      //content = <LandingPage />;
     }
 
     return (
