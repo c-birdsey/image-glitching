@@ -3,7 +3,9 @@ import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 const Landing = () => {
   return (
     <>
-      <h1>Welcome to our Image Glitching Research Tool</h1>
+      <h1 className="Landing-title">
+        Welcome to our Image Glitching Research Tool
+      </h1>
       <p className="Landing-intro">
         Image glitching is a digital-art phenomena that offers new techniques of
         historical visual analysis. This app is intended to be used a reasearch
