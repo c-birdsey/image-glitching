@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import LandingPage from './components/Landing';
+import { Button } from 'reactstrap';
 import Glitch from './components/Glitch';
 //import Uploader from './components/Uploader';
 
@@ -19,20 +20,19 @@ class App extends Component {
       content = <LandingPage />;
 
       const singleImageButton = (
-        <input
+        <Button
           className="Landing-button"
-          type="button"
-          value="Glitch Single Image"
+          color="primary"
           onClick={() => this.setState({ mode: 'upload' })}
-        />
+        >
+          Glitch Single Image
+        </Button>
       );
 
       const multipleImageButton = (
-        <input
-          className="Landing-button"
-          type="button"
-          value="Glitch Library of Images"
-        />
+        <Button className="Landing-button" color="primary">
+          Glitch Library of Images
+        </Button>
       );
 
       return (

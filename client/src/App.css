@@ -24,6 +24,10 @@
   padding: 10px 20% 0 20%;
 }
 
+.Landing-title {
+  padding: 10px 18% 0 18%;
+}
+
 .Landing-buttons {
   display: inline;
   font-size: large;
