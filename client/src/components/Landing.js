@@ -21,10 +21,6 @@ const Landing = () => {
         annotations. You can glitch a single image at a time, or glitch an
         entire library of images at once.
       </p>
-      <p className="Landing-buttons">
-        <button className="Landing-button">Glitch Single Image</button>
-        <button className="Landing-button">Glitch Library of Images</button>
-      </p>
     </>
   );
 };
