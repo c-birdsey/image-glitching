@@ -93,7 +93,7 @@ class Glitch extends Component {
   render() {
     return (
       <div>
-        <div>
+        <div style="float: left">
           <h1>Glitching. . .</h1>
           <input id="myfileinput" type="file" onChange={this.handleShow} />
           <img id="origin" className="styled" src="" height="200" />
