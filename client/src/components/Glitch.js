@@ -34,10 +34,11 @@ class Glitch extends Component {
 
   handleGlitch() {
     const fileInput = document.getElementById('myfileinput');
-    const preview = document.querySelector('img');
+    const preview = document.getElementById('glitchimg');
+    const origin = document.getElementById('origin');
     // files is a FileList object
     const file = fileInput.files[0];
-
+    const original = file;
     console.log(file);
 
     if (file) {
@@ -62,8 +63,6 @@ class Glitch extends Component {
               ''
             );
           }
-
-          console.log(data);
           preview.src = data;
         },
         false
@@ -73,17 +72,38 @@ class Glitch extends Component {
         reader.readAsDataURL(file);
       }
     }
+    if (original) {
+      const reader = new FileReader();
+      reader.addEventListener(
+        'load',
+        function() {
+          console.log(original);
+          let data = reader.result;
+          console.log(data);
+          origin.src = data;
+        },
+        false
+      );
+      if (original) {
+        reader.readAsDataURL(original);
+      }
+    }
   }
 
   render() {
     return (
       <div>
-        <h1>Glitching. . .</h1>
-        <input id="myfileinput" type="file" onChange={this.handleShow} />
-        <img className="styled" src="" alt="preview . . ." height="200" />
-        <button className="styled" onClick={this.handleGlitch}>
-          Glitch
-        </button>
+        <div>
+          <h1>Glitching. . .</h1>
+          <input id="myfileinput" type="file" onChange={this.handleShow} />
+          <img id="origin" className="styled" src="" height="200" />
+          <button className="styled" onClick={this.handleGlitch}>
+            Glitch
+          </button>
+        </div>
+        <div align="right">
+          <img id="glitchimg" className="styled" src="" height="200" />
+        </div>
       </div>
     );
   }
