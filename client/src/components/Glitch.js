@@ -93,16 +93,16 @@ class Glitch extends Component {
   render() {
     return (
       <div>
-        <div style="float: left">
+        <div>
           <h1>Glitching. . .</h1>
           <input id="myfileinput" type="file" onChange={this.handleShow} />
-          <img id="origin" className="styled" src="" height="200" />
+          <img id="origin" className="styled" src="" alt="" height="200" />
           <button className="styled" onClick={this.handleGlitch}>
             Glitch
           </button>
         </div>
         <div align="right">
-          <img id="glitchimg" className="styled" src="" height="200" />
+          <img id="glitchimg" className="styled" src="" alt="" height="200" />
         </div>
       </div>
     );
