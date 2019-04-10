@@ -10,7 +10,7 @@ class App extends Component {
     super();
 
     this.state = {
-      mode: 'landing'
+      mode: 'upload'
     };
   }
 
@@ -29,6 +29,7 @@ class App extends Component {
         </Button>
       );
 
+      //incomplete-- will add handler when we figure out how to handle libs
       const multipleImageButton = (
         <Button className="Landing-button" color="primary">
           Glitch Library of Images

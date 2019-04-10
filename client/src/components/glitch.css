@@ -1,0 +1,79 @@
+.previewComponent {
+  margin-top: 1em;
+}
+
+h3 {
+  margin-left: 15px;
+}
+
+.fileInput {
+  border-radius: 5px;
+  border: 2px solid grey;
+  padding: 5px;
+  margin: 15px 15px 15px 0;
+  cursor: pointer;
+}
+
+.imgPreview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 450px;
+  width: 450px;
+  min-width: 400px;
+  border: 2px solid gray;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.displayHelper {
+  display: inline-block;
+  height: 100%;
+  vertical-align: middle;
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.previewPlaceholder {
+  width: 100%;
+}
+
+.optionField {
+  padding: 10px 0 40px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.uploadField {
+  padding: 10px 0 40px 0;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: left;
+}
+
+.options {
+  padding: 0.5em;
+}
+
+.check-option {
+  padding: 0.2em;
+  font-size: 14px;
+}
+
+.upload-form {
+  font-size: 12px;
+}
+
+.slidecontainer {
+  width: 100%;
+}
+
+.glitch-button {
+  margin: 10px;
+}
