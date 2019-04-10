@@ -159,16 +159,6 @@ class Glitch extends Component {
   }
 
   render() {
-    let previewImage;
-    if (this.state.preview) {
-      previewImage = <img src={this.state.preview} />;
-    } else {
-      previewImage = (
-        <div class="previewPlaceholder">
-          <b>Upload an Image to Glitch</b>
-        </div>
-      );
-    }
     return (
       <Container className="previewComponent">
         <Row>
@@ -187,7 +177,7 @@ class Glitch extends Component {
         <Row>
           <Col className="uploadField">
             <Container className="imgPreview">
-              <img className="styled" src="" />
+              <img className="styled" src="" alt="" />
             </Container>
           </Col>
           <Col className="optionField">
