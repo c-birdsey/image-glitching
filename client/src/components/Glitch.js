@@ -117,7 +117,7 @@ class Glitch extends Component {
 
   handleGlitch() {
     const fileInput = document.getElementById('myfileinput');
-    const preview = document.getElementById('glitchimg');
+    const preview = document.querySelector('img');
     const origin = document.getElementById('origin');
     // files is a FileList object
     const file = fileInput.files[0];
@@ -163,7 +163,7 @@ class Glitch extends Component {
           console.log(original);
           let data = reader.result;
           console.log(data);
-          origin.src = data;
+          original.src = data;
         },
         false
       );
