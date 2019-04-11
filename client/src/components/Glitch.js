@@ -118,7 +118,7 @@ class Glitch extends Component {
   handleGlitch() {
     const fileInput = document.getElementById('myfileinput');
     const preview = document.querySelector('img');
-    const origin = document.getElementById('origin');
+    //const origin = document.getElementById('origin');
     // files is a FileList object
     const file = fileInput.files[0];
     const original = file;
@@ -155,22 +155,22 @@ class Glitch extends Component {
         reader.readAsDataURL(file);
       }
     }
-    if (original) {
-      const reader = new FileReader();
-      reader.addEventListener(
-        'load',
-        function() {
-          console.log(original);
-          let data = reader.result;
-          console.log(data);
-          original.src = data;
-        },
-        false
-      );
-      if (original) {
-        reader.readAsDataURL(original);
-      }
-    }
+    // if (original) {
+    //   const reader = new FileReader();
+    //   reader.addEventListener(
+    //     'load',
+    //     function() {
+    //       console.log(original);
+    //       let data = reader.result;
+    //       console.log(data);
+    //       origin.src = data;
+    //     },
+    //     false
+    //   );
+    //   if (original) {
+    //     reader.readAsDataURL(original);
+    //   }
+    // }
   }
 
   render() {
