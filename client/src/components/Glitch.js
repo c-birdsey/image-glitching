@@ -128,11 +128,11 @@ class Glitch extends Component {
       // create reader
       const reader = new FileReader();
       // reader.readAsText(file);
-
+      const distort = this.state.distortion;
       reader.addEventListener(
         'load',
         function() {
-          const charToDelete = 200; // on forward this value will be randomized
+          const charToDelete = (distort + 100) * 2; // on forward this value will be randomized
           const imageUrlOffset = 25;
           let data = reader.result;
           const rand = Math.random() * Math.floor(data.length);
