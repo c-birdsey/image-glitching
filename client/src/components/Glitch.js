@@ -121,7 +121,7 @@ class Glitch extends Component {
     //const origin = document.getElementById('origin');
     // files is a FileList object
     const file = fileInput.files[0];
-    const original = file;
+    // const original = file;
     console.log(file);
 
     if (file) {
