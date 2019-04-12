@@ -3,6 +3,7 @@ import './App.css';
 import LandingPage from './components/Landing';
 import { Button } from 'reactstrap';
 import Glitch from './components/Glitch';
+import MenuBar from './components/MenuBar';
 //import Uploader from './components/Uploader';
 
 class App extends Component {
@@ -16,6 +17,11 @@ class App extends Component {
 
   render() {
     let content;
+    const menuBar = (
+      <div className="App-menu">
+        <MenuBar home={() => this.setState({ mode: 'landing' })} />
+      </div>
+    );
     if (this.state.mode === 'landing') {
       content = <LandingPage />;
 
@@ -38,9 +44,7 @@ class App extends Component {
 
       return (
         <div className="App">
-          <header className="App-header">
-            <h1 className="App-menu">Menu Placeholder</h1>
-          </header>
+          {menuBar}
           {content}
           <div className="Landing-buttons">
             {singleImageButton} {multipleImageButton}
@@ -53,9 +57,7 @@ class App extends Component {
     // no major styling for the glitch class so edit it as prefered
     return (
       <div>
-        <header className="App-header">
-          <h1 className="App-menu">Menu Placeholder</h1>
-        </header>
+        {menuBar}
         <Glitch />
       </div>
     );
