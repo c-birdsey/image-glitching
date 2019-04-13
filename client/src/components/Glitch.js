@@ -1,6 +1,6 @@
-// code has a minor bug, sometimes it fails to preview image
 // functionality is simplified.
-// Prof. Andrews advised to manipulate dataURI instead of image's text
+// needs fixing:_uploaded images are not contained in the display box
+// _code has a minor bug, sometimes it fails to preview image
 
 import React, { Component } from 'react';
 import {
@@ -98,63 +98,80 @@ class Glitch extends Component {
   }
 
   handleShow() {
-    const preview = document.querySelector('img');
-    const file = document.getElementById('myfileinput').files[0];
-    const reader = new FileReader();
+    const preview = document.querySelector('.imgPreview');
+    const files = document.querySelector('input').files;
 
-    reader.addEventListener(
-      'load',
-      function() {
-        preview.src = reader.result;
-      },
-      false
-    );
+    if (files) {
+      [].forEach.call(files, file => {
+        // checks if files uploaded are images in the format jpeg | jpg |png
+        if (/\.(jpe?g|png)$/i.test(file.name)) {
+          const reader = new FileReader();
 
-    if (file) {
-      reader.readAsDataURL(file);
+          reader.addEventListener(
+            'load',
+            function() {
+              // creates image tag and adds attributes
+              const image = new Image();
+              image.className = 'styled';
+              image.title = file.name;
+              image.src = reader.result;
+              image.style.margin = '10px';
+
+              // adds images in the container/uploadField
+              preview.appendChild(image);
+            },
+            false
+          );
+
+          reader.readAsDataURL(file);
+        }
+      });
     }
   }
 
   handleGlitch() {
-    const fileInput = document.getElementById('myfileinput');
-    const preview = document.querySelector('img');
-    // files is a FileList object
-    const file = fileInput.files[0];
+    const files = document.querySelector('input').files;
+    const preview = document.querySelector('.imgPreview');
 
-    console.log(file);
+    if (files) {
+      [].forEach.call(files, file => {
+        // creates reader
+        const reader = new FileReader();
 
-    if (file) {
-      // create reader
-      const reader = new FileReader();
-      // reader.readAsText(file);
+        reader.addEventListener(
+          'load',
+          function() {
+            let data = reader.result;
 
-      reader.addEventListener(
-        'load',
-        function() {
-          const charToDelete = 200; // on forward this value will be randomized
-          const imageUrlOffset = 25;
-          let data = reader.result;
-          const rand = Math.random() * Math.floor(data.length);
+            const charToDelete = 200; // on forward this value will be randomized or user input
+            const imageUrlOffset = 23; // number of characters on data:image/[];base64,
 
-          if (rand > imageUrlOffset) {
-            data = data.replace(data.slice(rand, rand + charToDelete), '');
-          } else {
-            // prevents removing the url section of the data
+            // generates a random number between 23 (imageUrlOffset) and data.length
+            const randomNum =
+              Math.floor(Math.random() * (data.length - imageUrlOffset)) +
+              imageUrlOffset;
+
+            // replaces a (randomNum) of characters with empty string
             data = data.replace(
-              data.slice(rand + charToDelete, rand + charToDelete * 2),
+              data.slice(randomNum, randomNum + charToDelete),
               ''
             );
-          }
 
-          console.log(data);
-          preview.src = data;
-        },
-        false
-      );
+            // creates image tag and adds attributes
+            const imageDisplay = document.createElement('img');
+            imageDisplay.className = 'styled';
+            imageDisplay.src = data;
 
-      if (file) {
-        reader.readAsDataURL(file);
-      }
+            // adds images in the container/uploadField
+            preview.appendChild(imageDisplay);
+          },
+          false
+        );
+
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      });
     }
   }
 
@@ -167,18 +184,17 @@ class Glitch extends Component {
               <b>Upload Image:</b>
             </legend>
             <input
-              class="fileInput"
+              className="fileInput"
               id="myfileinput"
               type="file"
               onChange={this.handleShow}
+              multiple
             />
           </Col>
         </Row>
         <Row>
           <Col className="uploadField">
-            <Container className="imgPreview">
-              <img className="styled" src="" alt="" />
-            </Container>
+            <Container className="imgPreview" />
           </Col>
           <Col className="optionField">
             <OptionsForm
@@ -201,18 +217,4 @@ class Glitch extends Component {
   }
 }
 
-/*
-
-      <div>
-        <h1>Glitching. . .</h1>
-        <input id="myfileinput" type="file" onChange={this.handleShow} />
-        <img className="styled" src="" alt="preview . . ." height="200" />
-        <button className="styled" onClick={this.handleGlitch}>
-          Glitch
-        </button>
-      </div>
-    );
-  }
-}
-*/
 export default Glitch;
