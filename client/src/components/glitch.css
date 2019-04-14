@@ -26,6 +26,13 @@ h3 {
   padding: 15px;
 }
 
+.styled {
+  margin: 1%;
+  height: 50%;
+  width: 50%;
+  display: block;
+}
+
 .displayHelper {
   display: inline-block;
   height: 100%;
