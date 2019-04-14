@@ -132,7 +132,7 @@ class Glitch extends Component {
       reader.addEventListener(
         'load',
         function() {
-          const charToDelete = (distort + 100) * 2; // on forward this value will be randomized
+          const charToDelete = distort + 100; // on forward this value will be randomized
           const imageUrlOffset = 25;
           let data = reader.result;
           const rand = Math.random() * Math.floor(data.length);
