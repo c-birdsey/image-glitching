@@ -143,7 +143,7 @@ class Glitch extends Component {
           function() {
             let data = reader.result;
 
-            const charToDelete = 200; // on forward this value will be randomized or user input
+            const charToDelete = 20000; // on forward this value will be randomized or user input
             const imageUrlOffset = 23; // number of characters on data:image/[];base64,
 
             // generates a random number between 23 (imageUrlOffset) and data.length
