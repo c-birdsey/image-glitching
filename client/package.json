@@ -12,11 +12,17 @@
   },
   "keywords": [],
   "contributors": [
-    "Student1 <student1@middlebury.edu>",
-    "Student2 <student2@middlebury.edu>"
+    "William Frazier <wjfrazier@middlebury.edu>",
+    "Angel Ngulumbi <angulumbi@middlebury.edu>",
+    "Trey Oehmler <roehmler@middlebury.edu>",
+    "Calder Birdsey <cbirdsey@middlebury.edu>",
+    "Guanghan Pan <gpan@middlebury.edu>",
+    "Brandon Choe <bchoe@middlebury.edu>"
   ],
   "license": "Apache-2.0",
   "dependencies": {
+    "@material-ui/core": "^3.9.3",
+    "@material-ui/icons": "^3.0.2",
     "bootstrap": "^4.3.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

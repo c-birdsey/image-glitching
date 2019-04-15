@@ -1,6 +1,5 @@
 // functionality is simplified.
-// needs fixing:_uploaded images are not contained in the display box
-// _code has a minor bug, sometimes it fails to preview image
+// needs fixing:_code has a minor bug, sometimes it fails to preview image
 
 import React, { Component } from 'react';
 import {
