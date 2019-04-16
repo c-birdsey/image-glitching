@@ -99,10 +99,17 @@ img {
 }
 
 .previewBox {
-  height: 200px;
+  text-align: center;
+  height: 300px;
   border: 2px solid gray;
   border-radius: 10px;
   overflow-y: auto;
+}
+
+.saveImg {
+  margin: 1%;
+  height: 70%;
+  width: auto;
 }
 
 .options {
