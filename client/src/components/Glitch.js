@@ -174,6 +174,8 @@ class Glitch extends Component {
     }
   }
 
+  handleSave() {}
+
   render() {
     return (
       <Container className="previewComponent">
@@ -209,6 +211,18 @@ class Glitch extends Component {
             >
               Glitch Image
             </Button>
+            <Button
+              color="danger"
+              onClick={this.handleSave}
+              className="save-button"
+            >
+              Save Glitch
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="previewField">
+            <Container className="previewBox" />
           </Col>
         </Row>
       </Container>
