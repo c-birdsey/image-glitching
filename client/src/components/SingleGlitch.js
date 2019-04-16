@@ -81,97 +81,94 @@ function OptionsForm(props) {
   );
 }
 
-class Glitch extends Component {
+class SingleGlitch extends Component {
   constructor() {
     super();
 
     this.state = {
       upload: '',
       preview: '',
-      glitch_options: '', //to disable color shift/content shift if random selected
+      glitch_options: '',
       distortion: 0
     };
 
     this.handleShow = this.handleShow.bind(this);
     this.handleGlitch = this.handleGlitch.bind(this);
+    this.handleSave = this.handleSave.bind(this);
   }
 
   handleShow() {
-    const preview = document.querySelector('.imgPreview');
-    const files = document.querySelector('input').files;
+    const preview = document.querySelector('.single');
+    const file = document.querySelector('input').files[0];
 
-    if (files) {
-      [].forEach.call(files, file => {
-        // checks if files uploaded are images in the format jpeg | jpg |png
-        if (/\.(jpe?g|png)$/i.test(file.name)) {
-          const reader = new FileReader();
-
-          reader.addEventListener(
-            'load',
-            function() {
-              // creates image tag and adds attributes
-              const image = new Image();
-              image.className = 'styled';
-              image.title = file.name;
-              image.src = reader.result;
-              image.style.margin = '10px';
-
-              // adds images in the container/uploadField
-              preview.appendChild(image);
-            },
-            false
-          );
-
-          reader.readAsDataURL(file);
-        }
-      });
-    }
-  }
-
-  handleGlitch() {
-    const files = document.querySelector('input').files;
-    const preview = document.querySelector('.imgPreview');
-
-    if (files) {
-      [].forEach.call(files, file => {
-        // creates reader
+    if (file) {
+      // checks if files uploaded are images in the format jpeg | jpg |png
+      if (/\.(jpe?g|png)$/i.test(file.name)) {
         const reader = new FileReader();
 
         reader.addEventListener(
           'load',
           function() {
-            let data = reader.result;
-
-            const charToDelete = 200; // on forward this value will be randomized or user input
-            const imageUrlOffset = 23; // number of characters on data:image/[];base64,
-
-            // generates a random number between 23 (imageUrlOffset) and data.length
-            const randomNum =
-              Math.floor(Math.random() * (data.length - imageUrlOffset)) +
-              imageUrlOffset;
-
-            // replaces a (randomNum) of characters with empty string
-            data = data.replace(
-              data.slice(randomNum, randomNum + charToDelete),
-              ''
-            );
-
-            // creates image tag and adds attributes
-            const imageDisplay = document.createElement('img');
-            imageDisplay.className = 'styled';
-            imageDisplay.src = data;
-
-            // adds images in the container/uploadField
-            preview.appendChild(imageDisplay);
+            preview.src = reader.result;
           },
           false
         );
 
-        if (file) {
-          reader.readAsDataURL(file);
-        }
-      });
+        reader.readAsDataURL(file);
+      }
     }
+  }
+
+  handleGlitch() {
+    const file = document.querySelector('input').files[0];
+    const preview = document.querySelector('.single');
+
+    if (file) {
+      // create reader
+      const reader = new FileReader();
+      // reader.readAsText(file);
+
+      reader.addEventListener(
+        'load',
+        function() {
+          const charToDelete = 200; // on forward this value will be randomized
+          const imageUrlOffset = 25;
+          let data = reader.result;
+          const rand = Math.random() * Math.floor(data.length);
+
+          if (rand > imageUrlOffset) {
+            data = data.replace(data.slice(rand, rand + charToDelete), '');
+          } else {
+            // prevents removing the url section of the data
+            data = data.replace(
+              data.slice(rand + charToDelete, rand + charToDelete * 2),
+              ''
+            );
+          }
+
+          preview.src = data;
+        },
+        false
+      );
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+  }
+
+  handleSave() {
+    const preview = document.querySelector('.single');
+    const savedGlitch = document.querySelector('.previewBox');
+
+    // creates image tag and adds attributes
+    const image = new Image();
+    image.className = 'saveImg';
+    image.src = preview.src;
+    image.style.margin = '10px';
+
+    // adds images in the container/uploadField
+    savedGlitch.appendChild(image);
   }
 
   render() {
@@ -187,13 +184,14 @@ class Glitch extends Component {
               id="myfileinput"
               type="file"
               onChange={this.handleShow}
-              multiple
             />
           </Col>
         </Row>
         <Row>
           <Col className="uploadField">
-            <Container className="imgPreview" />
+            <Container className="singlePreview">
+              <img className="single" src="" />
+            </Container>
           </Col>
           <Col className="optionField">
             <OptionsForm
@@ -209,6 +207,18 @@ class Glitch extends Component {
             >
               Glitch Image
             </Button>
+            <Button
+              color="danger"
+              onClick={this.handleSave}
+              className="save-button"
+            >
+              Save Glitch
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="previewField">
+            <Container className="previewBox" />
           </Col>
         </Row>
       </Container>
@@ -216,4 +226,4 @@ class Glitch extends Component {
   }
 }
 
-export default Glitch;
+export default SingleGlitch;
