@@ -107,7 +107,6 @@ class Glitch extends Component {
         // checks if files uploaded are images in the format jpeg | jpg |png
         if (/\.(jpe?g|png)$/i.test(file.name)) {
           const reader = new FileReader();
-
           reader.addEventListener(
             'load',
             () => {
@@ -116,7 +115,7 @@ class Glitch extends Component {
               image.className = 'styled';
               image.title = file.name;
               image.src = reader.result;
-              image.style.margin = '10px';
+              image.style.margin = '1px';
 
               // adds images in the container/uploadField
               preview.appendChild(image);
@@ -139,12 +138,13 @@ class Glitch extends Component {
         // creates reader
         const reader = new FileReader();
 
+        const levelDistort = this.state.distortion;
         reader.addEventListener(
           'load',
           () => {
             let data = reader.result;
 
-            const charToDelete = 200; // on forward this value will be randomized or user input
+            const charToDelete = 5000 + 20 * levelDistort; // on forward this value will be randomized or user input
             const imageUrlOffset = 23; // number of characters on data:image/[];base64,
 
             // generates a random number between 23 (imageUrlOffset) and data.length

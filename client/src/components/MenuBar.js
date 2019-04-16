@@ -22,7 +22,7 @@ const styles = {
 };
 
 function MenuBar(props) {
-  const { classes, home } = props;
+  const { classes, home, login } = props;
   return (
     <div className={classes.root}>
       <AppBar position="static" style={{ backgroundColor: '#0a61fe' }}>
@@ -38,7 +38,9 @@ function MenuBar(props) {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             Image Glitching
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color="inherit" onClick={login}>
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
