@@ -218,6 +218,9 @@ class SingleGlitch extends Component {
         </Row>
         <Row>
           <Col className="previewField">
+            <legend>
+              <b>Saved Glitches:</b>
+            </legend>
             <Container className="previewBox" />
           </Col>
         </Row>
