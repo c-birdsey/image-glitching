@@ -61,7 +61,7 @@ class App extends Component {
       return (
         <div>
           {menuBar}
-          <Login />
+          <Login home={() => this.setState({ mode: 'landing' })} />
         </div>
       );
     }

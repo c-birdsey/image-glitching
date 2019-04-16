@@ -22,6 +22,7 @@ class Login extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  //this just updates the state
   handleChange = async event => {
     const { target } = event;
     const value = target.type === 'checkbox' ? target.checked : target.value;
@@ -31,6 +32,7 @@ class Login extends Component {
     });
   };
 
+  //currently doesn't really do anything but this is where functionality needs to be added
   submitForm(e) {
     e.preventDefault();
     console.log(`Email: ${this.state.email}`);
@@ -38,10 +40,14 @@ class Login extends Component {
   }
 
   render() {
+    //this sends us back to the home page when the user clicks login or register
+    const home = this.props.home;
+    //two different screens: login and register
     if (this.state.mode === 'login') {
       return (
         <Container className="app">
-          <Form onSubmit={e => this.submitForm(e)}>
+          <br />
+          <Form onSubmit={(e => this.submitForm(e), home)}>
             <FormGroup>
               <Label for="userEmail">Email</Label>
               <Input
@@ -83,7 +89,8 @@ class Login extends Component {
     if (this.state.mode === 'register') {
       return (
         <Container className="app">
-          <Form>
+          <br />
+          <Form onSubmit={(e => this.submitForm(e), home)}>
             <FormGroup>
               <Label for="userEmail">Email</Label>
               <Input
