@@ -1,14 +1,14 @@
-import React, { Component } from 'react';
-import {
+//import React, { Component } from 'react';
+/*import {
   Container,
   Row,
   Col
-  /*Button,
+  Button,
   Form,
   FormGroup,
   Label,
   Input,
-  FormText*/
+  FormText
 } from 'reactstrap';
 //import './multiple.css';
 import testImg from './test.jpg';
@@ -17,13 +17,13 @@ import testImg from './test.jpg';
 //glitched images passed as props from Glitch.js
 function BuildDisplay(props) {
   //props will be an array of objects but for now will use a placeholder
-  var testRange = 3;
-  var testDisplay = document.createElement('Container');
+  let testRange = 3;
+  const testDisplay = document.createElement('Container');
   testDisplay.setAttribute('id', 'baseDisplay');
   testDisplay.setAttribute('className', 'displayContainer');
 
   for (testRange; testRange > 0; testRange--) {
-    /* console.log(testRange); 
+    */ /* console.log(testRange); 
         var row = document.createElement("Row");
         row.setAttribute("className", "displayRow");
         var colOrig = document.createElement("Col");
@@ -49,8 +49,8 @@ function BuildDisplay(props) {
                     <img src={testImg} alt="" height="200" width="auto" /> 
                 </Col>
             </Row>
-        );*/
-    var row = document.createElement('div');
+        );*/ /*
+    const row = document.createElement('div');
     document.getElementById('baseDisplay').appendChild(row);
   }
   return testDisplay;
@@ -67,7 +67,7 @@ class Multiple extends Component {
     let display;
     display = BuildDisplay();
     return { display };
-    /*<div>
+    */ /*<div>
                 <p>TESTING</p>
                 <Container className="displayContainer" id="baseDisplay">
                     <Row className="displayRow">
@@ -79,8 +79,8 @@ class Multiple extends Component {
                         </Col>
                     </Row>
                 </Container>
-            </div>*/
+            </div>*/ /*
   }
 }
 
-export default Multiple;
+export default Multiple;*/
