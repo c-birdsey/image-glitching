@@ -86,9 +86,9 @@ class SingleGlitch extends Component {
     super();
 
     this.state = {
-      upload: '',
-      preview: '',
-      glitch_options: '',
+      //upload: '',
+      //preview: '',
+      //glitch_options: '',
       distortion: 0
     };
 
@@ -108,7 +108,7 @@ class SingleGlitch extends Component {
 
         reader.addEventListener(
           'load',
-          function() {
+          () => {
             preview.src = reader.result;
           },
           false
@@ -130,7 +130,7 @@ class SingleGlitch extends Component {
 
       reader.addEventListener(
         'load',
-        function() {
+        () => {
           const charToDelete = 200; // on forward this value will be randomized
           const imageUrlOffset = 25;
           let data = reader.result;
@@ -190,7 +190,7 @@ class SingleGlitch extends Component {
         <Row>
           <Col className="uploadField">
             <Container className="singlePreview">
-              <img className="single" src="" />
+              <img className="single" src="" alt="" />
             </Container>
           </Col>
           <Col className="optionField">
@@ -218,6 +218,9 @@ class SingleGlitch extends Component {
         </Row>
         <Row>
           <Col className="previewField">
+            <legend>
+              <b>Saved Glitches:</b>
+            </legend>
             <Container className="previewBox" />
           </Col>
         </Row>
