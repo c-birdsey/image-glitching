@@ -25,7 +25,7 @@ function MenuBar(props) {
   const { classes, home } = props;
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="static" style={{ backgroundColor: '#0a61fe' }}>
         <Toolbar>
           <IconButton
             className={classes.homeButton}
