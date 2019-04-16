@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Button,
-  Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText,
-  Container,
-  Col
-} from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 
 class Login extends Component {
   constructor() {
@@ -78,7 +69,7 @@ class Login extends Component {
             <br />
             <br />
             <br />
-            <a>Need an account?</a>{' '}
+            <p>Need an account?</p>{' '}
             <Button onClick={() => this.setState({ mode: 'register' })}>
               Sign up
             </Button>
@@ -128,7 +119,7 @@ class Login extends Component {
             <br />
             <br />
             <br />
-            <a>Already have an account?</a>{' '}
+            <p>Already have an account?</p>{' '}
             <Button onClick={() => this.setState({ mode: 'login' })}>
               Login
             </Button>
