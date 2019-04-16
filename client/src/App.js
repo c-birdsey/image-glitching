@@ -4,6 +4,7 @@ import LandingPage from './components/Landing';
 import { Button } from 'reactstrap';
 import Glitch from './components/Glitch';
 import MenuBar from './components/MenuBar';
+import Login from './components/Login';
 //import Uploader from './components/Uploader';
 
 class App extends Component {
@@ -19,7 +20,10 @@ class App extends Component {
     let content;
     const menuBar = (
       <div className="App-menu">
-        <MenuBar home={() => this.setState({ mode: 'landing' })} />
+        <MenuBar
+          home={() => this.setState({ mode: 'landing' })}
+          login={() => this.setState({ mode: 'login' })}
+        />
       </div>
     );
     if (this.state.mode === 'landing') {
@@ -49,6 +53,15 @@ class App extends Component {
           <div className="Landing-buttons">
             {singleImageButton} {multipleImageButton}
           </div>
+        </div>
+      );
+    }
+
+    if (this.state.mode === 'login') {
+      return (
+        <div>
+          {menuBar}
+          <Login />
         </div>
       );
     }

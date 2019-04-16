@@ -137,7 +137,6 @@ class Glitch extends Component {
         const reader = new FileReader();
 
         const levelDistort = this.state.distortion;
-        console.log(levelDistort);
         reader.addEventListener(
           'load',
           function() {
