@@ -123,7 +123,7 @@ class Login extends Component {
                 <Input type="checkbox" /> Remember Me
               </Label>
             </FormGroup>
-            <Button>Login</Button>
+            <Button>Register</Button>
             <br />
             <br />
             <br />
