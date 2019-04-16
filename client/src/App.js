@@ -3,6 +3,7 @@ import './App.css';
 import LandingPage from './components/Landing';
 import { Button } from 'reactstrap';
 import Glitch from './components/Glitch';
+import SingleGlitch from './components/SingleGlitch';
 import MenuBar from './components/MenuBar';
 import Login from './components/Login';
 //import Uploader from './components/Uploader';
@@ -12,7 +13,7 @@ class App extends Component {
     super();
 
     this.state = {
-      mode: 'upload'
+      mode: 'landing'
     };
   }
 
@@ -33,7 +34,7 @@ class App extends Component {
         <Button
           className="Landing-button"
           color="primary"
-          onClick={() => this.setState({ mode: 'upload' })}
+          onClick={() => this.setState({ mode: 'uploadSingle' })}
         >
           Glitch Single Image
         </Button>
@@ -41,7 +42,11 @@ class App extends Component {
 
       //incomplete-- will add handler when we figure out how to handle libs
       const multipleImageButton = (
-        <Button className="Landing-button" color="primary">
+        <Button
+          className="Landing-button"
+          color="primary"
+          onClick={() => this.setState({ mode: 'uploadMultiple' })}
+        >
           Glitch Library of Images
         </Button>
       );
@@ -68,10 +73,19 @@ class App extends Component {
 
     // we are uploading
     // no major styling for the glitch class so edit it as prefered
+    if (this.state.mode === 'uploadMultiple') {
+      return (
+        <div>
+          {menuBar}
+          <Glitch />
+        </div>
+      );
+    }
+
     return (
       <div>
         {menuBar}
-        <Glitch />
+        <SingleGlitch />
       </div>
     );
   }
