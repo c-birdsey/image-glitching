@@ -18,6 +18,8 @@ import './glitch.css';
 //function to build the options field, mostly just for styling right now but will
 //translate user input to state to be passed to glitching script once we implement
 //more functionality there
+
+/* eslint-disable prefer-destructuring */
 function OptionsForm(props) {
   return (
     <Form>
@@ -86,9 +88,9 @@ class Glitch extends Component {
     super();
 
     this.state = {
-      upload: '',
-      preview: '',
-      glitch_options: '', //to disable color shift/content shift if random selected
+      //upload: '',
+      //preview: '',
+      //glitch_options: '', //to disable color shift/content shift if random selected
       distortion: 0
     };
 
@@ -107,7 +109,7 @@ class Glitch extends Component {
           const reader = new FileReader();
           reader.addEventListener(
             'load',
-            function() {
+            () => {
               // creates image tag and adds attributes
               const image = new Image();
               image.className = 'styled';
@@ -139,7 +141,7 @@ class Glitch extends Component {
         const levelDistort = this.state.distortion;
         reader.addEventListener(
           'load',
-          function() {
+          () => {
             let data = reader.result;
 
             const charToDelete = 5000 + 20 * levelDistort; // slider

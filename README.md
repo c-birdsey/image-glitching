@@ -4,7 +4,7 @@
 
 An application for researchers to glitch images, record insights and share the results. 
 
-The link to [deployed application on Heroku](https://cryptic-caverns-66585.herokuapp.com/)
+The link to [deployed application on Heroku](https://mysterious-beyond-74055.herokuapp.com/)
 
 This repository combines the client and server into a single repository that can be co-developed, tested and ultimately deployed to Heroku or basin.cs.middlebury.edu.
 
