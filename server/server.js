@@ -3,12 +3,17 @@ const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
 const knexConfig = require('./knexfile');
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+
 const knex = require('knex')(knexConfig[process.env.NODE_ENV || 'development']);
 
-const { Model } = require('objection');
+const { Model, ValidationError } = require('objection');
 const User = require('./models/User.js');
 
 Model.knex(knex);
+
+const { wrapError, DBError } = require('db-errors');
 
 const app = express();
 
@@ -20,6 +25,8 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
+
+const auth = require('./auth');
 
 // express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
@@ -50,42 +57,23 @@ const authenticate = userReq => {
     });
 };
 
-// adding a new user
-app.post('/register', (request, response, next) => {
-  const newUser = request.body;
-  const hashedPassword = User.hash(newUser.password);
+// all routes under auth prefix use authentication controller
+app.use('/auth', auth);
 
-  newUser.password = hashedPassword;
-  newUser.token = User.generateToken();
+/*---------- Error handling middleware ----------*/
 
-  User.query()
-    .insertAndFetch(newUser)
-    .then(addedUser => {
-      response.send(addedUser);
-    }, next);
-});
-
-// authentication
-app.post('/login', (request, response, next) => {
-  const usernameReq = request.body.username;
-  const passwordReq = request.body.password;
-
-  User.query()
-    .where('username', usernameReq)
-    .then(foundUsers => {
-      if (User.checkPassword(passwordReq, foundUsers[0].password)) {
-        const newToken = User.generateToken();
-        // updates users token on sign in
-        User.query()
-          .findById(foundUsers[0].id)
-          .patchAndFetchById(foundUsers[0].id, { token: newToken })
-          .then(regUser => {
-            response.send(regUser);
-          }, next);
-      } else {
-        response.sendStatus(401);
-      }
-    }, next);
+app.use((error, request, response, next) => {
+  if (response.headersSent) {
+    next(error);
+  }
+  const wrappedError = wrapError(error);
+  if (wrappedError instanceof DBError) {
+    response.status(400).send(wrappedError.data || wrappedError.message || {});
+  } else {
+    response
+      .status(wrappedError.statusCode || wrappedError.status || 500)
+      .send(wrappedError.data || wrappedError.message || {});
+  }
 });
 
 module.exports = {
