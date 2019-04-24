@@ -190,7 +190,7 @@ class SingleGlitch extends Component {
         <Row>
           <Col className="uploadField">
             <Container className="singlePreview">
-              <img className="single" src="" />
+              <img className="single" src="" alt="" />
             </Container>
           </Col>
           <Col className="optionField">
