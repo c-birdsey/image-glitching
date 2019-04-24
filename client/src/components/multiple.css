@@ -1,0 +1,31 @@
+.multImages {
+  padding: 2rem;
+}
+
+.displayRow {
+  padding: 0 0 3rem 0;
+}
+
+.originalElement {
+  min-width: 250px;
+}
+
+.glitchedElement {
+  min-width: 250px;
+}
+
+.download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.downloadAll {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+}
