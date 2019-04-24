@@ -13,7 +13,7 @@ class App extends Component {
     super();
 
     this.state = {
-      mode: 'landing'
+      mode: 'glitch_library'
     };
   }
 

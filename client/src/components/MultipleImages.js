@@ -13,38 +13,38 @@ import {
 import './multiple.css';
 import { saveAs } from 'jszip';
 
+//function to convert img path to data URI-- not working
+//this won't be neceessary once we decide how data is pulled from server
+function getImgData(imgURL) {
+  const canvas = document.createElement('canvas');
+  const context = canvas.getContext('2d');
+  const image = new Image();
+  image.src = imgURL;
+  image.onload = function() {
+    context.drawImage(image, 100, 100);
+  };
+  const imgData = canvas.toDataURL(image);
+  return imgData;
+}
+
 //function to package images from array into zip for download
 //using jszip framework-- install with npm install jszip in client dir
 const downloadZip = props => {
-  var JSZip = require('jszip');
-  var zip = new JSZip();
-  var img = zip.folder('Glitches');
-  var array = props;
-  var i = 0;
-  array.forEach(function(element) {
+  const JSZip = require('jszip');
+  const zip = new JSZip();
+  const img = zip.folder('Glitches');
+  const array = props;
+  let i = 0;
+  array.forEach(element => {
     i = i + 1;
     img.file(`glitch${i}.jpg`, getImgData(require(`./${element[1]}.jpg`)), {
       base64: true
     });
   });
-  zip.generateAsync({ type: 'blob' }).then(function(content) {
+  zip.generateAsync({ type: 'blob' }).then(content => {
     saveAs(content, 'glitches.zip');
   });
 };
-
-//function to convert img path to data URI-- not working
-//this won't be neceessary once we decide how data is pulled from server
-function getImgData(imgURL) {
-  var canvas = document.createElement('canvas');
-  var context = canvas.getContext('2d');
-  var image = new Image();
-  image.src = imgURL;
-  image.onload = function() {
-    context.drawImage(image, 100, 100);
-  };
-  var imgData = canvas.toDataURL(image);
-  return imgData;
-}
 
 class Multiple extends Component {
   constructor() {
@@ -55,8 +55,8 @@ class Multiple extends Component {
   }
 
   render() {
-    let array = this.state.imgArray;
-    let images = array.map(image => {
+    const array = this.state.imgArray;
+    const images = array.map(image => {
       return (
         <Container fluid>
           <Row className="displayRow">
