@@ -6,7 +6,7 @@ import Glitch from './components/Glitch';
 import SingleGlitch from './components/SingleGlitch';
 import MenuBar from './components/MenuBar';
 import Login from './components/Login';
-//import Uploader from './components/Uploader';
+import MultipleGlitches from './components/MultipleImages';
 
 class App extends Component {
   constructor() {
@@ -67,6 +67,15 @@ class App extends Component {
         <div>
           {menuBar}
           <Login home={() => this.setState({ mode: 'landing' })} />
+        </div>
+      );
+    }
+
+    if (this.state.mode === 'glitch_library') {
+      return (
+        <div>
+          {menuBar}
+          <MultipleGlitches />
         </div>
       );
     }
