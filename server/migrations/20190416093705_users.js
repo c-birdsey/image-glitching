@@ -1,3 +1,6 @@
+/* eslint-disable func-names */
+/* eslint no-unused-vars: ["error", { "args": "none" }] */
+
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('Users', table => {
     table.increments('id');

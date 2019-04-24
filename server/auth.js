@@ -1,12 +1,16 @@
+/* eslint-disable no-console */
+/* eslint no-unused-vars: ["error", { "args": "none" }] */
+
 /* auth.js | Authentication controller */
 const express = require('express');
-const router = express.Router();
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-const { Model, ValidationError } = require('objection');
+const { ValidationError } = require('objection');
 const User = require('./models/User.js');
 
-/*---------- Registration ----------*/
+const router = express.Router();
+
+// ========== Registration ==========
 
 router.post('/register', (request, response, next) => {
   /* (1) check for missing or empty password
@@ -31,7 +35,7 @@ router.post('/register', (request, response, next) => {
     }, next);
 });
 
-/*---------- Login ----------*/
+// ========== Login ==========
 
 router.post('/login', (request, response, next) => {
   /* (1) validate request has a username and password
@@ -53,7 +57,7 @@ router.post('/login', (request, response, next) => {
           User.query()
             .patchAndFetchById(foundUser.id, { token: newToken })
             .then(authUser => {
-              response.status(200).send(foundUser.authDetails());
+              response.status(200).send(authUser.authDetails());
             }, next);
         } else {
           response.sendStatus(401);

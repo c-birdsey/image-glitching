@@ -27,7 +27,7 @@ describe('Authentication API', () => {
       email: 'scratchy@gmail.com'
     };
 
-    /*---------- user creation test ----------*/
+    // ---------- user creation test ----------
 
     // need to check if response contains token
     test('Should create a new user', () => {
@@ -35,13 +35,10 @@ describe('Authentication API', () => {
         .post('/auth/register')
         .send(newUser)
         .expect(201)
-        .expect('Content-Type', /json/)
-        .expect(function(response) {
-          response.body.username = newUser.username;
-        });
+        .expect('Content-Type', /json/);
     });
 
-    /*---------- input validation tests ----------*/
+    // ---------- input validation tests ----------
 
     test('Should reject if username already in use', () => {
       const testUser = newUser;
@@ -127,15 +124,13 @@ describe('Authentication API', () => {
       password: 'test'
     };
 
+    // need to test that username and token are returned
     test('Should log in user with proper credentials', () => {
       return request(app)
         .post('/auth/login')
         .send(authUser)
         .expect(200)
-        .expect('Content-Type', /json/)
-        .expect(function(response) {
-          response.body.username = user.username;
-        });
+        .expect('Content-Type', /json/);
     });
 
     test('Should reject attempt with wrong password', () => {

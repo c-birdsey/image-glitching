@@ -1,15 +1,13 @@
 const cors = require('cors');
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const knexConfig = require('./knexfile');
-const bcrypt = require('bcrypt');
-const crypto = require('crypto');
 
 const knex = require('knex')(knexConfig[process.env.NODE_ENV || 'development']);
 
-const { Model, ValidationError } = require('objection');
-const User = require('./models/User.js');
+const { Model } = require('objection');
+
+const auth = require('./auth');
 
 Model.knex(knex);
 
@@ -26,8 +24,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-const auth = require('./auth');
-
 // express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
   // Resolve client build directory as absolute path to avoid errors in express
@@ -42,25 +38,10 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
-// TODO: Add any middleware here
-
-// comparing authentication tokens
-const authenticate = userReq => {
-  User.query()
-    .where('token', userReq.token)
-    .then(foundUser => {
-      if (foundUser.username == userReq.username) {
-        return true;
-      } else {
-        return false;
-      }
-    });
-};
-
 // all routes under auth prefix use authentication controller
 app.use('/auth', auth);
 
-/*---------- Error handling middleware ----------*/
+// ---------- Error handling middleware ----------
 
 app.use((error, request, response, next) => {
   if (response.headersSent) {
