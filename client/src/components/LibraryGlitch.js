@@ -254,7 +254,7 @@ class Glitch extends Component {
   render() {
     let previewImage = null;
     if (this.state.originalFiles.length !== 0) {
-      previewImage = <img src={placeholder} alt="" />;
+      previewImage = <img className="folder-icon" src={placeholder} alt="" />;
     }
 
     return (

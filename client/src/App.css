@@ -25,7 +25,7 @@
 }
 
 .Landing-title {
-  padding: 10px 18% 0 18%;
+  padding: 25px 18% 0 18%;
 }
 
 .Landing-buttons {
@@ -53,6 +53,10 @@
 
 .Landing-button:active {
   background-color: #999;
+}
+
+.folder-icon {
+  max-width: 250px;
 }
 
 @keyframes App-logo-spin {

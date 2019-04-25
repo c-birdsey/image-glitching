@@ -1,15 +1,5 @@
 import React, { Component } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Button
-  /*Form,
-  FormGroup,
-  Label,
-  Input,
-  FormText*/
-} from 'reactstrap';
+import { Container, Row, Col, Button } from 'reactstrap';
 import './multiple.css';
 import { saveAs } from 'file-saver';
 
@@ -71,7 +61,9 @@ class Multiple extends Component {
             </Col>
             <Col xs={12} sm={12} md={2} className="download text-center">
               <a href={elem[1]} download="glitch">
-                Download Glitch
+                <Button outline className="buttons" size="sm" color="primary">
+                  Download Glitch
+                </Button>
               </a>
             </Col>
           </Row>
@@ -83,21 +75,17 @@ class Multiple extends Component {
       <Container className="multImages" fluid>
         <Row>
           <Col xs={6} sm={6} md={7}>
-            <legend>
+            <legend className="legend">
               <b>Glitched Library:</b>
             </legend>
+            <p className="about">
+              Browse through your library of glitched images below. You can
+              download a single glitch with the link to the right of the image,
+              or you can downlaod the entire library as a .zip file with the
+              button to the right.
+            </p>
           </Col>
           <Col xs={6} sm={6} md={5} className="text-right buttonBar">
-            <Button
-              className="buttons"
-              size="sm"
-              color="primary"
-              onClick={() => {
-                downloadZip(this.state.imgArray);
-              }}
-            >
-              Download All
-            </Button>
             <Button
               className="buttons"
               size="sm"
@@ -107,6 +95,16 @@ class Multiple extends Component {
               }}
             >
               Back to Glitcher
+            </Button>
+            <Button
+              className="buttons"
+              size="sm"
+              color="primary"
+              onClick={() => {
+                downloadZip(this.state.imgArray);
+              }}
+            >
+              Download All
             </Button>
           </Col>
         </Row>
