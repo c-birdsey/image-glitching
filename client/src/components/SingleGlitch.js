@@ -68,8 +68,8 @@ function OptionsForm(props) {
         </div>
         <input
           type="range"
-          min="1"
-          max="10"
+          min="0"
+          max="255"
           step="1"
           value={props.value}
           onChange={event =>
@@ -127,44 +127,22 @@ class SingleGlitch extends Component {
       // create reader
       const reader = new FileReader();
       // reader.readAsText(file);
-
       reader.addEventListener(
         'load',
         () => {
+          const charToDelete = 200; // on forward this value will be randomized
+          const imageUrlOffset = 25;
           let data = reader.result;
-          //convert to hex to find "0xFF DA", which marks the start of the actual image encoding
-          const hexString = Buffer.from(
-            data.slice(23, data.length),
-            'base64'
-          ).toString('hex');
-          const startOfImg = Math.floor(hexString.indexOf('ffda') * 1.3); //multiply by 1.3 just in case theres some extra buffer
+          const rand = Math.random() * Math.floor(data.length);
 
-          //distorition level determines how many times each operation happens
-          for (let i = 0; i < this.state.distortion; i++) {
-            //needs to be a multiple of 4 to keep valid hex format
-            const rand =
-              4 *
-              Math.floor(
-                (data.length / 10000) *
-                  Math.floor(Math.floor(Math.random() * Math.floor(20)))
-              );
-            const whichGlitch = Math.floor(Math.random() * Math.floor(2));
-            //a random block of data that is used by Glitches 1 and 2
-            const dataBlock = data.slice(startOfImg, startOfImg + rand);
-
-            //deletion
-            if (whichGlitch === 0) {
-              data =
-                data.slice(0, startOfImg) +
-                data.slice(startOfImg + rand, data.length);
-
-              //move code around
-            } else if (whichGlitch === 1) {
-              data =
-                data.slice(0, startOfImg + rand * 2) +
-                dataBlock +
-                data.slice(startOfImg + rand * 2, data.length);
-            }
+          if (rand > imageUrlOffset) {
+            data = data.replace(data.slice(rand, rand + charToDelete), '');
+          } else {
+            // prevents removing the url section of the data
+            data = data.replace(
+              data.slice(rand + charToDelete, rand + charToDelete * 2),
+              ''
+            );
           }
 
           preview.src = data;
