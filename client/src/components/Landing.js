@@ -13,15 +13,16 @@ const Landing = () => {
         reconsider the historical context from which the original image arose.
         Our app provides a comprehensive platform for glitching, annotating,
         examining and sharing the diverse world of image glitching in a academic
-        setting. This app was developed through the Middlebury College Science
-        Department in the Spring of 2019.
+        setting. This app was developed through the Middlebury College Computer
+        Science Department in the Spring of 2019.
       </p>
       <p className="Landing-intro">
         To begin the process of glitching your own images, simply upload the
         images to the browser, configure specific glitching options, and
         interact with the resulting glitched image with comments and
         annotations. You can glitch a single image at a time, or glitch an
-        entire library of images at once.
+        entire library of images at once. You are also able to download your
+        glitches locally.
       </p>
     </>
   );
