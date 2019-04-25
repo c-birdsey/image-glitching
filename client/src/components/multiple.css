@@ -14,15 +14,23 @@
   min-width: 250px;
 }
 
+.glitchedElement .img {
+  width: 100%;
+}
+
 .download {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.downloadAll {
-  display: inline-block;
+.butttonBar {
   vertical-align: middle;
+  float: right;
+}
+
+.buttons {
+  margin: 5px !important;
 }
 
 .row {
