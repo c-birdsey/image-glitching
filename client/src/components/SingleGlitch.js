@@ -131,8 +131,6 @@ class SingleGlitch extends Component {
       reader.addEventListener(
         'load',
         () => {
-          const charToDelete = 200; // on forward this value will be randomized
-          const imageUrlOffset = 25;
           let data = reader.result;
           //convert to hex to find "0xFF DA", which marks the start of the actual image encoding
           const hexString = Buffer.from(
@@ -142,7 +140,7 @@ class SingleGlitch extends Component {
           const startOfImg = Math.floor(hexString.indexOf('ffda') * 1.3); //multiply by 1.3 just in case theres some extra buffer
 
           //distorition level determines how many times each operation happens
-          for (var i = 0; i < this.state.distortion; i++) {
+          for (let i = 0; i < this.state.distortion; i++) {
             //needs to be a multiple of 4 to keep valid hex format
             const rand =
               4 *
