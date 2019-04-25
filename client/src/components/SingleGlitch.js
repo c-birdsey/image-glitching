@@ -127,11 +127,11 @@ class SingleGlitch extends Component {
       // create reader
       const reader = new FileReader();
       // reader.readAsText(file);
-
+      const levelDistort = this.state.distortion;
       reader.addEventListener(
         'load',
         () => {
-          const charToDelete = 200; // on forward this value will be randomized
+          const charToDelete = 5000 + 20 * levelDistort; // on forward this value will be randomized
           const imageUrlOffset = 25;
           let data = reader.result;
           const rand = Math.random() * Math.floor(data.length);
