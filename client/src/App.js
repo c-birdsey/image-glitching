@@ -13,21 +13,23 @@ class App extends Component {
     super();
 
     this.state = {
-      mode: 'uploadMultiple',
+      //mode options are: landing, login, displayLibrary, uploadMultiple
+      mode: 'landing',
+
       //this stores the array of glitched images and originals from LibraryGlitch
       //Passed down to multiple images displayer
-      glitchArray: null
+      glitchArray: []
     };
 
     this.ShowMultiple = this.ShowMultiple.bind(this);
   }
 
   //call back to switch to page showing multiple glitches
-  ShowMultiple(glitchArray) {
-    console.log('testing');
-    let imageArray = glitchArray;
+  ShowMultiple(array) {
+    const imageArray = array;
+    //console.log(imageArray);
     this.setState({ glitchArray: imageArray });
-    this.setState({ mode: 'glitch_library' });
+    this.setState({ mode: 'displayLibrary' });
   }
 
   render() {
@@ -84,11 +86,17 @@ class App extends Component {
       );
     }
 
-    if (this.state.mode === 'glitch_library') {
+    //
+    if (this.state.mode === 'displayLibrary') {
       return (
         <div>
           {menuBar}
-          <MultipleGlitches images={this.state.glitchArray} />
+          <MultipleGlitches
+            images={this.state.glitchArray}
+            back={() => {
+              this.setState({ mode: 'uploadMultiple' });
+            }}
+          />
         </div>
       );
     }

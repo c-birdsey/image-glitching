@@ -11,24 +11,16 @@ import {
   FormText*/
 } from 'reactstrap';
 import './multiple.css';
-import { saveAs } from 'jszip';
+import { saveAs } from 'file-saver';
 
-//function to convert img path to data URI-- not working
-//this won't be neceessary once we decide how data is pulled from server
-function getImgData(imgURL) {
-  const canvas = document.createElement('canvas');
-  const context = canvas.getContext('2d');
-  const image = new Image();
-  image.src = imgURL;
-  image.onload = function() {
-    context.drawImage(image, 100, 100);
-  };
-  const imgData = canvas.toDataURL(image);
-  return imgData;
+//function to convert url to pure base64
+function toBase64(url) {
+  const base64 = url.replace(/^data:image\/[a-z]+;base64,/, '');
+  return base64;
 }
 
 //function to package images from array into zip for download
-//using jszip framework-- install with npm install jszip in client dir
+//using jszip framework-- install with npm --save install jszip in client dir
 const downloadZip = props => {
   const JSZip = require('jszip');
   const zip = new JSZip();
@@ -37,26 +29,26 @@ const downloadZip = props => {
   let i = 0;
   array.forEach(element => {
     i = i + 1;
-    img.file(`glitch${i}.jpg`, getImgData(require(`./${element[1]}.jpg`)), {
-      base64: true
-    });
+    const base64img = toBase64(element[1]);
+    img.file(`glitch${i}.jpg`, base64img, { base64: true });
   });
   zip.generateAsync({ type: 'blob' }).then(content => {
-    saveAs(content, 'glitches.zip');
+    saveAs(content, 'glitch.zip');
   });
 };
 
 class Multiple extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      imgArray: [['test', 'test1'], ['test', 'test1'], ['test', 'test1']]
+      imgArray: this.props.images
     };
   }
 
   render() {
     const array = this.state.imgArray;
-    const images = array.map(image => {
+    const images = array.map(elem => {
       return (
         <Container fluid>
           <Row className="displayRow">
@@ -69,16 +61,16 @@ class Multiple extends Component {
               <p>
                 <b>Original Image</b>
               </p>
-              <img key={image[0]} src={require(`./${image[0]}.jpg`)} alt="" />
+              <img src={elem[0]} alt="" />
             </Col>
             <Col xs={12} sm={6} md={5} className="glitchedElement">
               <p>
                 <b>Glitched Image</b>
               </p>
-              <img key={image[1]} src={require(`./${image[1]}.jpg`)} alt="" />
+              <img src={elem[1]} alt="" />
             </Col>
             <Col xs={12} sm={12} md={2} className="download text-center">
-              <a href={require(`./${image[1]}.jpg`)} download="glitch">
+              <a href={elem[1]} download="glitch">
                 Download Glitch
               </a>
             </Col>
@@ -86,23 +78,35 @@ class Multiple extends Component {
         </Container>
       );
     });
+
     return (
       <Container className="multImages" fluid>
         <Row>
-          <Col xs={10} sm={10} md={10}>
+          <Col xs={6} sm={6} md={7}>
             <legend>
               <b>Glitched Library:</b>
             </legend>
           </Col>
-          <Col xs={2} sm={2} md={2} className="text-center downloadAll">
+          <Col xs={6} sm={6} md={5} className="text-right buttonBar">
             <Button
-              size="md"
+              className="buttons"
+              size="sm"
               color="primary"
               onClick={() => {
                 downloadZip(this.state.imgArray);
               }}
             >
               Download All
+            </Button>
+            <Button
+              className="buttons"
+              size="sm"
+              color="primary"
+              onClick={() => {
+                this.props.back();
+              }}
+            >
+              Back to Glitcher
             </Button>
           </Col>
         </Row>
