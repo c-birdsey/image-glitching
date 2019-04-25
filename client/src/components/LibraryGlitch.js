@@ -102,7 +102,7 @@ class Glitch extends Component {
   }
 
   handleShow() {
-    const preview = document.querySelector('.imgPreview');
+    //const preview = document.querySelector('.imgPreview');
     const files = document.querySelector('input').files;
 
     if (files) {
