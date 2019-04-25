@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import LandingPage from './components/Landing';
 import { Button } from 'reactstrap';
-import Glitch from './components/Glitch';
+import LibraryGlitch from './components/LibraryGlitch';
 import SingleGlitch from './components/SingleGlitch';
 import MenuBar from './components/MenuBar';
 import Login from './components/Login';
@@ -13,8 +13,21 @@ class App extends Component {
     super();
 
     this.state = {
-      mode: 'glitch_library'
+      mode: 'uploadMultiple',
+      //this stores the array of glitched images and originals from LibraryGlitch
+      //Passed down to multiple images displayer
+      glitchArray: null
     };
+
+    this.ShowMultiple = this.ShowMultiple.bind(this);
+  }
+
+  //call back to switch to page showing multiple glitches
+  ShowMultiple(glitchArray) {
+    console.log('testing');
+    let imageArray = glitchArray;
+    this.setState({ glitchArray: imageArray });
+    this.setState({ mode: 'glitch_library' });
   }
 
   render() {
@@ -75,22 +88,23 @@ class App extends Component {
       return (
         <div>
           {menuBar}
-          <MultipleGlitches />
+          <MultipleGlitches images={this.state.glitchArray} />
         </div>
       );
     }
 
-    // we are uploading
+    // we are uploading a library of images
     // no major styling for the glitch class so edit it as prefered
     if (this.state.mode === 'uploadMultiple') {
       return (
         <div>
           {menuBar}
-          <Glitch />
+          <LibraryGlitch callback={this.ShowMultiple} />
         </div>
       );
     }
 
+    //Glitching a single image
     return (
       <div>
         {menuBar}
