@@ -89,7 +89,8 @@ class SingleGlitch extends Component {
       //upload: '',
       //preview: '',
       //glitch_options: '',
-      distortion: 0
+      distortion: 1,
+      savedGlitches: []
     };
 
     this.handleShow = this.handleShow.bind(this);
