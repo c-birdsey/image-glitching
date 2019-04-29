@@ -5,15 +5,14 @@
   "description": "Server for ...",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "lint": "eslint .",
-    "start": "node index.js",
-    "watch": "nodemon --ignore '*.test.js' index.js"
+    "test": "jest --setupFiles dotenv/config",
+    "start": "node -r dotenv/config index.js",
+    "watch": "nodemon --exec 'node -r dotenv/config' --ignore '*.test.js' index.js",
+    "lint": "eslint ."
   },
   "keywords": [],
   "contributors": [
-    "Student1 <student1@middlebury.edu>",
-    "Student2 <student2@middlebury.edu>"
+    "Trey Oehmler <roehmler@middlebury.edu>"
   ],
   "license": "Apache-2.0",
   "devDependencies": {
@@ -30,9 +29,15 @@
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "db-errors": "^0.2.2",
+    "dotenv": "^7.0.0",
     "express": "^4.16.4",
+    "express-session": "^1.16.1",
+    "google-auth-library": "^3.1.2",
+    "http": "0.0.0",
     "knex": "^0.16.5",
     "objection": "^1.6.7",
+    "passport": "^0.4.0",
+    "passport-http-bearer": "^1.0.1",
     "pg": "^7.9.0",
     "sqlite3": "^4.0.6",
     "supertest": "^4.0.2"

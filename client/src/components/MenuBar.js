@@ -10,6 +10,12 @@ import Home from '@material-ui/icons/Home';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+
+// for development only
+// currently using same endpoint as from practical
+const GOOGLE_CLIENT_ID =
+  '833253079657-v2g067u0c0f1fkgreqntppltlrfa25kb.apps.googleusercontent.com';
 
 const styles = {
   root: {
@@ -29,8 +35,13 @@ class MenuBar extends React.Component {
     super(props);
     this.state = {
       anchorEl: null,
-      auth: true
+      auth: true, // deprecated
+      loggedIn: false
     };
+
+    this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
+    this.handleGoogleLogout = this.handleGoogleLogout.bind(this);
+    this.handleGoogleFailure = this.handleGoogleFailure.bind(this);
   }
 
   handleMenu = event => {
@@ -41,12 +52,55 @@ class MenuBar extends React.Component {
     this.setState({ anchorEl: null });
   };
 
+  handleGoogleLogin(response) {
+    fetch('/login', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${response.tokenId}`
+      }
+    }).then(fetchResponse => {
+      if (!fetchResponse.ok) {
+        alert('Unable to authenticate', fetchResponse.statusText);
+        this.setState({ loggedIn: false });
+      } else {
+        this.setState({ loggedIn: true });
+      }
+    });
+  }
+
+  handleGoogleLogout() {
+    this.setState({ loggedIn: false });
+  }
+
+  handleGoogleFailure() {
+    this.setState({ loggedIn: false });
+  }
+
   render() {
     const { classes, home, login } = this.props;
-    const { anchorEl, auth } = this.state;
+    const { anchorEl, auth, loggedIn } = this.state;
     const open = Boolean(anchorEl);
+
+    const loginButton = (
+      <GoogleLogin
+        clientId={GOOGLE_CLIENT_ID}
+        buttonText="Login with Google"
+        isSignedIn
+        onSuccess={this.handleGoogleLogin}
+        onFailure={this.handleGoogleFailure}
+      />
+    );
+    const logoutButton = (
+      <GoogleLogout
+        clientId={GOOGLE_CLIENT_ID}
+        buttonText="Logout"
+        onLogoutSuccess={this.handleGoogleLogout}
+      />
+    );
+
     const profileMenu = (
       <div>
+        {logoutButton}
         <IconButton
           aria-owns={open ? 'menu-appbar' : undefined}
           aria-haspopup="true"
@@ -75,12 +129,6 @@ class MenuBar extends React.Component {
       </div>
     );
 
-    const loginButton = (
-      <Button color="inherit" onClick={login}>
-        Login
-      </Button>
-    );
-
     return (
       <div className={classes.root}>
         <AppBar position="static" style={{ backgroundColor: '#0a61fe' }}>
@@ -96,7 +144,7 @@ class MenuBar extends React.Component {
             <Typography variant="h6" color="inherit" className={classes.grow}>
               Image Glitching
             </Typography>
-            {auth ? profileMenu : loginButton}
+            {loggedIn ? profileMenu : loginButton}
           </Toolbar>
         </AppBar>
       </div>

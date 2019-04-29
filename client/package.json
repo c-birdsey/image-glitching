@@ -28,6 +28,7 @@
     "jszip": "^3.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-google-login": "^5.0.4",
     "react-scripts": "^2.1.8",
     "reactstrap": "^8.0.0"
   },
