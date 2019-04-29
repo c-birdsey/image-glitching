@@ -163,6 +163,7 @@ class SingleGlitch extends Component {
     // const newSavedGliches = this.state.savedGlitches;
     // newSavedGliches.push(this.state.currentImage);
     // this.setState({savedGlitches: newSavedGliches});
+    // save saved images as state
     savedGlitch.appendChild(image);
   }
 
