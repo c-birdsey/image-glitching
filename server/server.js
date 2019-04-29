@@ -1,3 +1,6 @@
+/* eslint-disable no-console */
+/* eslint no-unused-vars: ["error", { "args": "none" }] */
+
 const cors = require('cors');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -77,13 +80,6 @@ passport.use(
   })
 );
 
-const authenticationMiddleware = (request, response, next) => {
-  if (request.isAuthenticated()) {
-    return next(); // we are good, proceed to the next handler
-  }
-  return response.sendStatus(403); // forbidden
-};
-
 // express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
   // Resolve client build directory as absolute path to avoid errors in express
@@ -100,7 +96,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.post(
   '/login',
-  passport.authenticate('bearer', { session: false }),
+  passport.authenticate('bearer', { session: true }),
   (request, response, next) => {
     response.sendStatus(200);
   }

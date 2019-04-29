@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+//import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import Home from '@material-ui/icons/Home';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -35,7 +35,6 @@ class MenuBar extends React.Component {
     super(props);
     this.state = {
       anchorEl: null,
-      auth: true, // deprecated
       loggedIn: false
     };
 
@@ -59,6 +58,7 @@ class MenuBar extends React.Component {
         Authorization: `Bearer ${response.tokenId}`
       }
     }).then(fetchResponse => {
+      console.log(fetchResponse);
       if (!fetchResponse.ok) {
         alert('Unable to authenticate', fetchResponse.statusText);
         this.setState({ loggedIn: false });
@@ -77,8 +77,8 @@ class MenuBar extends React.Component {
   }
 
   render() {
-    const { classes, home, login } = this.props;
-    const { anchorEl, auth, loggedIn } = this.state;
+    const { classes, home } = this.props;
+    const { anchorEl, loggedIn } = this.state;
     const open = Boolean(anchorEl);
 
     const loginButton = (
