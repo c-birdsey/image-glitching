@@ -38,9 +38,11 @@ class Multiple extends Component {
 
   render() {
     const array = this.state.imgArray;
+    let i = 0; //used for unique keys
     const images = array.map(elem => {
+      i++;
       return (
-        <Container fluid>
+        <Container key={i.toString()} fluid>
           <Row className="displayRow">
             <Col
               xs={12}

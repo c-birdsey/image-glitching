@@ -11,7 +11,8 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText
+  FormText,
+  Spinner
 } from 'reactstrap';
 import './glitch.css';
 import placeholder from './folder-icon.png';
@@ -90,12 +91,13 @@ class Glitch extends Component {
 
     this.state = {
       distortion: 1,
-      originalFiles: []
+      originalFiles: [],
+      glitchLoading: false
     };
 
     this.handleShow = this.handleShow.bind(this);
     this.handleGlitch = this.handleGlitch.bind(this);
-    //this.handleGlitch = this.handleGlitch.bind(this);
+    this.glitcher = this.glitcher.bind(this);
   }
 
   handleShow() {
@@ -131,6 +133,14 @@ class Glitch extends Component {
   }
 
   handleGlitch() {
+    this.setState({ glitchLoading: true }, () => {
+      setTimeout(() => {
+        this.glitcher();
+      }, 1);
+    });
+  }
+
+  glitcher() {
     const currentSaved = [];
     const origArray = this.state.originalFiles;
     origArray.forEach(function(elem) {
@@ -253,8 +263,13 @@ class Glitch extends Component {
 
   render() {
     let previewImage = null;
+    let loader = null;
     if (this.state.originalFiles.length !== 0) {
       previewImage = <img className="folder-icon" src={placeholder} alt="" />;
+    }
+    if (this.state.glitchLoading) {
+      console.log('loading');
+      loader = <Spinner color="primary" />;
     }
 
     return (
@@ -291,6 +306,7 @@ class Glitch extends Component {
             >
               Glitch Images
             </Button>
+            {loader}
           </Col>
         </Row>
       </Container>
