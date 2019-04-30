@@ -32,9 +32,12 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
+// development purposes
+const sessionSecret = 'foo4321!';
+
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false
   })
