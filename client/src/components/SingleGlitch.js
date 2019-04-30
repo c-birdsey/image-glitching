@@ -110,7 +110,7 @@ function OptionsForm(props) {
 class SingleGlitch extends Component {
   constructor() {
     super();
-    var Selected = new Set();
+    const Selected = new Set();
     this.state = {
       distortion: 1,
       currentImage: undefined,
@@ -185,14 +185,14 @@ class SingleGlitch extends Component {
   }
 
   handleDownload() {
-    var downloadArray = [];
+    const downloadArray = [];
     this.state.selected.forEach(i =>
       downloadArray.push(this.state.savedGlitches[i])
     );
     downloadZip(downloadArray);
   }
 
-  handleChange = i => event => {
+  handleChange = i => () => {
     const newSelected = this.state.selected;
     if (!this.state.selected.has(i)) {
       newSelected.add(i);
@@ -207,7 +207,7 @@ class SingleGlitch extends Component {
     const { currentImage, savedGlitches, selected } = this.state;
     let imageswithCheck;
     if (savedGlitches) {
-      var i = 0;
+      let i = 0;
       const gliches = savedGlitches.map(glitch => (
         <Container
           className="imageContainer"
