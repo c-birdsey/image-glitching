@@ -14,6 +14,32 @@ import {
   FormText
 } from 'reactstrap';
 import './glitch.css';
+import Checkbox from '@material-ui/core/Checkbox';
+import { saveAs } from 'file-saver';
+
+//function to convert url to pure base64
+function toBase64(url) {
+  const base64 = url.replace(/^data:image\/[a-z]+;base64,/, '');
+  return base64;
+}
+
+//function to package images from array into zip for download
+//using jszip framework-- install with npm --save install jszip in client dir
+const downloadZip = props => {
+  const JSZip = require('jszip');
+  const zip = new JSZip();
+  const img = zip.folder('Glitches');
+  const array = props;
+  let i = 0;
+  array.forEach(element => {
+    i = i + 1;
+    const base64img = toBase64(element);
+    img.file(`glitch${i}.jpg`, base64img, { base64: true });
+  });
+  zip.generateAsync({ type: 'blob' }).then(content => {
+    saveAs(content, 'glitch.zip');
+  });
+};
 
 //function to build the options field, mostly just for styling right now but will
 //translate user input to state to be passed to glitching script once we implement
@@ -84,16 +110,19 @@ function OptionsForm(props) {
 class SingleGlitch extends Component {
   constructor() {
     super();
-
+    const Selected = new Set();
     this.state = {
       distortion: 1,
       currentImage: undefined,
-      savedGlitches: []
+      savedGlitches: [],
+      selected: Selected
     };
 
     this.handleShow = this.handleShow.bind(this);
     this.handleGlitch = this.handleGlitch.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
   }
 
   handleShow() {
@@ -125,7 +154,7 @@ class SingleGlitch extends Component {
       reader.addEventListener(
         'load',
         () => {
-          const charToDelete = 200; // on forward this value will be randomized
+          const charToDelete = 300; // on forward this value will be randomized
           const imageUrlOffset = 25;
           let data = reader.result;
           const rand = Math.random() * Math.floor(data.length);
@@ -150,24 +179,70 @@ class SingleGlitch extends Component {
   }
 
   handleSave() {
-    const preview = document.querySelector('.single');
-    const savedGlitch = document.querySelector('.previewBox');
-
-    // creates image tag and adds attributes
-    const image = new Image();
-    image.className = 'saveImg';
-    image.src = preview.src;
-    image.style.margin = '10px';
-
-    // adds images in the container/uploadField
-    // const newSavedGliches = this.state.savedGlitches;
-    // newSavedGliches.push(this.state.currentImage);
-    // this.setState({savedGlitches: newSavedGliches});
-    savedGlitch.appendChild(image);
+    const newSavedGliches = this.state.savedGlitches;
+    newSavedGliches.push(this.state.currentImage);
+    this.setState({ savedGlitches: newSavedGliches });
   }
 
+  handleDownload() {
+    const downloadArray = [];
+    this.state.selected.forEach(i =>
+      downloadArray.push(this.state.savedGlitches[i])
+    );
+    downloadZip(downloadArray);
+  }
+
+  handleChange = i => () => {
+    const newSelected = this.state.selected;
+    if (!this.state.selected.has(i)) {
+      newSelected.add(i);
+    } else {
+      newSelected.delete(i);
+    }
+    console.log(newSelected);
+    this.setState({ selected: newSelected });
+  };
+
   render() {
-    const { currentImage } = this.state;
+    const { currentImage, savedGlitches, selected } = this.state;
+    let imageswithCheck;
+    if (savedGlitches) {
+      let i = 0;
+      const gliches = savedGlitches.map(glitch => (
+        <Container
+          className="imageContainer"
+          key={i}
+          onClick={this.handleChange(i)}
+        >
+          <img className="saveImg" src={glitch} alt="" />
+          <Container className="checkBox">
+            <Checkbox checked={this.state.selected.has(i++)} />
+          </Container>
+        </Container>
+      ));
+      imageswithCheck = <Container className="previewBox">{gliches}</Container>;
+    }
+
+    const downloadButton = (
+      <Button
+        color="danger"
+        onClick={this.handleDownload}
+        className="download-button"
+      >
+        Download Selected
+      </Button>
+    );
+
+    const profileButton = (
+      <Button
+        color="danger"
+        onClick={this.handleProfile}
+        className="profile-button"
+      >
+        Save Selected to Profile
+      </Button>
+    );
+
     return (
       <Container className="previewComponent">
         <Row>
@@ -220,7 +295,10 @@ class SingleGlitch extends Component {
             <legend>
               <b>Saved Glitches:</b>
             </legend>
-            <Container className="previewBox" />
+            {imageswithCheck}
+            {selected.size !== 0 && downloadButton}{' '}
+            {selected.size !== 0 && profileButton}
+            {/* <Container className="previewBox"/> */}
           </Col>
         </Row>
       </Container>

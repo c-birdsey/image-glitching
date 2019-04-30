@@ -14,6 +14,19 @@ h3 {
   cursor: pointer;
 }
 
+.imageContainer {
+  position: relative;
+  margin: 10px;
+  height: 85%;
+  min-width: 300px;
+}
+
+.checkBox {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+}
+
 .imgPreview {
   display: flex;
   align-items: center;
@@ -49,15 +62,12 @@ h3 {
   padding: 15px;
 }
 
-/*
 .single {
-  margin: 1%;
-  height: 50%;
-  width: 50%;
+  height: 100%;
+  width: 100%;
   display: block;
   float: left;
 }
-*/
 
 .displayHelper {
   display: inline-block;
@@ -105,12 +115,12 @@ img {
   border-radius: 10px;
   overflow-x: auto;
   display: flex;
-  align-items: center;
+  align-items: left;
 }
 
 .saveImg {
   margin: 1%;
-  height: 70%;
+  height: 100%;
   width: auto;
 }
 
@@ -136,5 +146,13 @@ img {
 }
 
 .save-button {
+  margin: 10px;
+}
+
+.download-button {
+  margin: 10px;
+}
+
+.profile-button {
   margin: 10px;
 }
