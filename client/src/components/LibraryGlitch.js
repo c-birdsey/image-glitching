@@ -72,8 +72,8 @@ function OptionsForm(props) {
         </div>
         <input
           type="range"
-          min="0"
-          max="255"
+          min="1"
+          max="75"
           step="1"
           value={props.value}
           onChange={event =>
@@ -151,7 +151,15 @@ class Glitch extends Component {
         data.slice(23, data.length),
         'base64'
       ).toString('hex');
-      const startOfImg = Math.floor(hexString.indexOf('ffda') * 1.3); //multiply by 1.3 just in case theres some extra buffer
+      let startOfImg = Math.floor(hexString.indexOf('ffda') * 1.3); //multiply by 1.3 just in case theres some extra buffer
+      //some images always have an index of 2087, even if it should be a larger number
+      if (startOfImg === 2087) {
+        startOfImg += startOfImg;
+      }
+      //if for some reason the tag is not found
+      if (startOfImg === -1) {
+        startOfImg = hexString.length / 10;
+      }
 
       //distorition level determines how many times each operation happens
       for (let i = 0; i < this.state.distortion; i++) {
@@ -192,14 +200,14 @@ class Glitch extends Component {
   /*handleGlitch() {
     const files = document.querySelector('input').files;
     const preview = document.querySelector('.imgPreview');
-    let currentSaved = []; 
+    let currentSaved = [];
 
     if (files) {
       [].forEach.call(files, file => {
         // creates reader
         const reader = new FileReader();
         // reader.readAsText(file);
-      
+
         reader.addEventListener(
           'load',
           () => {
@@ -239,24 +247,24 @@ class Glitch extends Component {
                   data.slice(startOfImg + rand * 2, data.length);
               }
             }
-            var dataArray = []; 
-            dataArray.push(originalImage); 
-            dataArray.push(data); 
-            currentSaved.push(dataArray); 
-            console.log(currentSaved); 
+            var dataArray = [];
+            dataArray.push(originalImage);
+            dataArray.push(data);
+            currentSaved.push(dataArray);
+            console.log(currentSaved);
           },
           false
         );
 
         if (file) {
           reader.readAsDataURL(file);
-        } 
+        }
       });
-      //update state of orig/glitched image array  
+      //update state of orig/glitched image array
       this.setState({ libraryImages: currentSaved });
-      console.log("state"); 
-      console.log(currentSaved); 
-      console.log(this.state.libraryImages); 
+      console.log("state");
+      console.log(currentSaved);
+      console.log(this.state.libraryImages);
       this.props.callback(this.state.libraryImages);
     }
   }*/
