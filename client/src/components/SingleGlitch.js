@@ -86,10 +86,8 @@ class SingleGlitch extends Component {
     super();
 
     this.state = {
-      //upload: '',
-      //preview: '',
-      //glitch_options: '',
       distortion: 1,
+      currentImage: undefined,
       savedGlitches: []
     };
 
@@ -99,7 +97,6 @@ class SingleGlitch extends Component {
   }
 
   handleShow() {
-    const preview = document.querySelector('.single');
     const file = document.querySelector('input').files[0];
 
     if (file) {
@@ -110,11 +107,10 @@ class SingleGlitch extends Component {
         reader.addEventListener(
           'load',
           () => {
-            preview.src = reader.result;
+            this.setState({ currentImage: reader.result });
           },
           false
         );
-
         reader.readAsDataURL(file);
       }
     }
@@ -122,8 +118,6 @@ class SingleGlitch extends Component {
 
   handleGlitch() {
     const file = document.querySelector('input').files[0];
-    const preview = document.querySelector('.single');
-
     if (file) {
       // create reader
       const reader = new FileReader();
@@ -145,12 +139,10 @@ class SingleGlitch extends Component {
               ''
             );
           }
-
-          preview.src = data;
+          this.setState({ currentImage: data });
         },
         false
       );
-
       if (file) {
         reader.readAsDataURL(file);
       }
@@ -168,10 +160,14 @@ class SingleGlitch extends Component {
     image.style.margin = '10px';
 
     // adds images in the container/uploadField
+    // const newSavedGliches = this.state.savedGlitches;
+    // newSavedGliches.push(this.state.currentImage);
+    // this.setState({savedGlitches: newSavedGliches});
     savedGlitch.appendChild(image);
   }
 
   render() {
+    const { currentImage } = this.state;
     return (
       <Container className="previewComponent">
         <Row>
@@ -190,7 +186,9 @@ class SingleGlitch extends Component {
         <Row>
           <Col className="uploadField">
             <Container className="singlePreview">
-              <img className="single" src="" alt="" />
+              {currentImage && (
+                <img className="single" src={currentImage} alt="" />
+              )}
             </Container>
           </Col>
           <Col className="optionField">
@@ -211,6 +209,7 @@ class SingleGlitch extends Component {
               color="danger"
               onClick={this.handleSave}
               className="save-button"
+              disabled={!currentImage}
             >
               Save Glitch
             </Button>

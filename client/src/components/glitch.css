@@ -99,11 +99,13 @@ img {
 }
 
 .previewBox {
-  text-align: center;
-  height: 300px;
+  text-align: left;
+  height: 250px;
   border: 2px solid gray;
   border-radius: 10px;
-  overflow-y: auto;
+  overflow-x: auto;
+  display: flex;
+  align-items: center;
 }
 
 .saveImg {
@@ -135,14 +137,4 @@ img {
 
 .save-button {
   margin: 10px;
-}
-
-.imgPreview {
-  height: 450px;
-  width: 450px;
-  min-width: 400px;
-  border: 2px solid gray;
-  border-radius: 10px;
-  padding: 15px;
-  overflow-y: auto;
 }
