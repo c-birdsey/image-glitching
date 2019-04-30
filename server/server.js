@@ -33,11 +33,11 @@ app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
 // development purposes
-const session_secret = 'foo4321!';
+const sessionSecret = 'foo4321!';
 
 app.use(
   session({
-    secret: session_secret,
+    secret: sessionSecret,
     resave: false,
     saveUninitialized: false
   })
