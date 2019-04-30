@@ -3,14 +3,11 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('Users', table => {
-    table.increments('id');
-    table
-      .string('username')
-      .unique()
-      .notNullable();
-    table.string('password').notNullable();
-    table.string('email').notNullable();
-    table.text('token');
+    table.increments('id').primary();
+    table.string('googleId');
+    table.string('givenName');
+    table.string('familyName');
+    table.text('email');
   });
 };
 
