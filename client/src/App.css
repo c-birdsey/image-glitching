@@ -15,7 +15,10 @@
 }
 
 .App-menu {
+  position: sticky;
   font-size: 1em;
+  top: 0;
+  z-index: 1;
 }
 
 .Landing-intro {
