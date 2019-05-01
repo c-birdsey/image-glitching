@@ -21,8 +21,7 @@ const styles = {
     flexGrow: 1
   },
   grow: {
-    flexGrow: 1,
-    marginLeft: 500
+    flexGrow: 1
   },
   homeButton: {
     marginLeft: -12,
