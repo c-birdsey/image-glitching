@@ -1,0 +1,39 @@
+.profile {
+  margin-left: 0px;
+}
+
+.firstTab {
+  margin-left: 60px;
+}
+
+.profileTab {
+  padding-top: 25px;
+  align-content: center;
+}
+
+.content {
+  margin: 30px 60px 0 60px;
+}
+
+.pic-col {
+  padding: 0 15px 25px 0 !important;
+  min-width: 325px;
+}
+
+.data-col {
+  align-content: left;
+}
+
+.profile-pic {
+  align-items: center;
+  justify-content: center;
+  min-width: 300px;
+  border: 1px solid black;
+  border-radius: 10px;
+  max-width: 200px;
+  padding: 10px;
+}
+
+.header {
+  font-size: 1.2rem;
+}
