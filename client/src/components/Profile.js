@@ -1,12 +1,9 @@
-// functionality is simplified.
-// needs fixing:_code has a minor bug, sometimes it fails to preview image
-
 import React, { Component } from 'react';
 import {
   Container,
   Row,
   Col,
-  //Button,
+  Button,
   TabContent,
   TabPane,
   Nav,
@@ -27,7 +24,12 @@ function makeProfileInfo() {
         </Col>
         <Col xs={12} sm={7} md={7} lg={7} className="profile-data">
           <div className="profile-text">
-            <h2>Profile Information</h2>
+            <h2>
+              Profile Information
+              <Button size="sm" color="primary" className="edit-button">
+                Edit Profile
+              </Button>
+            </h2>
             <h4 className="header">Full Name</h4>
             <h4 className="header">Username</h4>
             <h4 className="header">Email</h4>
@@ -50,14 +52,14 @@ function makeGlitchLib() {
   const array = [square, square, square, square, square, square, square];
   const grid = array.map(elem => {
     return (
-      <div class="gallery-item" tabindex="0">
+      <div class="gallery-item">
         <img src={elem} class="gallery-image" alt="" />
       </div>
     );
   });
 
   return (
-    <div className="container">
+    <div className="glitch-container">
       <div className="gallery">{grid}</div>
     </div>
   );
@@ -110,15 +112,15 @@ class Profile extends Component {
             </NavLink>
           </NavItem>
         </Nav>
-        <div className="content">
+        <div>
           <TabContent activeTab={this.state.activeTab}>
-            <TabPane tabId="1">
+            <TabPane className="content" tabId="1">
               <Row>
                 <Col sm="12">{profile}</Col>
               </Row>
             </TabPane>
             <TabPane tabId="2">
-              <h4>Saved Glitches:</h4>
+              <h4 className="lib-title">Saved Glitches:</h4>
               {glitchGrid}
             </TabPane>
           </TabContent>
