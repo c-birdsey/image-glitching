@@ -7,13 +7,14 @@ import SingleGlitch from './components/SingleGlitch';
 import MenuBar from './components/MenuBar';
 import Login from './components/Login';
 import MultipleGlitches from './components/MultipleImages';
+import Profile from './components/Profile';
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      //mode options are: landing, login, displayLibrary, uploadMultiple
+      //mode options are: landing, login, displayLibrary, uploadMultiple, profile
       mode: 'landing',
 
       //this stores the array of glitched images and originals from LibraryGlitch
@@ -27,7 +28,6 @@ class App extends Component {
   //call back to switch to page showing multiple glitches
   ShowMultiple(array) {
     const imageArray = array;
-    //console.log(imageArray);
     this.setState({ glitchArray: imageArray });
     this.setState({ mode: 'displayLibrary' });
   }
@@ -42,6 +42,7 @@ class App extends Component {
         />
       </div>
     );
+
     if (this.state.mode === 'landing') {
       content = <LandingPage />;
 
@@ -55,7 +56,6 @@ class App extends Component {
         </Button>
       );
 
-      //incomplete-- will add handler when we figure out how to handle libs
       const multipleImageButton = (
         <Button
           className="Landing-button"
@@ -67,12 +67,21 @@ class App extends Component {
       );
 
       return (
-        <div className="App">
+        <div>
           {menuBar}
           {content}
           <div className="Landing-buttons">
             {singleImageButton} {multipleImageButton}
           </div>
+        </div>
+      );
+    }
+
+    if (this.state.mode === 'profile') {
+      return (
+        <div>
+          {menuBar}
+          <Profile />
         </div>
       );
     }

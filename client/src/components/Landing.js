@@ -2,7 +2,7 @@ import React, { Component } from 'react'; // eslint-disable-line no-unused-vars
 
 const Landing = () => {
   return (
-    <>
+    <div>
       <h1 className="Landing-title">
         Welcome to our Image Glitching Research Tool
       </h1>
@@ -24,7 +24,7 @@ const Landing = () => {
         entire library of images at once. You are also able to download your
         glitches locally.
       </p>
-    </>
+    </div>
   );
 };
 
