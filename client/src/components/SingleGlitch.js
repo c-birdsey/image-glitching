@@ -297,8 +297,7 @@ class SingleGlitch extends Component {
             </legend>
             {imageswithCheck}
             {selected.size !== 0 && downloadButton}{' '}
-            {selected.size !== 0 && profileButton}
-            {/* <Container className="previewBox"/> */}
+            {this.props.loggedIn && selected.size !== 0 && profileButton}
           </Col>
         </Row>
       </Container>

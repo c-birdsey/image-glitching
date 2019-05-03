@@ -33,8 +33,7 @@ class MenuBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      anchorEl: null,
-      loggedIn: false
+      anchorEl: null
     };
 
     this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
@@ -48,6 +47,7 @@ class MenuBar extends React.Component {
 
   handleClose = () => {
     this.setState({ anchorEl: null });
+    this.props.profile();
   };
 
   handleGoogleLogin(response) {
@@ -60,24 +60,24 @@ class MenuBar extends React.Component {
       console.log(fetchResponse);
       if (!fetchResponse.ok) {
         alert('Unable to authenticate', fetchResponse.statusText);
-        this.setState({ loggedIn: false });
+        this.props.logOut();
       } else {
-        this.setState({ loggedIn: true });
+        this.props.logIn();
       }
     });
   }
 
   handleGoogleLogout() {
-    this.setState({ loggedIn: false });
+    this.props.logOut();
   }
 
   handleGoogleFailure() {
-    this.setState({ loggedIn: false });
+    this.props.logOut();
   }
 
   render() {
-    const { classes, home } = this.props;
-    const { anchorEl, loggedIn } = this.state;
+    const { classes, home, loggedIn } = this.props;
+    const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
     const loginButton = (

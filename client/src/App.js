@@ -19,7 +19,10 @@ class App extends Component {
 
       //this stores the array of glitched images and originals from LibraryGlitch
       //Passed down to multiple images displayer
-      glitchArray: []
+      glitchArray: [],
+
+      // keep the state if user is logged in or not
+      loggedIn: true
     };
 
     this.ShowMultiple = this.ShowMultiple.bind(this);
@@ -38,7 +41,10 @@ class App extends Component {
       <div className="App-menu">
         <MenuBar
           home={() => this.setState({ mode: 'landing' })}
-          login={() => this.setState({ mode: 'login' })}
+          profile={() => this.setState({ mode: 'profile' })}
+          logIn={() => this.setState({ loggedIn: true })}
+          logOut={() => this.setState({ loggedIn: false })}
+          loggedIn={this.state.loggedIn}
         />
       </div>
     );
@@ -125,7 +131,7 @@ class App extends Component {
     return (
       <div>
         {menuBar}
-        <SingleGlitch />
+        <SingleGlitch loggedIn={this.state.loggedIn} />
       </div>
     );
   }
