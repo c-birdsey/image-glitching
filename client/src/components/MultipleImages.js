@@ -34,6 +34,13 @@ class Multiple extends Component {
     this.state = {
       imgArray: this.props.images
     };
+
+    this.handleSave = this.handleSave.bind(this);
+  }
+
+  //placeholder function for now
+  handleSave() {
+    console.log('saving');
   }
 
   render() {
@@ -61,12 +68,21 @@ class Multiple extends Component {
               </p>
               <img src={elem[1]} alt="" />
             </Col>
-            <Col xs={12} sm={12} md={2} className="download text-center">
+            <Col xs={12} sm={12} md={2} className="button-col text-center">
               <a href={elem[1]} download="glitch">
                 <Button outline className="buttons" size="sm" color="primary">
                   Download Glitch
                 </Button>
               </a>
+              <Button
+                outline
+                className="buttons"
+                size="sm"
+                color="primary"
+                onClick={this.handleSave}
+              >
+                Save Glitch
+              </Button>
             </Col>
           </Row>
         </Container>

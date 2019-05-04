@@ -15,7 +15,7 @@ class App extends Component {
 
     this.state = {
       //mode options are: landing, login, displayLibrary, uploadMultiple, profile
-      mode: 'profile',
+      mode: 'landing',
 
       //this stores the array of glitched images and originals from LibraryGlitch
       //Passed down to multiple images displayer

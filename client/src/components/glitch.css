@@ -31,9 +31,10 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 450px;
-  width: 450px;
+  height: 550px;
+  width: auto;
   min-width: 400px;
+  max-width: 680px;
   border: 2px solid gray;
   border-radius: 10px;
   padding: 15px;
@@ -93,7 +94,7 @@ img {
 }
 
 .uploadField {
-  padding: 10px 0 40px 0;
+  padding: 0px 0 10px 0;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -125,7 +126,7 @@ img {
 }
 
 .options {
-  padding: 0.5em;
+  padding: 0em;
 }
 
 .check-option {
@@ -155,4 +156,25 @@ img {
 
 .profile-button {
   margin: 10px;
+}
+
+.descriptor {
+  font-size: 13px;
+  color: #6f7377;
+}
+
+.slider {
+  margin: 1rem 0 1rem 2rem;
+}
+
+.folder-icon {
+  min-width: 300px;
+}
+
+.button-col {
+  justify-content: center;
+}
+
+.buttons {
+  display: block;
 }
