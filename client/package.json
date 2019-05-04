@@ -25,6 +25,7 @@
     "@material-ui/icons": "^3.0.2",
     "bootstrap": "^4.3.1",
     "file-saver": "^2.0.1",
+    "glitch-canvas": "^1.1.6",
     "jszip": "^3.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
