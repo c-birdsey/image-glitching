@@ -14,9 +14,11 @@ const { OAuth2Client } = require('google-auth-library');
 
 const { Model } = require('objection');
 const User = require('./models/User');
+const Image = require('./models/Image');
 
 Model.knex(knex);
 
+const { ValidationError } = require('objection');
 const { wrapError, DBError } = require('db-errors');
 
 const app = express();
@@ -96,6 +98,28 @@ if (process.env.NODE_ENV === 'production') {
     response.sendFile(path.join(buildPath, 'index.html'));
   });
 }
+
+app.get('/api/images', (request, response, next) => {
+  Image.query().then(images => {
+    response.send(images);
+  }, next);
+});
+
+app.post('/api/images', (request, response, next) => {
+  console.log(request.body.test);
+  if (!request.body.data) {
+    throw new ValidationError({
+      statusCode: 400,
+      message: 'No image was provided'
+    });
+  }
+  newImage = request.body;
+  Image.query()
+    .insertAndFetch(newImage)
+    .then(image => {
+      response.send(image);
+    }, next);
+});
 
 app.post(
   '/login',
