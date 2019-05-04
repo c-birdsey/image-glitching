@@ -54,7 +54,8 @@ class SingleGlitch extends Component {
       savedGlitches: [],
       selected: Selected,
       glitchControlled: 'disabled',
-      origImage: undefined
+      origImage: undefined,
+      seed: 10
     };
 
     this.handleShow = this.handleShow.bind(this);
@@ -65,7 +66,6 @@ class SingleGlitch extends Component {
     this.OptionsForm = this.OptionsForm.bind(this);
     this.setRandom = this.setRandom.bind(this);
     this.setControlled = this.setControlled.bind(this);
-    this.glitchLib = this.glitchLib.bind(this);
     this.renderImage = this.renderImage.bind(this);
   }
 
@@ -88,43 +88,48 @@ class SingleGlitch extends Component {
     }
   }
 
+  // handleGlitch() {
+  //   const file = document.querySelector('input').files[0];
+  //   if (file) {
+  //     // create reader
+  //     const reader = new FileReader();
+  //     // reader.readAsText(file);
+  //     reader.addEventListener(
+  //       'load',
+  //       () => {
+  //         const charToDelete = 300; // on forward this value will be randomized
+  //         const imageUrlOffset = 25;
+  //         let data = reader.result;
+  //         const rand = Math.random() * Math.floor(data.length);
+
+  //         if (rand > imageUrlOffset) {
+  //           data = data.replace(data.slice(rand, rand + charToDelete), '');
+  //         } else {
+  //           // prevents removing the url section of the data
+  //           data = data.replace(
+  //             data.slice(rand + charToDelete, rand + charToDelete * 2),
+  //             ''
+  //           );
+  //         }
+  //         this.setState({ currentImage: data });
+  //       },
+  //       false
+  //     );
+  //     if (file) {
+  //       reader.readAsDataURL(file);
+  //     }
+  //   }
+  // }
+
   handleGlitch() {
-    const file = document.querySelector('input').files[0];
-    if (file) {
-      // create reader
-      const reader = new FileReader();
-      // reader.readAsText(file);
-      reader.addEventListener(
-        'load',
-        () => {
-          const charToDelete = 300; // on forward this value will be randomized
-          const imageUrlOffset = 25;
-          let data = reader.result;
-          const rand = Math.random() * Math.floor(data.length);
-
-          if (rand > imageUrlOffset) {
-            data = data.replace(data.slice(rand, rand + charToDelete), '');
-          } else {
-            // prevents removing the url section of the data
-            data = data.replace(
-              data.slice(rand + charToDelete, rand + charToDelete * 2),
-              ''
-            );
-          }
-          this.setState({ currentImage: data });
-        },
-        false
-      );
-      if (file) {
-        reader.readAsDataURL(file);
-      }
+    if (this.state.glitchControlled === 'disabled') {
+      this.setState({ distortion: Math.floor(Math.random() * 99) + 1 });
+      this.setState({ amount: Math.floor(Math.random() * 99) + 1 });
+      this.setState({ quality: Math.floor(Math.random() * 99) + 1 });
     }
-  }
-
-  glitchLib() {
-    console.log('snorpy');
+    this.setState({ seed: Math.floor(Math.random() * 101) });
     const glitchParams = {
-      seed: 25,
+      seed: this.state.seed,
       quality: this.state.quality,
       amount: this.state.amount,
       iterations: this.state.distortion
@@ -209,7 +214,12 @@ class SingleGlitch extends Component {
           </legend>
           <FormGroup check className="options">
             <Label check>
-              <Input type="radio" name="options" onChange={this.setRandom} />
+              <Input
+                type="radio"
+                name="options"
+                onChange={this.setRandom}
+                defaultChecked
+              />
               <b>Random:</b>
               <FormText color="muted">
                 This will glitch your uploaded image in a completely random
@@ -234,7 +244,7 @@ class SingleGlitch extends Component {
                 className="slider"
                 disabled={this.state.glitchControlled}
                 type="range"
-                min="0"
+                min="1"
                 max="99"
                 step="1"
                 value={this.state.amount}
@@ -256,7 +266,7 @@ class SingleGlitch extends Component {
                 className="slider"
                 disabled={this.state.glitchControlled}
                 type="range"
-                min="0"
+                min="1"
                 max="99"
                 step="1"
                 value={this.state.quality}
@@ -277,7 +287,7 @@ class SingleGlitch extends Component {
                 className="slider"
                 disabled={this.state.glitchControlled}
                 type="range"
-                min="0"
+                min="1"
                 max="99"
                 step="1"
                 value={this.state.distortion}
@@ -370,8 +380,9 @@ class SingleGlitch extends Component {
             {options}
             <Button
               color="danger"
-              onClick={this.glitchLib}
+              onClick={this.handleGlitch}
               className="glitch-button"
+              disabled={!currentImage}
             >
               Glitch Image
             </Button>

@@ -25,6 +25,7 @@ class Glitch extends Component {
       distortion: 1,
       quality: 99,
       amount: 35,
+      seed: 25,
       originalFiles: [],
       glitchLoading: false,
       glitchControlled: 'disabled'
@@ -131,7 +132,7 @@ class Glitch extends Component {
   //glitching function
   glitchLib() {
     const glitchParams = {
-      seed: 25,
+      seed: this.state.seed,
       quality: this.state.quality,
       amount: this.state.amount,
       iterations: this.state.distortion
@@ -188,6 +189,7 @@ class Glitch extends Component {
     this.setState({ distortion: Math.floor(Math.random() * 99) + 1 });
     this.setState({ amount: Math.floor(Math.random() * 99) + 1 });
     this.setState({ quality: Math.floor(Math.random() * 99) + 1 });
+    this.setState({ seed: Math.floor(Math.random() * 101) });
     this.setState({ glitchControlled: 'disabled' });
   }
 
@@ -231,7 +233,7 @@ class Glitch extends Component {
                 className="slider"
                 disabled={this.state.glitchControlled}
                 type="range"
-                min="0"
+                min="1"
                 max="99"
                 step="1"
                 value={this.state.amount}
@@ -253,7 +255,7 @@ class Glitch extends Component {
                 className="slider"
                 disabled={this.state.glitchControlled}
                 type="range"
-                min="0"
+                min="1"
                 max="99"
                 step="1"
                 value={this.state.quality}
@@ -274,7 +276,7 @@ class Glitch extends Component {
                 className="slider"
                 disabled={this.state.glitchControlled}
                 type="range"
-                min="0"
+                min="1"
                 max="99"
                 step="1"
                 value={this.state.distortion}
