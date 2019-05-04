@@ -50,10 +50,12 @@ function makeProfileInfo() {
 
 function makeGlitchLib() {
   const array = [square, square, square, square, square, square, square];
+  let i = 0;
   const grid = array.map(elem => {
+    i++;
     return (
-      <div class="gallery-item">
-        <img src={elem} class="gallery-image" alt="" />
+      <div key={i} className="gallery-item">
+        <img src={elem} className="gallery-image" alt="" />
       </div>
     );
   });
