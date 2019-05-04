@@ -16,6 +16,7 @@ import {
 import './glitch.css';
 import Checkbox from '@material-ui/core/Checkbox';
 import { saveAs } from 'file-saver';
+import glitch from 'glitch-canvas';
 
 //function to convert url to pure base64
 function toBase64(url) {
@@ -41,81 +42,19 @@ const downloadZip = props => {
   });
 };
 
-//function to build the options field, mostly just for styling right now but will
-//translate user input to state to be passed to glitching script once we implement
-//more functionality there
-function OptionsForm(props) {
-  return (
-    <Form>
-      <FormGroup tag="fieldset">
-        <legend>
-          <b>Options:</b>
-        </legend>
-        <FormGroup check className="options">
-          <Label check>
-            <Input type="radio" name="options" /> <b>Random:</b>
-            <FormText color="muted">
-              This will glitch your uploaded image in a completely random
-              manner.
-            </FormText>
-          </Label>
-        </FormGroup>
-        <FormGroup check className="options">
-          <Label check>
-            <Input type="radio" name="options" /> <b>Controlled:</b>
-            <FormText color="muted">
-              This will allow you to have more control over your glitch. Use the
-              options below to alter the visual effects applied to the image.
-            </FormText>
-          </Label>
-          <FormGroup check>
-            <Label check className="check-option">
-              <Input type="checkbox" /> <i>Coloration Shift:</i>
-              <FormText color="muted">
-                This will alter the colors and hues of your image rather than
-                the pixel positioning.
-              </FormText>
-            </Label>
-          </FormGroup>
-          <FormGroup check>
-            <Label check className="check-option">
-              <Input type="checkbox" /> <i>Content Shift:</i>
-              <FormText color="muted">
-                This will shift the pixels and skew the composition of the
-                image.
-              </FormText>
-            </Label>
-          </FormGroup>
-        </FormGroup>
-      </FormGroup>
-      <FormGroup>
-        <div>
-          <b>Degree of distortion:</b>
-        </div>
-        <input
-          type="range"
-          min="0"
-          max="255"
-          step="1"
-          value={props.value}
-          onChange={event =>
-            props.valueChange(parseInt(event.target.value, 10))
-          }
-        />
-      </FormGroup>
-    </Form>
-  );
-}
-
 class SingleGlitch extends Component {
   constructor() {
     super();
     const Selected = new Set();
     this.state = {
       distortion: 1,
+      quality: 99,
+      amount: 35,
       currentImage: undefined,
       savedGlitches: [],
-      selected: Selected
+      selected: Selected,
+      glitchControlled: 'disabled',
+      origImage: undefined
     };
 
     this.handleShow = this.handleShow.bind(this);
@@ -123,20 +62,24 @@ class SingleGlitch extends Component {
     this.handleSave = this.handleSave.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
+    this.OptionsForm = this.OptionsForm.bind(this);
+    this.setRandom = this.setRandom.bind(this);
+    this.setControlled = this.setControlled.bind(this);
+    this.glitchLib = this.glitchLib.bind(this);
+    this.renderImage = this.renderImage.bind(this);
   }
 
   handleShow() {
     const file = document.querySelector('input').files[0];
-
     if (file) {
       // checks if files uploaded are images in the format jpeg | jpg |png
       if (/\.(jpe?g|png)$/i.test(file.name)) {
         const reader = new FileReader();
-
         reader.addEventListener(
           'load',
           () => {
             this.setState({ currentImage: reader.result });
+            this.setState({ origImage: reader.result });
           },
           false
         );
@@ -178,6 +121,46 @@ class SingleGlitch extends Component {
     }
   }
 
+  glitchLib() {
+    console.log('snorpy');
+    const glitchParams = {
+      seed: 25,
+      quality: this.state.quality,
+      amount: this.state.amount,
+      iterations: this.state.distortion
+    };
+    const image = new Image();
+    image.src = this.state.origImage;
+    image.onload = () => {
+      glitch(glitchParams)
+        .fromImage(image)
+        .toDataURL()
+        .then(dataURL => {
+          this.renderImage(dataURL, image.width, image.height).then(result => {
+            this.setState({ currentImage: result });
+          });
+        });
+    };
+  }
+
+  //function to draw new image on canvas and creat valid png from pixels
+  renderImage(src64, width, height) {
+    const promise = new Promise(resolve => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      ctx.canvas.width = width;
+      ctx.canvas.height = height;
+      const image = new Image();
+      image.src = src64;
+      image.onload = function() {
+        ctx.drawImage(image, 0, 0);
+        const newGlitch = canvas.toDataURL();
+        resolve(newGlitch);
+      };
+    });
+    return promise;
+  }
+
   handleSave() {
     const newSavedGliches = this.state.savedGlitches;
     newSavedGliches.push(this.state.currentImage);
@@ -203,24 +186,139 @@ class SingleGlitch extends Component {
     this.setState({ selected: newSelected });
   };
 
+  //sets glitch param state when random radio button is clicked
+  setRandom() {
+    this.setState({ distortion: Math.floor(Math.random() * 99) + 1 });
+    this.setState({ amount: Math.floor(Math.random() * 99) + 1 });
+    this.setState({ quality: Math.floor(Math.random() * 99) + 1 });
+    this.setState({ glitchControlled: 'disabled' });
+  }
+
+  //sets state to indicate controlled radio button is clicked
+  setControlled() {
+    this.setState({ glitchControlled: '' });
+  }
+
+  //build options
+  OptionsForm() {
+    return (
+      <Form>
+        <FormGroup tag="fieldset">
+          <legend>
+            <b>Options:</b>
+          </legend>
+          <FormGroup check className="options">
+            <Label check>
+              <Input type="radio" name="options" onChange={this.setRandom} />
+              <b>Random:</b>
+              <FormText color="muted">
+                This will glitch your uploaded image in a completely random
+                manner.
+              </FormText>
+            </Label>
+          </FormGroup>
+        </FormGroup>
+        <FormGroup check className="options">
+          <Label check>
+            <Input type="radio" name="options" onChange={this.setControlled} />
+            <b>Controlled:</b>
+            <FormText color="muted">
+              This will allow you to have more control over your glitch. Use the
+              options below to alter the visual effects applied to the image.
+            </FormText>
+          </Label>
+          <FormGroup id="inputForm">
+            <div>
+              <b>Amount:</b>
+              <input
+                className="slider"
+                disabled={this.state.glitchControlled}
+                type="range"
+                min="0"
+                max="99"
+                step="1"
+                value={this.state.amount}
+                onChange={event =>
+                  this.setState({ amount: parseInt(event.target.value, 10) })
+                }
+              />
+              <p className="descriptor">
+                This will change the amount of alteration to the underlying
+                image data. Depending on other parameters, this might have a
+                marginal effect.
+              </p>
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <div>
+              <b>Quality:</b>
+              <input
+                className="slider"
+                disabled={this.state.glitchControlled}
+                type="range"
+                min="0"
+                max="99"
+                step="1"
+                value={this.state.quality}
+                onChange={event =>
+                  this.setState({ quality: parseInt(event.target.value, 10) })
+                }
+              />
+              <p className="descriptor">
+                This will change the quality (pixelation) of the original base
+                image.
+              </p>
+            </div>
+          </FormGroup>
+          <FormGroup>
+            <div>
+              <b>Degree of distortion:</b>
+              <input
+                className="slider"
+                disabled={this.state.glitchControlled}
+                type="range"
+                min="0"
+                max="99"
+                step="1"
+                value={this.state.distortion}
+                onChange={event =>
+                  this.setState({
+                    distortion: parseInt(event.target.value, 10)
+                  })
+                }
+              />
+              <p className="descriptor">
+                This will change the number of iterations the image undergoes.
+                At the max, the image may be unrecognizable. This parameter will
+                have the most observable effect on the glitch.
+              </p>
+            </div>
+          </FormGroup>
+        </FormGroup>
+      </Form>
+    );
+  }
+
   render() {
     const { currentImage, savedGlitches, selected } = this.state;
     let imageswithCheck;
     if (savedGlitches) {
       let i = 0;
-      const gliches = savedGlitches.map(glitch => (
+      const glitches = savedGlitches.map(elem => (
         <Container
           className="imageContainer"
           key={i}
           onClick={this.handleChange(i)}
         >
-          <img className="saveImg" src={glitch} alt="" />
+          <img className="saveImg" src={elem} alt="" />
           <Container className="checkBox">
             <Checkbox checked={this.state.selected.has(i++)} />
           </Container>
         </Container>
       ));
-      imageswithCheck = <Container className="previewBox">{gliches}</Container>;
+      imageswithCheck = (
+        <Container className="previewBox">{glitches}</Container>
+      );
     }
 
     const downloadButton = (
@@ -243,10 +341,12 @@ class SingleGlitch extends Component {
       </Button>
     );
 
+    const options = this.OptionsForm();
+
     return (
       <Container className="previewComponent">
         <Row>
-          <Col>
+          <Col xs={12} sm={12} md={12} lg={6} xl={6}>
             <legend>
               <b>Upload Image:</b>
             </legend>
@@ -259,7 +359,7 @@ class SingleGlitch extends Component {
           </Col>
         </Row>
         <Row>
-          <Col className="uploadField">
+          <Col xs={12} sm={12} md={12} lg={6} xl={6} className="uploadField">
             <Container className="singlePreview">
               {currentImage && (
                 <img className="single" src={currentImage} alt="" />
@@ -267,15 +367,10 @@ class SingleGlitch extends Component {
             </Container>
           </Col>
           <Col className="optionField">
-            <OptionsForm
-              value={this.state.distortion}
-              valueChange={value => {
-                this.setState({ distortion: value });
-              }}
-            />
+            {options}
             <Button
               color="danger"
-              onClick={this.handleGlitch}
+              onClick={this.glitchLib}
               className="glitch-button"
             >
               Glitch Image
