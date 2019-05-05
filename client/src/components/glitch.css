@@ -177,3 +177,9 @@ img {
 .buttons {
   display: block;
 }
+
+.pinned-descriptor {
+  font-size: 14px;
+  color: #6f7377;
+  padding: 0;
+}
