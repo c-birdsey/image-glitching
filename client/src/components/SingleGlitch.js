@@ -392,14 +392,19 @@ class SingleGlitch extends Component {
               className="save-button"
               disabled={!currentImage}
             >
-              Save Glitch
+              Pin Glitch
             </Button>
           </Col>
         </Row>
         <Row>
           <Col className="previewField">
             <legend>
-              <b>Saved Glitches:</b>
+              <b>Pinned Glitches:</b>
+              <p className="pinned-descriptor">
+                Pinned glitches will appear below. You can select individual
+                images to either save to your profile, or download directly.
+                Once you leave this page, these glitches will be lost.
+              </p>
             </legend>
             {imageswithCheck}
             {selected.size !== 0 && downloadButton}{' '}

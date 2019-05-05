@@ -32,9 +32,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-
   font-size: large;
-  padding: 0 20% 0 20%;
+  padding: 0.25rem 0 2rem 0;
 }
 
 .Landing-button {
