@@ -113,7 +113,7 @@ app.post('/api/images', (request, response, next) => {
       message: 'No image was provided'
     });
   }
-  newImage = request.body;
+  let newImage = request.body;
   Image.query()
     .insertAndFetch(newImage)
     .then(image => {
