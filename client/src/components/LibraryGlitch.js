@@ -16,6 +16,7 @@ import {
 import './glitch.css';
 import placeholder from './folder-icon.png';
 import glitch from 'glitch-canvas';
+import PropTypes from 'prop-types';
 
 class Glitch extends Component {
   constructor(props) {
@@ -352,5 +353,10 @@ class Glitch extends Component {
     );
   }
 }
+
+Glitch.propTypes = {
+  callback: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired
+};
 
 export default Glitch;
