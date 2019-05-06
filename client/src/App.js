@@ -22,7 +22,7 @@ class App extends Component {
       glitchArray: [],
 
       // keep the state if user is logged in or not
-      loggedIn: true
+      loggedIn: false
     };
 
     this.ShowMultiple = this.ShowMultiple.bind(this);
@@ -43,7 +43,7 @@ class App extends Component {
           home={() => this.setState({ mode: 'landing' })}
           profile={() => this.setState({ mode: 'profile' })}
           logIn={() => this.setState({ loggedIn: true })}
-          logOut={() => this.setState({ loggedIn: false })}
+          logOut={() => this.setState({ loggedIn: false, mode: 'landing' })}
           loggedIn={this.state.loggedIn}
         />
       </div>
@@ -122,7 +122,10 @@ class App extends Component {
       return (
         <div>
           {menuBar}
-          <LibraryGlitch callback={this.ShowMultiple} />
+          <LibraryGlitch
+            callback={this.ShowMultiple}
+            loggedIn={this.state.loggedIn}
+          />
         </div>
       );
     }
