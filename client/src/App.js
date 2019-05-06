@@ -8,13 +8,15 @@ import MenuBar from './components/MenuBar';
 import Login from './components/Login';
 import MultipleGlitches from './components/MultipleImages';
 import Profile from './components/Profile';
+import Documentation from './components/Documentation';
 
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      //mode options are: landing, login, displayLibrary, uploadMultiple, profile
+      //mode options are: landing, login, displayLibrary, uploadMultiple,
+      //  profile, documentation
       mode: 'landing',
 
       //this stores the array of glitched images and originals from LibraryGlitch
@@ -72,12 +74,22 @@ class App extends Component {
         </Button>
       );
 
+      const documentation = (
+        <Button
+          className="Landing-button"
+          color="primary"
+          onClick={() => this.setState({ mode: 'documentation' })}
+        >
+          Documentation
+        </Button>
+      );
+
       return (
         <div>
           {menuBar}
           {content}
           <div className="Landing-buttons">
-            {singleImageButton} {multipleImageButton}
+            {singleImageButton} {multipleImageButton} {documentation}
           </div>
         </div>
       );
@@ -88,6 +100,15 @@ class App extends Component {
         <div>
           {menuBar}
           <Profile />
+        </div>
+      );
+    }
+
+    if (this.state.mode === 'documentation') {
+      return (
+        <div>
+          {menuBar}
+          <Documentation />
         </div>
       );
     }
