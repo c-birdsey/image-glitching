@@ -1,10 +1,8 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { fireEvent } from 'react-testing-library';
 
 import SingleGlitch from './SingleGlitch';
 import { findButton, sampleImage } from '../setupTests';
-import glitchedImage from './Glitch.png';
 
 describe('Single Glitcher tests', () => {
   describe('Glitcher interface', () => {
