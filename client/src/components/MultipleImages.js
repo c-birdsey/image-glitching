@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import './multiple.css';
 import { saveAs } from 'file-saver';
 import Checkbox from '@material-ui/core/Checkbox';
+import PropTypes from 'prop-types';
 
 //function to convert url to pure base64
 function toBase64(url) {
@@ -143,8 +144,7 @@ class Multiple extends Component {
                 Download All
               </Button>
             )}
-
-            {this.state.selected.size === 0 && (
+            {this.props.loggedIn && this.state.selected.size === 0 && (
               <Button
                 className="buttons"
                 size="sm"
@@ -165,7 +165,7 @@ class Multiple extends Component {
                 Download Glitch
               </Button>
             )}
-            {true && this.state.selected.size !== 0 && (
+            {this.props.loggedIn && this.state.selected.size !== 0 && (
               <Button
                 outline
                 className="buttons"
@@ -183,5 +183,11 @@ class Multiple extends Component {
     );
   }
 }
+
+Multiple.propTypes = {
+  images: PropTypes.array.isRequired,
+  back: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired
+};
 
 export default Multiple;

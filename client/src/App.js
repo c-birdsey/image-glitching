@@ -129,6 +129,7 @@ class App extends Component {
           {menuBar}
           <MultipleGlitches
             images={this.state.glitchArray}
+            loggedIn={this.state.loggedIn}
             back={() => {
               this.setState({ mode: 'uploadMultiple' });
             }}
