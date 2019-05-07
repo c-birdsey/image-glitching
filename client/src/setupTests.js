@@ -4,11 +4,11 @@ import Adapter from 'enzyme-adapter-react-16';
 
 configure({ adapter: new Adapter() });
 
-export const sampleImage = { src: null };
+export const sampleImage = { src: './components/Glitch.png' };
 
 export const sampleImages = [{ src: null }, { src: null }, { src: null }];
 
-/* 
+/*
     Used to find the variety of buttons seen in use so far.
 */
 export const findButton = (comp, labelRegEx) => {
