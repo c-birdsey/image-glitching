@@ -330,6 +330,7 @@ class SingleGlitch extends Component {
   render() {
     const { currentImage, savedGlitches, selected } = this.state;
     let imageswithCheck;
+    console.log(savedGlitches);
     if (savedGlitches) {
       let i = 0;
       const glitches = savedGlitches.map(elem => (
