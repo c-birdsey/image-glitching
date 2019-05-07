@@ -78,7 +78,7 @@ class Multiple extends Component {
             <Col
               xs={12}
               sm={6}
-              md={5}
+              md={6}
               className="justify-content-center originalElement"
             >
               <p>
@@ -86,7 +86,7 @@ class Multiple extends Component {
               </p>
               <img src={elem[0]} alt="" />
             </Col>
-            <Col xs={12} sm={6} md={5} className="glitchedElement">
+            <Col xs={12} sm={6} md={6} className="glitchedElement">
               <p>
                 <b>Glitched Image</b>
               </p>
@@ -110,10 +110,10 @@ class Multiple extends Component {
               <b>Glitched Library:</b>
             </legend>
             <p className="about">
-              Browse through your library of glitched images below. You can
-              download a single glitch with the link to the right of the image,
-              or you can downlaod the entire library as a .zip file with the
-              button to the right.
+              Browse through your library of glitched images below. Select the
+              glitched you would like to save or download via the checkboxes in
+              the upper right corners, and use the buttons to the right to add
+              them to your glitch library, or download locally as a .zip file.
             </p>
           </Col>
           <Col xs={6} sm={6} md={5} className="text-right buttonBar">
@@ -159,7 +159,7 @@ class Multiple extends Component {
                 size="sm"
                 color="primary"
               >
-                Download Glitch
+                Download Selected
               </Button>
             )}
             {this.props.loggedIn && this.state.selected.size !== 0 && (
@@ -170,7 +170,7 @@ class Multiple extends Component {
                 color="primary"
                 onClick={this.handleSave}
               >
-                Save Glitch
+                Save Selected
               </Button>
             )}
           </Col>
