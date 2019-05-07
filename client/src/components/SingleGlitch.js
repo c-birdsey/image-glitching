@@ -67,6 +67,7 @@ class SingleGlitch extends Component {
     this.setRandom = this.setRandom.bind(this);
     this.setControlled = this.setControlled.bind(this);
     this.renderImage = this.renderImage.bind(this);
+    this.handleProfile = this.handleProfile.bind(this);
   }
 
   handleShow() {
@@ -164,6 +165,31 @@ class SingleGlitch extends Component {
       };
     });
     return promise;
+  }
+
+  handleProfile() {
+    this.state.selected.forEach(i => {
+      const now = new Date();
+      const newImage = {
+        data: this.state.savedGlitches[i],
+        createdAt: now.toISOString()
+      };
+      fetch('/api/images', {
+        method: 'POST',
+        body: JSON.stringify(newImage),
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        })
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(response.statusText);
+        })
+        .catch(err => console.log(err)); // eslint-disable-line no-console
+    });
   }
 
   handleSave() {

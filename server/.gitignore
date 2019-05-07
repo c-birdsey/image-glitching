@@ -11,6 +11,7 @@
 
 # sqlite
 movies.db
+glitching.db
 
 # misc
 .DS_Store

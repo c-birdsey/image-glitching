@@ -32,7 +32,8 @@ const corsOptions = {
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
 
 // development purposes
 const sessionSecret = 'foo4321!';
@@ -99,21 +100,35 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+const authenticationMiddleware = (request, response, next) => {
+  if (request.isAuthenticated()) {
+    return next(); // we are good, proceed to the next handler
+  }
+  return response.sendStatus(403); // forbidden
+};
+
 app.get('/api/images', (request, response, next) => {
   Image.query().then(images => {
     response.send(images);
   }, next);
 });
 
-app.post('/api/images', (request, response, next) => {
-  console.log(request.body.test);
+app.get('/users', (request, response, next) => {
+  User.query().then(users => {
+    response.send(users);
+  }, next);
+});
+
+app.post('/api/images', authenticationMiddleware, (request, response, next) => {
   if (!request.body.data) {
     throw new ValidationError({
       statusCode: 400,
       message: 'No image was provided'
     });
   }
-  const newImage = request.body;
+  const newImage = Object.assign({}, request.body, {
+    createdBy: request.user.id
+  });
   Image.query()
     .insertAndFetch(newImage)
     .then(image => {
