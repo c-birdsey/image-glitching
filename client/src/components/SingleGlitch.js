@@ -243,6 +243,7 @@ class SingleGlitch extends Component {
             <div>
               <b>Amount:</b>
               <input
+                id="glitchAmount"
                 className="slider"
                 disabled={this.state.glitchControlled}
                 type="range"
@@ -266,6 +267,7 @@ class SingleGlitch extends Component {
               <b>Quality:</b>
               <input
                 className="slider"
+                id="glitchQuality"
                 disabled={this.state.glitchControlled}
                 type="range"
                 min="1"
@@ -287,6 +289,7 @@ class SingleGlitch extends Component {
               <b>Degree of distortion:</b>
               <input
                 className="slider"
+                id="glitchDistortion"
                 disabled={this.state.glitchControlled}
                 type="range"
                 min="1"

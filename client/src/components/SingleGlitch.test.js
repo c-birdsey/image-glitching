@@ -1,5 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
+import { fireEvent } from 'react-testing-library';
 
 import SingleGlitch from './SingleGlitch';
 import { findButton, sampleImage } from '../setupTests';
@@ -26,7 +27,31 @@ describe('Single Glitcher tests', () => {
     test('Has Options Menu', () => {
       const form = singleGlitch.find('#inputForm');
       expect(form.exists()).toBe(true);
+      const amount = singleGlitch.find('#glitchAmount');
+      expect(amount.exists()).toBe(true);
+      const quality = singleGlitch.find('#glitchQuality');
+      expect(quality.exists()).toBe(true);
+      const distortion = singleGlitch.find('#glitchDistortion');
+      expect(distortion.exists()).toBe(true);
+      const control = singleGlitch.find('#not_a_real_ID');
+      expect(control.exists()).toBe(false);
     });
+
+    // test('Options Menu Changes State', () => {
+    //   singleGlitch.setState({ glitchControlled: '' });
+    //   const startingAmount = singleGlitch.state().amount;
+    //   const amount = singleGlitch.find('#glitchAmount');
+    //   expect(amount.exists()).toBe(true);
+    //   fireEvent.change(amount);
+    //   const newAmount = singleGlitch.state().amount;
+    //   expect(startingAmount).not.toBe(newAmount);
+    //   const quality = singleGlitch.find('#glitchQuality');
+    //   expect(quality.exists()).toBe(true);
+    //   const distortion = singleGlitch.find('#glitchDistortion');
+    //   expect(distortion.exists()).toBe(true);
+    //   const control = singleGlitch.find('#not_a_real_ID');
+    //   expect(control.exists()).toBe(false);
+    // });
 
     // test('Glitch Changes Image', () => {
     //   const image = new Image();
