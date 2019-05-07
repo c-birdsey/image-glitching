@@ -26,7 +26,6 @@
     "bootstrap": "^4.3.1",
     "file-saver": "^2.0.1",
     "glitch-canvas": "^1.1.6",
-    "image-to-base64": "^2.0.1",
     "jszip": "^3.2.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
