@@ -137,6 +137,7 @@ class MenuBar extends React.Component {
               color="inherit"
               aria-label="Home"
               onClick={home}
+              alt="HomeButton"
             >
               <Home />
             </IconButton>
