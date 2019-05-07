@@ -12,12 +12,10 @@ class Annotation extends Component {
   }
 
   render() {
+    const { Return } = this.props;
+
     const returnButton = (
-      <Button
-        color="danger"
-        onClick={this.handleReturn}
-        className="return-button"
-      >
+      <Button color="danger" onClick={Return} className="return-button">
         Return to Library
       </Button>
     );
@@ -33,16 +31,18 @@ class Annotation extends Component {
     );
 
     return (
-      <Container fluid>
+      <Container fluid className="content">
         <Row>
-          <Col xs={12} sm={5} md={5} lg={4} className="glitch-img">
-            <img className="glitch-pic" src={placeholder} alt="" />
-            <div>
-              {returnButton}
-              {deleteButton}
+          <Col xs={12} md={6} lg={5} className="glitch-img">
+            <div className="left-area">
+              <img className="glitch-pic" src={placeholder} alt="" />
+              <div>
+                {returnButton}
+                {deleteButton}
+              </div>
             </div>
           </Col>
-          <Col xs={12} sm={5} md={5} lg={6} className="annotations-area">
+          <Col xs={12} md={6} lg={7} className="annotations-area">
             <div className="annotation-text">
               <h2>
                 Annotations

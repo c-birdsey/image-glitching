@@ -54,7 +54,9 @@ class Profile extends Component {
     if (this.state.currentGlitch) {
       return (
         <div className="profile">
-          <Annotation />
+          <Annotation
+            Return={() => this.setState({ currentGlitch: undefined })}
+          />
         </div>
       );
     }
