@@ -20,7 +20,6 @@ const downloadZip = props => {
   let i = 0;
   array.forEach(element => {
     i = i + 1;
-    console.log(element);
     const base64img = toBase64(element[1]);
     img.file(`glitch${i}.jpg`, base64img, { base64: true });
   });
@@ -52,7 +51,6 @@ class Multiple extends Component {
     } else {
       newSelected.delete(i);
     }
-    console.log(newSelected);
     this.setState({ selected: newSelected });
   };
 
@@ -71,7 +69,6 @@ class Multiple extends Component {
   render() {
     const array = this.state.imgArray;
     let i = 0; //used for unique keys
-    console.log(array);
     const images = array.map(elem => {
       i++;
       return (
