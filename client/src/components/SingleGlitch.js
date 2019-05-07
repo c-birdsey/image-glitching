@@ -217,7 +217,10 @@ class SingleGlitch extends Component {
               <Input
                 type="radio"
                 name="options"
-                onChange={this.setRandom}
+                onChange={() => {
+                  this.setRandom();
+                  this.handleGlitch();
+                }}
                 defaultChecked
               />
               <b>Random:</b>
@@ -227,6 +230,18 @@ class SingleGlitch extends Component {
               </FormText>
             </Label>
           </FormGroup>
+          <Button
+            className="random-button"
+            size="sm"
+            color="danger"
+            onClick={() => {
+              this.setRandom();
+              this.handleGlitch();
+            }}
+            disabled={!this.state.glitchControlled}
+          >
+            Randomize
+          </Button>
         </FormGroup>
         <FormGroup check className="options">
           <Label check>
@@ -248,9 +263,10 @@ class SingleGlitch extends Component {
                 max="99"
                 step="1"
                 value={this.state.amount}
-                onChange={event =>
-                  this.setState({ amount: parseInt(event.target.value, 10) })
-                }
+                onChange={event => {
+                  this.setState({ amount: parseInt(event.target.value, 10) });
+                  this.handleGlitch();
+                }}
               />
               <p className="descriptor">
                 This will change the amount of alteration to the underlying
@@ -270,9 +286,10 @@ class SingleGlitch extends Component {
                 max="99"
                 step="1"
                 value={this.state.quality}
-                onChange={event =>
-                  this.setState({ quality: parseInt(event.target.value, 10) })
-                }
+                onChange={event => {
+                  this.setState({ quality: parseInt(event.target.value, 10) });
+                  this.handleGlitch();
+                }}
               />
               <p className="descriptor">
                 This will change the quality (pixelation) of the original base
@@ -291,11 +308,12 @@ class SingleGlitch extends Component {
                 max="99"
                 step="1"
                 value={this.state.distortion}
-                onChange={event =>
+                onChange={event => {
                   this.setState({
                     distortion: parseInt(event.target.value, 10)
-                  })
-                }
+                  });
+                  this.handleGlitch();
+                }}
               />
               <p className="descriptor">
                 This will change the number of iterations the image undergoes.
@@ -378,14 +396,6 @@ class SingleGlitch extends Component {
           </Col>
           <Col className="optionField">
             {options}
-            <Button
-              color="danger"
-              onClick={this.handleGlitch}
-              className="glitch-button"
-              disabled={!currentImage}
-            >
-              Glitch Image
-            </Button>
             <Button
               color="danger"
               onClick={this.handleSave}
