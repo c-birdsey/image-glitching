@@ -11,6 +11,20 @@
   float: right;
 }
 
+.buttons-area {
+  float: right;
+}
+
+.comment-time {
+  font-size: small;
+  color: grey;
+  text-align: right;
+}
+
+.comment-container {
+  margin: 0px 0 30px 0;
+}
+
 .content {
   margin: 30px 60px 0 60px;
 }

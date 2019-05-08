@@ -3,6 +3,19 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import './Annotation.css';
 import placeholder from './sqr.jpg';
 
+export function Comment(props) {
+  const {
+    comment: { content, time }
+  } = props;
+
+  return (
+    <div className="comment-container">
+      <div className="comment-text">{content}</div>
+      <p className="comment-time">{new Date(time).toLocaleString()}</p>
+    </div>
+  );
+}
+
 class Annotation extends Component {
   constructor(props) {
     super(props);
@@ -13,10 +26,26 @@ class Annotation extends Component {
 
   render() {
     const { Return } = this.props;
+    const date = new Date('2019-01-01T00:00:00.000000Z');
+    const example = {
+      content:
+        "ows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is",
+      time: date
+    };
+    const arrayexample = [example, example, example];
+    const comments = arrayexample.map(element => {
+      return <Comment comment={element} />;
+    });
 
     const returnButton = (
       <Button color="danger" onClick={Return} className="return-button">
         Return to Library
+      </Button>
+    );
+
+    const addButton = (
+      <Button color="danger" className="add-button">
+        Add New Comment
       </Button>
     );
 
@@ -27,6 +56,16 @@ class Annotation extends Component {
         className="delete-button"
       >
         Delete Glitch
+      </Button>
+    );
+
+    const downloadButton = (
+      <Button
+        color="danger"
+        onClick={this.handleDownload}
+        className="download-button"
+      >
+        Download Glitch with Comments
       </Button>
     );
 
@@ -44,34 +83,14 @@ class Annotation extends Component {
           </Col>
           <Col xs={12} md={6} lg={7} className="annotations-area">
             <div className="annotation-text">
-              <h2>
-                Annotations
-                <Button size="sm" color="danger" className="add-button">
-                  Add New
-                </Button>
-              </h2>
+              <h2>Annotations</h2>
               <Container fluid className="annotation-box">
-                The story follows the world of a human's body which is
-                represented as cities with roughly 37.2 trillion anthropomorphic
-                cells who work together endlessly daily to run their world.
-                Everyday, they struggle to remove and resist against pathogenic
-                cells such as germs and bacteria from invading the body. The
-                story follows the world of a human's body which is represented
-                as cities with roughly 37.2 trillion anthropomorphic cells who
-                work together endlessly daily to run their world. Everyday, they
-                struggle to remove and resist against pathogenic cells such as
-                germs and bacteria from invading the body. The story follows the
-                world of a human's body which is represented as cities with
-                roughly 37.2 trillion anthropomorphic cells who work together
-                endlessly daily to run their world. Everyday, they struggle to
-                remove and resist against pathogenic cells such as germs and
-                bacteria from invading the body. The story follows the world of
-                a human's body which is represented as cities with roughly 37.2
-                trillion anthropomorphic cells who work together endlessly daily
-                to run their world. Everyday, they struggle to remove and resist
-                against pathogenic cells such as germs and bacteria from
-                invading the body.
+                {comments}
               </Container>
+              <div className="buttons-area">
+                {addButton}
+                {downloadButton}
+              </div>
             </div>
           </Col>
         </Row>
