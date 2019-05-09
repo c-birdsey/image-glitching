@@ -272,7 +272,12 @@ class SingleGlitch extends Component {
         </FormGroup>
         <FormGroup check className="options">
           <Label check>
-            <Input type="radio" name="options" onChange={this.setControlled} />
+            <Input
+              id="controlled"
+              type="radio"
+              name="options"
+              onChange={this.setControlled}
+            />
             <b>Controlled:</b>
             <FormText color="muted">
               This will allow you to have more control over your glitch. Use the
@@ -368,7 +373,7 @@ class SingleGlitch extends Component {
           key={i}
           onClick={this.handleChange(i)}
         >
-          <img className="saveImg" src={elem} alt="" />
+          <img id="savedGlitch" className="saveImg" src={elem} alt="" />
           <Container className="checkBox">
             <Checkbox checked={this.state.selected.has(i++)} />
           </Container>
@@ -420,7 +425,12 @@ class SingleGlitch extends Component {
           <Col xs={12} sm={12} md={12} lg={6} xl={6} className="uploadField">
             <Container className="singlePreview">
               {currentImage && (
-                <img className="single" src={currentImage} alt="" />
+                <img
+                  id="display"
+                  className="single"
+                  src={currentImage}
+                  alt=""
+                />
               )}
             </Container>
           </Col>
