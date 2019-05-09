@@ -5,7 +5,6 @@ import { Button } from 'reactstrap';
 import LibraryGlitch from './components/LibraryGlitch';
 import SingleGlitch from './components/SingleGlitch';
 import MenuBar from './components/MenuBar';
-import Login from './components/Login';
 import MultipleGlitches from './components/MultipleImages';
 import Profile from './components/Profile';
 import Documentation from './components/Documentation';
@@ -17,14 +16,14 @@ class App extends Component {
     this.state = {
       //mode options are: landing, login, displayLibrary, uploadMultiple,
       //  profile, documentation
-      mode: 'landing',
+      mode: 'profile',
 
       //this stores the array of glitched images and originals from LibraryGlitch
       //Passed down to multiple images displayer
       glitchArray: [],
 
       // keep the state if user is logged in or not
-      loggedIn: false
+      loggedIn: true
     };
 
     this.ShowMultiple = this.ShowMultiple.bind(this);
@@ -113,15 +112,6 @@ class App extends Component {
       );
     }
 
-    if (this.state.mode === 'login') {
-      return (
-        <div>
-          {menuBar}
-          <Login home={() => this.setState({ mode: 'landing' })} />
-        </div>
-      );
-    }
-
     //
     if (this.state.mode === 'displayLibrary') {
       return (
@@ -129,6 +119,7 @@ class App extends Component {
           {menuBar}
           <MultipleGlitches
             images={this.state.glitchArray}
+            loggedIn={this.state.loggedIn}
             back={() => {
               this.setState({ mode: 'uploadMultiple' });
             }}

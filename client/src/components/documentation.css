@@ -5,3 +5,19 @@
 .doc-col {
   padding: 2rem 4rem 1rem 4rem !important;
 }
+
+.image-span {
+  display: block;
+  text-align: left;
+  padding: 5px 0 5px 0;
+}
+.image {
+  min-width: 545px;
+  max-width: 785;
+}
+
+@media all and (min-width: 865px) {
+  .example-div {
+    width: 785px;
+  }
+}

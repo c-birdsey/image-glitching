@@ -1,5 +1,7 @@
 const { Model } = require('objection');
 
+const Image = require('./Image');
+
 class User extends Model {
   static get tableName() {
     return 'Users';
@@ -15,6 +17,19 @@ class User extends Model {
         givenName: { type: 'string' },
         familyName: { type: 'string' },
         email: { type: 'string' }
+      }
+    };
+  }
+
+  static get relationMappings() {
+    return {
+      owner: {
+        relation: Model.HasManyRelation,
+        modelClass: Image,
+        join: {
+          from: 'User.id',
+          to: 'Image.createdBy'
+        }
       }
     };
   }

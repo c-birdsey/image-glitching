@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import './multiple.css';
 import { saveAs } from 'file-saver';
+import Checkbox from '@material-ui/core/Checkbox';
+import PropTypes from 'prop-types';
 
 //function to convert url to pure base64
 function toBase64(url) {
@@ -31,14 +33,36 @@ class Multiple extends Component {
   constructor(props) {
     super(props);
 
+    const Selected = new Set();
+
     this.state = {
-      imgArray: this.props.images
+      imgArray: this.props.images,
+      selected: Selected
     };
 
+    this.handleChange = this.handleChange.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
     this.handleSave = this.handleSave.bind(this);
   }
 
-  //placeholder function for now
+  handleChange = i => () => {
+    const newSelected = this.state.selected;
+    if (!this.state.selected.has(i)) {
+      newSelected.add(i);
+    } else {
+      newSelected.delete(i);
+    }
+    this.setState({ selected: newSelected });
+  };
+
+  handleDownload() {
+    const downloadArray = [];
+    this.state.selected.forEach(i =>
+      downloadArray.push(this.state.imgArray[i])
+    );
+    downloadZip(downloadArray);
+  }
+
   handleSave() {
     console.log('saving');
   }
@@ -54,7 +78,7 @@ class Multiple extends Component {
             <Col
               xs={12}
               sm={6}
-              md={5}
+              md={6}
               className="justify-content-center originalElement"
             >
               <p>
@@ -62,27 +86,16 @@ class Multiple extends Component {
               </p>
               <img src={elem[0]} alt="" />
             </Col>
-            <Col xs={12} sm={6} md={5} className="glitchedElement">
+            <Col xs={12} sm={6} md={6} className="glitchedElement">
               <p>
                 <b>Glitched Image</b>
               </p>
-              <img src={elem[1]} alt="" />
-            </Col>
-            <Col xs={12} sm={12} md={2} className="button-col text-center">
-              <a href={elem[1]} download="glitch">
-                <Button outline className="buttons" size="sm" color="primary">
-                  Download Glitch
-                </Button>
-              </a>
-              <Button
-                outline
-                className="buttons"
-                size="sm"
-                color="primary"
-                onClick={this.handleSave}
-              >
-                Save Glitch
-              </Button>
+              <Container key={i} onClick={this.handleChange(i)}>
+                <img src={elem[1]} alt="" />
+                <Container className="checkBoxMulti">
+                  <Checkbox checked={this.state.selected.has(i++)} />
+                </Container>
+              </Container>
             </Col>
           </Row>
         </Container>
@@ -97,33 +110,69 @@ class Multiple extends Component {
               <b>Glitched Library:</b>
             </legend>
             <p className="about">
-              Browse through your library of glitched images below. You can
-              download a single glitch with the link to the right of the image,
-              or you can downlaod the entire library as a .zip file with the
-              button to the right.
+              Browse through your library of glitched images below. Select the
+              glitched you would like to save or download via the checkboxes in
+              the upper right corners, and use the buttons to the right to add
+              them to your glitch library, or download locally as a .zip file.
             </p>
           </Col>
           <Col xs={6} sm={6} md={5} className="text-right buttonBar">
-            <Button
-              className="buttons"
-              size="sm"
-              color="primary"
-              onClick={() => {
-                this.props.back();
-              }}
-            >
-              Back to Glitcher
-            </Button>
-            <Button
-              className="buttons"
-              size="sm"
-              color="primary"
-              onClick={() => {
-                downloadZip(this.state.imgArray);
-              }}
-            >
-              Download All
-            </Button>
+            {this.state.selected.size === 0 && (
+              <Button
+                className="buttons"
+                size="sm"
+                color="primary"
+                onClick={() => {
+                  this.props.back();
+                }}
+              >
+                Back to Glitcher
+              </Button>
+            )}
+            {this.state.selected.size === 0 && (
+              <Button
+                className="buttons"
+                size="sm"
+                color="primary"
+                onClick={() => {
+                  downloadZip(this.state.imgArray);
+                }}
+              >
+                Download All
+              </Button>
+            )}
+            {this.props.loggedIn && this.state.selected.size === 0 && (
+              <Button
+                className="buttons"
+                size="sm"
+                color="primary"
+                onClick={this.handleSave}
+              >
+                Save All
+              </Button>
+            )}
+            {this.state.selected.size !== 0 && (
+              <Button
+                outline
+                className="buttons"
+                onClick={this.handleDownload}
+                size="sm"
+                color="primary"
+              >
+                Download Selected
+              </Button>
+            )}
+            {this.props.loggedIn && this.state.selected.size !== 0 && (
+              <Button
+                outline
+                className="buttons"
+                size="sm"
+                color="primary"
+                onClick={this.handleSave}
+              >
+                Save Selected
+              </Button>
+            )}
           </Col>
         </Row>
         {images}
@@ -131,5 +180,11 @@ class Multiple extends Component {
     );
   }
 }
+
+Multiple.propTypes = {
+  images: PropTypes.array.isRequired,
+  back: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired
+};
 
 export default Multiple;

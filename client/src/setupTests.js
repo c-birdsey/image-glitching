@@ -26,3 +26,16 @@ export const findButton = (comp, labelRegEx) => {
   }
   return button;
 };
+export const findButtonIcon = (comp, IconName) => {
+  // Find <input type="button" ... />
+  let button = comp.find(IconName);
+  if (button.length === 0) {
+    // If that didn't work, look for "<button> ..."
+    button = comp
+      .find('button')
+      .filterWhere(
+        n => IconName.test(n.text()) || IconName.test(n.prop('value'))
+      );
+  }
+  return button;
+};

@@ -39,14 +39,18 @@ class Documentation extends Component {
             produce less glitched images
           </p>
           <h2>Example</h2>
-          <p>
-            <img src={lincoln} alt="linc" />
-            For this image, seed was set very low, which is why the glitches
-            started near the top of the image. Amount was set to about 1/3 of
-            the bar. Quality was set to be very low, explaining the the large
-            pixelation. Iterations was set to be high, which is why there are so
-            many "bars", signifying distinct glitches.
-          </p>
+          <div className="example-div">
+            <span className="image-span">
+              <img className="image" src={lincoln} alt="linc" />
+            </span>
+            <p>
+              For this image, seed was set very low, which is why the glitches
+              started near the top of the image. Amount was set to about 1/3 of
+              the bar. Quality was set to be very low, explaining the the large
+              pixelation. Iterations was set to be high, which is why there are
+              so many "bars", signifying distinct glitches.
+            </p>
+          </div>
         </Col>
       </Container>
     );

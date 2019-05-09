@@ -125,7 +125,7 @@ img {
 }
 
 .options {
-  padding: 0em;
+  padding: 0rem;
 }
 
 .check-option {
@@ -146,11 +146,15 @@ img {
 }
 
 .save-button {
-  margin: 10px;
+  margin: 0;
 }
 
 .download-button {
   margin: 10px;
+}
+
+.random-button {
+  margin: 8px 0 8px 20px !important;
 }
 
 .profile-button {
@@ -160,6 +164,7 @@ img {
 .descriptor {
   font-size: 13px;
   color: #6f7377;
+  margin: 0 !important;
 }
 
 .slider {

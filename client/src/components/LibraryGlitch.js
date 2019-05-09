@@ -207,7 +207,7 @@ class Glitch extends Component {
           <legend>
             <b>Options:</b>
           </legend>
-          <FormGroup check className="options">
+          <FormGroup check className="options random">
             <Label check>
               <Input
                 type="radio"
@@ -223,7 +223,7 @@ class Glitch extends Component {
             </Label>
           </FormGroup>
         </FormGroup>
-        <FormGroup check className="options">
+        <FormGroup check className="options controlled">
           <Label check>
             <Input type="radio" name="options" onChange={this.setControlled} />
             <b>Controlled:</b>
@@ -236,7 +236,7 @@ class Glitch extends Component {
             <div>
               <b>Amount:</b>
               <input
-                className="slider"
+                className="slider amount"
                 disabled={this.state.glitchControlled}
                 type="range"
                 min="1"
@@ -258,7 +258,7 @@ class Glitch extends Component {
             <div>
               <b>Quality:</b>
               <input
-                className="slider"
+                className="slider quality"
                 disabled={this.state.glitchControlled}
                 type="range"
                 min="1"
@@ -279,7 +279,7 @@ class Glitch extends Component {
             <div>
               <b>Degree of distortion:</b>
               <input
-                className="slider"
+                className="slider distortion"
                 disabled={this.state.glitchControlled}
                 type="range"
                 min="1"
