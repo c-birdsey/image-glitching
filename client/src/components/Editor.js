@@ -32,13 +32,15 @@ class Editor extends Component {
     return (
       <Form>
         <FormGroup>
-          <Label for="Comment">New Comment</Label>
+          <Label for="Comment">
+            <h3 className="comment-title">New Comment</h3>
+          </Label>
           <Input
             id="comment"
             type="textarea"
             placeholder="Enter your new comment here"
             cols="80"
-            rows="10"
+            rows="5"
             value={content}
             onChange={e => this.setState({ content: e.target.value })}
           />

@@ -39,16 +39,6 @@ class Profile extends Component {
       activeTab: '1',
       currentGlitch: undefined
     };
-
-    this.toggle = this.toggle.bind(this);
-  }
-
-  toggle(tab) {
-    if (this.state.activeTab !== tab) {
-      this.setState({
-        activeTab: tab
-      });
-    }
   }
 
   render() {
@@ -66,14 +56,11 @@ class Profile extends Component {
     return (
       <div className="profile">
         <Nav tabs>
-          <NavItem className="profileTab">
+          <NavItem className="profileTab firstTab">
             <NavLink
               className={classnames({ active: this.state.activeTab === '1' })}
-              onClick={() => {
-                this.toggle('1');
-              }}
             >
-              My Glitch Library
+              My Profile
             </NavLink>
           </NavItem>
         </Nav>

@@ -12,6 +12,7 @@ export function Comment(props) {
     <div className="comment-container">
       <div className="comment-text">{content}</div>
       <p className="comment-time">{new Date(time).toLocaleString()}</p>
+      <hr className="divider" />
     </div>
   );
 }
@@ -22,7 +23,7 @@ class Annotation extends Component {
 
     const example = {
       content:
-        "ows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is",
+        "Follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is",
       time: new Date('2019-01-01T00:00:00.000000Z')
     };
     this.state = {
@@ -32,6 +33,8 @@ class Annotation extends Component {
 
     this.handleEditorReturn = this.handleEditorReturn.bind(this);
     this.handleNew = this.handleNew.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
+    this.handleDownload = this.handleDownload.bind(this);
   }
 
   handleEditorReturn(newComment) {
@@ -45,6 +48,15 @@ class Annotation extends Component {
 
   handleNew() {
     this.setState({ editing: true });
+  }
+
+  handleDelete() {
+    console.log('delete from server');
+    this.props.Return();
+  }
+
+  handleDownload() {
+    console.log('downloading');
   }
 
   render() {
@@ -78,13 +90,9 @@ class Annotation extends Component {
     );
 
     const editorSection = (
-      <Row>
-        <Col>
-          <Container className="editor-container">
-            {editing && <Editor complete={this.handleEditorReturn} />}
-          </Container>
-        </Col>
-      </Row>
+      <Container className="editor-container">
+        {editing && <Editor complete={this.handleEditorReturn} />}
+      </Container>
     );
 
     const downloadButton = (
@@ -98,31 +106,38 @@ class Annotation extends Component {
     );
 
     return (
-      <Container fluid className="content">
-        <Row>
-          <Col xs={12} md={6} lg={5} className="glitch-img">
-            <div className="left-area">
-              <img className="glitch-pic" src={this.props.Picture} alt="" />
-              <div>
-                {returnButton}
-                {deleteButton}
-              </div>
+      <Container className="content">
+        <Row className="glitches-row">
+          <Col xs={12} md={10} lg={6} className="img-col">
+            <h2>Original Image</h2>
+            <div className="img-container">
+              <img className="pic" src={this.props.Picture} alt="" />
             </div>
           </Col>
-          <Col xs={12} md={6} lg={7} className="annotations-area">
-            <div className="annotation-text">
-              <h2>Annotations</h2>
-              <Container fluid className="annotation-box">
-                {comments}
-              </Container>
-              <div className="buttons-area">
-                {addButton}
-                {downloadButton}
-              </div>
+          <Col xs={12} md={10} lg={6} className="img-col">
+            <h2>Glitched Image</h2>
+            <div className="img-container">
+              <img className="pic" src={this.props.Picture} alt="" />
             </div>
           </Col>
         </Row>
-        {editing && editorSection}
+        <Row xs={12} md={12} lg={12} className="glitch-buttons">
+          {returnButton}
+          {deleteButton}
+        </Row>
+        <Row className="annotation-row">
+          <Col xs={12} md={12} lg={12}>
+            <h2>Annotations</h2>
+            <Container fluid className="annotation-box">
+              {comments}
+            </Container>
+          </Col>
+        </Row>
+        <Row className="anno-buttons">
+          {addButton}
+          {downloadButton}
+        </Row>
+        <Row className="add-row">{editing && editorSection}</Row>
       </Container>
     );
   }
