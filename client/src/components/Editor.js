@@ -11,11 +11,6 @@ class Editor extends Component {
 
     this.handleSave = this.handleSave.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
-    this.handleContent = this.handleContent.bind(this);
-  }
-
-  handleContent(field, event) {
-    this.setState({ [field]: event.target.value });
   }
 
   handleSave() {
