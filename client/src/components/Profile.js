@@ -3,11 +3,12 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import './profile.css';
 import classnames from 'classnames';
 import square from './sqr.jpg';
+import example from './Glitch.png';
 import Annotation from './Annotation';
 
 export function GlitchLib(props) {
   const { select } = props;
-  const array = [square, square, square, square, square, square, square];
+  const array = [square, square, square, example, square, example, square];
   let i = 0;
   const grid = array.map(elem => {
     i++;
@@ -56,6 +57,7 @@ class Profile extends Component {
         <div className="profile">
           <Annotation
             Return={() => this.setState({ currentGlitch: undefined })}
+            Picture={this.state.currentGlitch}
           />
         </div>
       );

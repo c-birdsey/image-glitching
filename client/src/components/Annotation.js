@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import './Annotation.css';
-import placeholder from './sqr.jpg';
+import Editor from './Editor';
 
 export function Comment(props) {
   const {
@@ -19,21 +19,39 @@ export function Comment(props) {
 class Annotation extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      Annotations: []
+
+    const example = {
+      content:
+        "ows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is",
+      time: new Date('2019-01-01T00:00:00.000000Z')
     };
+    this.state = {
+      annotations: [example],
+      editing: false
+    };
+
+    this.handleEditorReturn = this.handleEditorReturn.bind(this);
+    this.handleNew = this.handleNew.bind(this);
+  }
+
+  handleEditorReturn(newComment) {
+    if (newComment) {
+      const newAnnotations = this.state.annotations;
+      newAnnotations.push(newComment);
+      this.setState({ annotations: newAnnotations });
+    }
+    this.setState({ editing: false });
+  }
+
+  handleNew() {
+    this.setState({ editing: true });
   }
 
   render() {
     const { Return } = this.props;
-    const date = new Date('2019-01-01T00:00:00.000000Z');
-    const example = {
-      content:
-        "ows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is",
-      time: date
-    };
-    const arrayexample = [example, example, example];
-    const comments = arrayexample.map(element => {
+    const { editing, annotations } = this.state;
+
+    const comments = annotations.map(element => {
       return <Comment comment={element} />;
     });
 
@@ -44,7 +62,7 @@ class Annotation extends Component {
     );
 
     const addButton = (
-      <Button color="danger" className="add-button">
+      <Button color="danger" className="add-button" onClick={this.handleNew}>
         Add New Comment
       </Button>
     );
@@ -57,6 +75,16 @@ class Annotation extends Component {
       >
         Delete Glitch
       </Button>
+    );
+
+    const editorSection = (
+      <Row>
+        <Col>
+          <Container className="editor-container">
+            {editing && <Editor complete={this.handleEditorReturn} />}
+          </Container>
+        </Col>
+      </Row>
     );
 
     const downloadButton = (
@@ -74,7 +102,7 @@ class Annotation extends Component {
         <Row>
           <Col xs={12} md={6} lg={5} className="glitch-img">
             <div className="left-area">
-              <img className="glitch-pic" src={placeholder} alt="" />
+              <img className="glitch-pic" src={this.props.Picture} alt="" />
               <div>
                 {returnButton}
                 {deleteButton}
@@ -94,6 +122,7 @@ class Annotation extends Component {
             </div>
           </Col>
         </Row>
+        {editing && editorSection}
       </Container>
     );
   }
