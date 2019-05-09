@@ -119,7 +119,7 @@ class Glitch extends Component {
     }, this);
 
     //call callback with prop of glitched and orig imgs
-    console.log(currentSaved); 
+    console.log(currentSaved);
     this.props.callback(currentSaved);
   }*/
 
@@ -209,7 +209,12 @@ class Glitch extends Component {
           </legend>
           <FormGroup check className="options random">
             <Label check>
-              <Input type="radio" name="options" onChange={this.setRandom} />
+              <Input
+                type="radio"
+                name="options"
+                onChange={this.setRandom}
+                checked
+              />
               <b>Random:</b>
               <FormText color="muted">
                 This will glitch your uploaded image in a completely random

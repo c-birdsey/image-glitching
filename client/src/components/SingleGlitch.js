@@ -18,6 +18,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { saveAs } from 'file-saver';
 import glitch from 'glitch-canvas';
 
+import PropTypes from 'prop-types';
+
 //function to convert url to pure base64
 function toBase64(url) {
   const base64 = url.replace(/^data:image\/[a-z]+;base64,/, '');
@@ -281,6 +283,7 @@ class SingleGlitch extends Component {
             <div>
               <b>Amount:</b>
               <input
+                id="glitchAmount"
                 className="slider"
                 disabled={this.state.glitchControlled}
                 type="range"
@@ -305,6 +308,7 @@ class SingleGlitch extends Component {
               <b>Quality:</b>
               <input
                 className="slider"
+                id="glitchQuality"
                 disabled={this.state.glitchControlled}
                 type="range"
                 min="1"
@@ -327,6 +331,7 @@ class SingleGlitch extends Component {
               <b>Degree of distortion:</b>
               <input
                 className="slider"
+                id="glitchDistortion"
                 disabled={this.state.glitchControlled}
                 type="range"
                 min="1"
@@ -450,5 +455,10 @@ class SingleGlitch extends Component {
     );
   }
 }
+
+SingleGlitch.propTypes = {
+  callback: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired
+};
 
 export default SingleGlitch;
