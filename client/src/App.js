@@ -23,7 +23,7 @@ class App extends Component {
       glitchArray: [],
 
       // keep the state if user is logged in or not
-      loggedIn: true
+      loggedIn: false
     };
 
     this.ShowMultiple = this.ShowMultiple.bind(this);
