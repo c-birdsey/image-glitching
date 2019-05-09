@@ -18,7 +18,7 @@ describe('Single Glitcher tests', () => {
     });
 
     test('Has Glitch button', () => {
-      const button = findButton(singleGlitch, /Glitch Image/i);
+      const button = findButton(singleGlitch, /Randomize/i);
       expect(button.exists()).toBe(true);
     });
 
@@ -62,7 +62,7 @@ describe('Single Glitcher tests', () => {
 
     test('Can Pin Glitches', () => {
       singleGlitch.setState({ currentImage: sampleImage });
-      const button = findButton(singleGlitch, /Glitch Image/i);
+      const button = findButton(singleGlitch, /Randomize/i);
       button.simulate('click');
       expect(singleGlitch.state().savedGlitches).toEqual([]);
       const pin = findButton(singleGlitch, /Pin Glitch/i);
