@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Row, Col, Button } from 'reactstrap';
 import './Annotation.css';
 import Editor from './Editor';
+import { saveAs } from 'file-saver';
 
 export function Comment(props) {
   const {
@@ -16,6 +17,24 @@ export function Comment(props) {
     </div>
   );
 }
+function toBase64(url) {
+  const base64 = url.replace(/^data:image\/[a-z]+;base64,/, '');
+  return base64;
+}
+
+const downloadZip = props => {
+  const JSZip = require('jszip');
+  const zip = new JSZip();
+  const download = zip.folder('GlitchAndAnnotations');
+  const base64img = toBase64(props[0]);
+  download.file(`image.jpg`, base64img, { base64: true });
+  download.file('Annotations/Annotations.txt', props[1], {
+    type: 'text/plain;charset=utf-8'
+  });
+  zip.generateAsync({ type: 'blob' }).then(content => {
+    saveAs(content, 'GlitchAndAnnotations.zip');
+  });
+};
 
 class Annotation extends Component {
   constructor(props) {
@@ -54,9 +73,16 @@ class Annotation extends Component {
     console.log('delete from server');
     this.props.Return();
   }
-
   handleDownload() {
-    console.log('downloading');
+    const toDownload = [];
+    let allAnnotations = '';
+    this.state.annotations.forEach(entry => {
+      allAnnotations +=
+        'Entry: ' + entry.content + '\n' + 'Edited: ' + entry.time + '\n \n';
+    });
+    toDownload.push(this.props.Picture);
+    toDownload.push(allAnnotations);
+    downloadZip(toDownload);
   }
 
   render() {
