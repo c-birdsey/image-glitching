@@ -89,6 +89,7 @@ class MenuBar extends React.Component {
         onFailure={this.handleGoogleFailure}
       />
     );
+
     const logoutButton = (
       <GoogleLogout
         clientId={GOOGLE_CLIENT_ID}
@@ -103,7 +104,7 @@ class MenuBar extends React.Component {
         <IconButton
           aria-owns={open ? 'menu-appbar' : undefined}
           aria-haspopup="true"
-          onClick={this.handleMenu}
+          onClick={this.handleClose}
           color="inherit"
         >
           <AccountCircle />
