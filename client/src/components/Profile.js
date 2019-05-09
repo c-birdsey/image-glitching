@@ -3,15 +3,23 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import './profile.css';
 import classnames from 'classnames';
 import square from './sqr.jpg';
+import example from './Glitch.png';
+import Annotation from './Annotation';
 
-function makeGlitchLib() {
-  const array = [square, square, square, square, square, square, square];
+export function GlitchLib(props) {
+  const { select } = props;
+  const array = [square, square, square, example, square, example, square];
   let i = 0;
   const grid = array.map(elem => {
     i++;
     return (
       <div key={i} className="gallery-item">
-        <img src={elem} className="gallery-image" alt="" />
+        <img
+          src={elem}
+          className="gallery-image"
+          alt=""
+          onClick={() => select(elem)}
+        />
       </div>
     );
   });
@@ -28,7 +36,8 @@ class Profile extends Component {
     super();
 
     this.state = {
-      activeTab: '1'
+      activeTab: '1',
+      currentGlitch: undefined
     };
 
     this.toggle = this.toggle.bind(this);
@@ -43,7 +52,16 @@ class Profile extends Component {
   }
 
   render() {
-    const glitchGrid = makeGlitchLib();
+    if (this.state.currentGlitch) {
+      return (
+        <div className="profile">
+          <Annotation
+            Return={() => this.setState({ currentGlitch: undefined })}
+            Picture={this.state.currentGlitch}
+          />
+        </div>
+      );
+    }
 
     return (
       <div className="profile">
@@ -63,7 +81,9 @@ class Profile extends Component {
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
               <h4 className="lib-title">Saved Glitches:</h4>
-              {glitchGrid}
+              <GlitchLib
+                select={element => this.setState({ currentGlitch: element })}
+              />
             </TabPane>
           </TabContent>
         </div>
