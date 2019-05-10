@@ -27,16 +27,24 @@ class Documentation extends Component {
           <h2>How Does Our Image Glitcher Work?</h2>
           <p>
             There are four major parameters of the Image Glitcher we
-            implemented, originally created by Snorpey. The first, seed,
-            dictates how far along the image's encoding the byte altercations
-            begin. As a result the larger the seed value, the lower in the
-            image's representation the glitches being to appear. The next
-            parameter, Amount, decides how large each chunk of glitched data is.
-            Larger Amount values typically lead to more dramatic glitches. The
-            third parameter, Quality, alters the pixelation of the original
-            image. The last parameter is iterations. This parameter changes how
-            many times the image'switch encoding is altered - lower values
-            produce less glitched images
+            implemented, adapted from a open source{' '}
+            <a
+              href="https://github.com/snorpey/glitch-canvas"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              JavaScript library
+            </a>{' '}
+            created by Snorpey. The first, <b>seed</b>, dictates how far along
+            the image's encoding the byte altercations begin. As a result the
+            larger the seed value, the lower in the image's representation the
+            glitches being to appear. The next parameter, <b>amount</b>,
+            dictates how large each chunk of glitched data is. Larger amount
+            values typically lead to more dramatic glitches. The third
+            parameter, <b>quality</b>, alters the pixelation of the original
+            image. The last parameter is <b> iterations</b>. This parameter
+            changes how many times the image encoding is altered- lower values
+            produce less glitched images.
           </p>
           <h2>Example</h2>
           <div className="example-div">
@@ -45,10 +53,11 @@ class Documentation extends Component {
             </span>
             <p>
               For this image, seed was set very low, which is why the glitches
-              started near the top of the image. Amount was set to about 1/3 of
-              the bar. Quality was set to be very low, explaining the the large
-              pixelation. Iterations was set to be high, which is why there are
-              so many "bars", signifying distinct glitches.
+              started near the top of the image. Amount was set to about 33 (on
+              a scale of 0-99). Quality was set to be very low as well,
+              explaining the the large pixelation. Iterations was set to be
+              high, which is why there are so many "bars", signifying distinct
+              glitches.
             </p>
           </div>
         </Col>
