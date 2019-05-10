@@ -39,6 +39,7 @@ h3 {
   border-radius: 10px;
   padding: 15px;
   overflow-y: auto;
+  margin: 0 !important;
 }
 
 /*
@@ -86,7 +87,7 @@ img {
 }
 
 .optionField {
-  padding: 10px 0 40px 0;
+  padding: 10px 15px 40px !important;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -94,7 +95,7 @@ img {
 }
 
 .uploadField {
-  padding: 0px 0 10px 0;
+  padding: 0px 15px 10px 0;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
