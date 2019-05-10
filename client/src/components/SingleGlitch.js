@@ -467,7 +467,6 @@ class SingleGlitch extends Component {
 }
 
 SingleGlitch.propTypes = {
-  callback: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool.isRequired
 };
 

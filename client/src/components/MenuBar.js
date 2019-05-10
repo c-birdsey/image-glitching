@@ -14,7 +14,7 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 // for development only
 // currently using same endpoint as from practical
 const GOOGLE_CLIENT_ID =
-  '833253079657-v2g067u0c0f1fkgreqntppltlrfa25kb.apps.googleusercontent.com';
+  '926749830599-ro59em23fan9ipb5n46ffp3b1up9fsbb.apps.googleusercontent.com';
 
 const styles = {
   root: {
