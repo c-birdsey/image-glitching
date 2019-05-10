@@ -397,7 +397,10 @@ class SingleGlitch extends Component {
     const profileButton = (
       <Button
         color="danger"
-        onClick={this.handleProfile}
+        onClick={() => {
+          console.log(this.state.selected);
+          this.handleProfile();
+        }}
         className="profile-button"
       >
         Save Selected to Profile
@@ -467,7 +470,6 @@ class SingleGlitch extends Component {
 }
 
 SingleGlitch.propTypes = {
-  callback: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool.isRequired
 };
 
