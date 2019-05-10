@@ -58,7 +58,6 @@ h3 {
   justify-content: center;
   height: 550px;
   width: auto;
-  min-width: 400px;
   max-width: 680px;
   border: 2px solid gray;
   border-radius: 10px;
@@ -95,7 +94,7 @@ img {
 }
 
 .uploadField {
-  padding: 0px 15px 10px 0;
+  padding: 0px 15px 10px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
