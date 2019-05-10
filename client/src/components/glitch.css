@@ -125,7 +125,7 @@ img {
 }
 
 .options {
-  padding: 0rem;
+  padding: 0 0 0 20px !important;
 }
 
 .check-option {
