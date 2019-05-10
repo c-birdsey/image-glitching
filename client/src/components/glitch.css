@@ -33,7 +33,7 @@ h3 {
   justify-content: center;
   height: 550px;
   width: auto;
-  min-width: 400px;
+  min-width: 450px;
   max-width: 680px;
   border: 2px solid gray;
   border-radius: 10px;
@@ -58,6 +58,7 @@ h3 {
   justify-content: center;
   height: 550px;
   width: auto;
+  min-width: 450px;
   max-width: 680px;
   border: 2px solid gray;
   border-radius: 10px;
