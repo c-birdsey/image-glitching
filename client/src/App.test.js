@@ -50,6 +50,29 @@ describe('App tests', () => {
       const library = app.find('#libraryComp');
       expect(library.exists()).toBe(true);
     });
+
+    test('Properly handles change to view multiple glitches', () => {
+      app.setState({ loggedIn: true, mode: 'displayLibrary' });
+      const landingpage = findButton(app, /Glitch Single Image/i);
+      expect(landingpage.exists()).toBe(false);
+      const library = app.find('#multiglitchComp');
+      expect(library.exists()).toBe(true);
+    });
+
+    test('Properly handles change to view documentation', () => {
+      app.setState({ loggedIn: true, mode: 'documentation' });
+      const landingpage = findButton(app, /Glitch Single Image/i);
+      expect(landingpage.exists()).toBe(false);
+      const doc = app.find('#documentationComp');
+      expect(doc.exists()).toBe(true);
+    });
+
+    test('Buttons work', () => {
+      const landingpage = findButton(app, /Glitch Single Image/i);
+      expect(landingpage.exists()).toBe(true);
+      landingpage.simulate('click');
+      expect(app.state().mode).toBe('uploadSingle');
+    });
     //
     // test('Has Options Menu', () => {
     //   const form = singleGlitch.find('#inputForm');

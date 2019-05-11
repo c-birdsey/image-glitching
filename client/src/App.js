@@ -108,7 +108,7 @@ class App extends Component {
       return (
         <div>
           {menuBar}
-          <Documentation />
+          <Documentation id="documentationComp" />
         </div>
       );
     }
@@ -119,6 +119,7 @@ class App extends Component {
         <div>
           {menuBar}
           <MultipleGlitches
+            id="multiglitchComp"
             images={this.state.glitchArray}
             loggedIn={this.state.loggedIn}
             back={() => {
