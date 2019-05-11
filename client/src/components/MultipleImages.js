@@ -47,6 +47,7 @@ class Multiple extends Component {
 
   handleChange = i => () => {
     const newSelected = this.state.selected;
+    console.log(newSelected);
     if (!this.state.selected.has(i)) {
       newSelected.add(i);
     } else {
@@ -64,6 +65,39 @@ class Multiple extends Component {
   }
 
   handleSave() {
+    // in Download All
+    if (this.state.selected.size === 0) {
+      const newSelected = new Set();
+      for (let i = 1; i < this.state.imgArray.size; i + 1) {
+        newSelected.add(i);
+      }
+
+      this.setState({ selected: newSelected });
+      console.log(this.state.selected);
+    }
+
+    this.state.selected.forEach(i => {
+      const now = new Date();
+      const newImage = {
+        data: this.state.imgArray[i],
+        createdAt: now.toISOString()
+      };
+      fetch('/api/images', {
+        method: 'POST',
+        body: JSON.stringify(newImage),
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        })
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(response.statusText);
+        })
+        .catch(err => console.log(err)); // eslint-disable-line no-console
+    });
     console.log('saving');
   }
 
