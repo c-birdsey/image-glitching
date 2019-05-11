@@ -47,7 +47,6 @@ class Multiple extends Component {
 
   handleChange = i => () => {
     const newSelected = this.state.selected;
-    console.log(newSelected);
     if (!this.state.selected.has(i)) {
       newSelected.add(i);
     } else {
@@ -65,15 +64,14 @@ class Multiple extends Component {
   }
 
   handleSave() {
-    // in Download All
+    // in case of Save All
     if (this.state.selected.size === 0) {
-      const newSelected = new Set();
-      for (let i = 1; i < this.state.imgArray.size; i + 1) {
+      const newSelected = this.state.selected;
+      for (let i = 0; i < this.state.imgArray.length; i += 1) {
         newSelected.add(i);
       }
 
       this.setState({ selected: newSelected });
-      console.log(this.state.selected);
     }
 
     this.state.selected.forEach(i => {
@@ -94,11 +92,12 @@ class Multiple extends Component {
           if (response.ok) {
             return response.json();
           }
-          throw new Error(response.statusText);
+          throw new Error(response.status_text);
         })
         .catch(err => console.log(err)); // eslint-disable-line no-console
     });
     console.log('saving');
+    this.setState({ selected: new Set() });
   }
 
   render() {
