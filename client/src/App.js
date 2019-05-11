@@ -41,6 +41,7 @@ class App extends Component {
     const menuBar = (
       <div className="App-menu">
         <MenuBar
+          id="menuBar"
           home={() => this.setState({ mode: 'landing' })}
           profile={() => this.setState({ mode: 'profile' })}
           logIn={() => this.setState({ loggedIn: true })}
@@ -98,7 +99,7 @@ class App extends Component {
       return (
         <div>
           {menuBar}
-          <Profile />
+          <Profile id="profileComp" />
         </div>
       );
     }
@@ -135,6 +136,7 @@ class App extends Component {
         <div>
           {menuBar}
           <LibraryGlitch
+            id="libraryComp"
             callback={this.ShowMultiple}
             loggedIn={this.state.loggedIn}
           />
