@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { mount } from 'enzyme';
-import { findButton, sampleImage } from './setupTests';
+import { findButton } from './setupTests';
 import App from './App';
 
 it('renders without crashing', () => {
@@ -13,11 +13,9 @@ it('renders without crashing', () => {
 describe('App tests', () => {
   describe('App interface', () => {
     let app;
-    let status;
     const completeCallback = jest.fn();
     beforeEach(() => {
       completeCallback.mockReset();
-      status = false;
       app = mount(<App />);
     });
 
