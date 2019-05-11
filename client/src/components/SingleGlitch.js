@@ -1,6 +1,3 @@
-// functionality is simplified.
-// needs fixing:_code has a minor bug, sometimes it fails to preview image
-
 import React, { Component } from 'react';
 import {
   Container,
@@ -90,39 +87,6 @@ class SingleGlitch extends Component {
       }
     }
   }
-
-  // handleGlitch() {
-  //   const file = document.querySelector('input').files[0];
-  //   if (file) {
-  //     // create reader
-  //     const reader = new FileReader();
-  //     // reader.readAsText(file);
-  //     reader.addEventListener(
-  //       'load',
-  //       () => {
-  //         const charToDelete = 300; // on forward this value will be randomized
-  //         const imageUrlOffset = 25;
-  //         let data = reader.result;
-  //         const rand = Math.random() * Math.floor(data.length);
-
-  //         if (rand > imageUrlOffset) {
-  //           data = data.replace(data.slice(rand, rand + charToDelete), '');
-  //         } else {
-  //           // prevents removing the url section of the data
-  //           data = data.replace(
-  //             data.slice(rand + charToDelete, rand + charToDelete * 2),
-  //             ''
-  //           );
-  //         }
-  //         this.setState({ currentImage: data });
-  //       },
-  //       false
-  //     );
-  //     if (file) {
-  //       reader.readAsDataURL(file);
-  //     }
-  //   }
-  // }
 
   handleGlitch() {
     if (this.state.glitchControlled === 'disabled') {

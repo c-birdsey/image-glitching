@@ -11,11 +11,16 @@ describe('PropTypes in Glitched Library', () => {
 
 describe('Buttons display and Functionality', () => {
   let multi;
+  const backCallback = jest.fn();
 
   describe('buttons display state when not loggedIn and checkbox functionality(switching of buttons)', () => {
     beforeEach(async () => {
       multi = mount(
-        <MultipleImages images={sampleImages} back={jest.fn} loggedIn={false} />
+        <MultipleImages
+          images={sampleImages}
+          back={backCallback}
+          loggedIn={false}
+        />
       );
     });
 
@@ -26,6 +31,7 @@ describe('Buttons display and Functionality', () => {
       });
 
       // since sampleImages has three items, then there will be three glitched images with class name glitched-1, -3, -5.
+
       test('Disappearance of Back to Glitcher when image is selected/ clicked', () => {
         const img = multi.find('.glitched-1');
         expect(img.exists()).toBe(true);
@@ -201,7 +207,7 @@ describe('Buttons display and Functionality', () => {
   describe('buttons display state when loggedIn and checkbox functionality(switching of buttons)', () => {
     beforeEach(async () => {
       multi = mount(
-        <MultipleImages images={sampleImages} back={jest.fn} loggedIn />
+        <MultipleImages images={sampleImages} back={backCallback} loggedIn />
       );
     });
 
@@ -381,6 +387,21 @@ describe('Buttons display and Functionality', () => {
         const button = findButton(multi, /Save Selected/i);
         expect(button.exists()).toBe(true);
       });
+    });
+  });
+
+  describe('Back to Glitcher invokes callback', () => {
+    beforeEach(async () => {
+      backCallback.mockReset();
+      multi = mount(
+        <MultipleImages images={sampleImages} back={backCallback} loggedIn />
+      );
+    });
+
+    test('callback', () => {
+      const button = findButton(multi, /Back to Glitcher/i);
+      button.simulate('click');
+      expect(backCallback).toHaveBeenCalledTimes(1);
     });
   });
 });
