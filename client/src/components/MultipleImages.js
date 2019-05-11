@@ -91,7 +91,7 @@ class Multiple extends Component {
                 <b>Glitched Image</b>
               </p>
               <Container key={i} onClick={this.handleChange(i)}>
-                <img src={elem[1]} alt="" />
+                <img className={`glitched-${i}`} src={elem[1]} alt="" />
                 <Container className="checkBoxMulti">
                   <Checkbox checked={this.state.selected.has(i++)} />
                 </Container>
