@@ -84,7 +84,6 @@ class Multiple extends Component {
         method: 'POST',
         body: JSON.stringify(newImage),
         headers: new Headers({
-          Accept: 'application/json',
           'Content-Type': 'application/json'
         })
       })

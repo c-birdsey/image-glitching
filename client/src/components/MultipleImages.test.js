@@ -9,9 +9,28 @@ describe('PropTypes in Glitched Library', () => {
   });
 });
 
-describe('Buttons display and Functionality', () => {
+describe('Images and Buttons display plus functionality', () => {
   let multi;
   const backCallback = jest.fn();
+
+  describe('All Images are displayed', () => {
+    beforeEach(async () => {
+      multi = mount(
+        <MultipleImages images={sampleImages} back={backCallback} loggedIn />
+      );
+    });
+
+    test('Glitched images are displayed', () => {
+      let img = multi.find('.glitched-1');
+      expect(img.exists()).toBe(true);
+
+      img = multi.find('.glitched-3');
+      expect(img.exists()).toBe(true);
+
+      img = multi.find('.glitched-5');
+      expect(img.exists()).toBe(true);
+    });
+  });
 
   describe('buttons display state when not loggedIn and checkbox functionality(switching of buttons)', () => {
     beforeEach(async () => {
