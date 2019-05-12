@@ -154,7 +154,12 @@ class MenuBar extends React.Component {
 }
 
 MenuBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  home: PropTypes.func.isRequired,
+  loggedIn: PropTypes.bool.isRequired,
+  profile: PropTypes.func.isRequired,
+  logIn: PropTypes.func.isRequired,
+  logOut: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(MenuBar);

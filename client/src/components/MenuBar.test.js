@@ -15,8 +15,20 @@ describe('MenuBar tests', () => {
       completeCallback.mockReset();
       status = false;
       loggedIn = false;
+      const profileCallback = jest.fn();
+      const logInCallback = jest.fn();
+      const logOutCallback = jest.fn();
+      const homeCallback = jest.fn();
       IconButton = 'IconButton';
-      libGlitch = mount(<MenuBar loggedIn={status} />);
+      libGlitch = mount(
+        <MenuBar
+          loggedIn={status}
+          profile={profileCallback}
+          home={homeCallback}
+          logIn={logInCallback}
+          logOut={logOutCallback}
+        />
+      );
     });
 
     test('Has GoogleLogin/Logout button', () => {

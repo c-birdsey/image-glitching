@@ -3,6 +3,7 @@ import { Container, Row, Col, Button } from 'reactstrap';
 import './Annotation.css';
 import Editor from './Editor';
 import { saveAs } from 'file-saver';
+import PropTypes from 'prop-types';
 
 export function Comment(props) {
   const {
@@ -17,6 +18,7 @@ export function Comment(props) {
     </div>
   );
 }
+
 function toBase64(url) {
   const base64 = url.replace(/^data:image\/[a-z]+;base64,/, '');
   return base64;
@@ -173,5 +175,10 @@ class Annotation extends Component {
     );
   }
 }
+
+Annotation.propTypes = {
+  Return: PropTypes.func.isRequired,
+  Picture: PropTypes.string.isRequired
+};
 
 export default Annotation;
