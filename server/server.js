@@ -18,7 +18,6 @@ const Image = require('./models/Image');
 
 Model.knex(knex);
 
-const { ValidationError } = require('objection');
 const { wrapError, DBError } = require('db-errors');
 
 const app = express();
@@ -32,8 +31,7 @@ const corsOptions = {
 const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 app.use(cors(corsOptions));
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+app.use(bodyParser.json());
 
 // development purposes
 const sessionSecret = 'foo4321!';
@@ -107,43 +105,6 @@ const authenticationMiddleware = (request, response, next) => {
   return response.sendStatus(403); // forbidden
 };
 
-app.get('/api/images', (request, response, next) => {
-  Image.query().then(images => {
-    response.send(images);
-  }, next);
-});
-
-app.get('/users', (request, response, next) => {
-  User.query().then(users => {
-    response.send(users);
-  }, next);
-});
-
-app.post('/api/images', authenticationMiddleware, (request, response, next) => {
-  if (!request.body.data) {
-    throw new ValidationError({
-      statusCode: 400,
-      message: 'No image was provided'
-    });
-  }
-  const newImage = Object.assign({}, request.body, {
-    createdBy: request.user.id
-  });
-  Image.query()
-    .insertAndFetch(newImage)
-    .then(image => {
-      response.send(image);
-    }, next);
-});
-
-app.post(
-  '/login',
-  passport.authenticate('bearer', { session: true }),
-  (request, response, next) => {
-    response.sendStatus(200);
-  }
-);
-
 // ---------- Error handling middleware ----------
 
 app.use((error, request, response, next) => {
@@ -159,6 +120,68 @@ app.use((error, request, response, next) => {
       .send(wrappedError.data || wrappedError.message || {});
   }
 });
+
+/* =============== Photo storage =============== */
+
+const multer = require('multer');
+const cloudinary = require('cloudinary');
+const cloudinaryStorage = require('multer-storage-cloudinary');
+
+const folder = 'demo';
+
+const storage = cloudinaryStorage({
+  cloudinary,
+  folder
+});
+
+const parser = multer({ storage });
+
+/* ============================================= */
+
+// saves an image to profile
+app.post(
+  '/api/image',
+  authenticationMiddleware,
+  parser.single('image'),
+  (req, res, next) => {
+    req.files.forEach(file => {
+      const newImage = {
+        url: file.url,
+        createdAt: file.created_at,
+        createdBy: req.user.id
+      };
+      Image.query()
+        .insertAndFetch(newImage)
+        .then(uploadedImage => {
+          res.sendStatus(200);
+        }, next);
+    });
+  }
+);
+
+// returns all of a user's saved images
+app.get('/profile/images', (request, response, next) => {
+  Image.query()
+    .where('createdBy', request.user.id)
+    .then(images => {
+      response.send(images);
+    }, next);
+});
+
+// development purposes only
+app.get('/users', (request, response, next) => {
+  User.query().then(users => {
+    response.send(users);
+  }, next);
+});
+
+app.post(
+  '/login',
+  passport.authenticate('bearer', { session: true }),
+  (request, response, next) => {
+    response.sendStatus(200);
+  }
+);
 
 module.exports = {
   app,

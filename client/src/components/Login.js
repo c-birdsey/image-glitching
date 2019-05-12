@@ -9,8 +9,7 @@ class Login extends Component {
       mode: 'login',
       email: '',
       password: '',
-      passwordConfirm: '',
-      username: ''
+      passwordConfirm: ''
     };
     this.handleChange = this.handleChange.bind(this);
   }
