@@ -80,12 +80,8 @@ class Annotation extends Component {
     let allAnnotations = '';
     this.state.annotations.forEach(entry => {
       allAnnotations +=
-        'Entry: ' +
-        entry.content +
-        '\n' +
-        'Edited: ' +
-        new Date(entry.time).toLocaleString() +
-        '\n \n'; //eslint-disable-line no-useless-concat
+        `Entry: ${entry.content}\n` +
+        `Edited: ${new Date(entry.time).toLocaleString()}\n \n`; //eslint-disable-line no-useless-concat
     });
     toDownload.push(this.props.Picture);
     toDownload.push(allAnnotations);
