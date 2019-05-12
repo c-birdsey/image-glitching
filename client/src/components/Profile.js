@@ -46,6 +46,7 @@ class Profile extends Component {
       return (
         <div className="profile">
           <Annotation
+            id="annotateComp"
             Return={() => this.setState({ currentGlitch: undefined })}
             Picture={this.state.currentGlitch}
           />

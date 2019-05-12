@@ -41,6 +41,7 @@ class App extends Component {
     const menuBar = (
       <div className="App-menu">
         <MenuBar
+          id="menuBar"
           home={() => this.setState({ mode: 'landing' })}
           profile={() => this.setState({ mode: 'profile' })}
           logIn={() => this.setState({ loggedIn: true })}
@@ -98,7 +99,7 @@ class App extends Component {
       return (
         <div>
           {menuBar}
-          <Profile />
+          <Profile id="profileComp" />
         </div>
       );
     }
@@ -107,7 +108,7 @@ class App extends Component {
       return (
         <div>
           {menuBar}
-          <Documentation />
+          <Documentation id="documentationComp" />
         </div>
       );
     }
@@ -118,6 +119,7 @@ class App extends Component {
         <div>
           {menuBar}
           <MultipleGlitches
+            id="multiglitchComp"
             images={this.state.glitchArray}
             loggedIn={this.state.loggedIn}
             back={() => {
@@ -135,6 +137,7 @@ class App extends Component {
         <div>
           {menuBar}
           <LibraryGlitch
+            id="libraryComp"
             callback={this.ShowMultiple}
             loggedIn={this.state.loggedIn}
           />
@@ -146,7 +149,7 @@ class App extends Component {
     return (
       <div>
         {menuBar}
-        <SingleGlitch loggedIn={this.state.loggedIn} />
+        <SingleGlitch id="singleComp" loggedIn={this.state.loggedIn} />
       </div>
     );
   }

@@ -12,7 +12,7 @@ class Documentation extends Component {
 
   render() {
     return (
-      <Container fluid className="doc-container">
+      <Container fluid className="doc-container" id="documentation">
         <Col className="doc-col">
           <h1>Documentation</h1>
           <h2>What is Image Glitching?</h2>
