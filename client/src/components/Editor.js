@@ -30,13 +30,14 @@ class Editor extends Component {
     const { content } = this.state;
 
     return (
-      <Form>
+      <Form id="editorComp">
         <FormGroup>
           <Label for="Comment">
             <h3 className="comment-title">New Comment</h3>
           </Label>
           <Input
             id="comment"
+            name="textInput"
             type="textarea"
             placeholder="Enter your new comment here"
             cols="80"

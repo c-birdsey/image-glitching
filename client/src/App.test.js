@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { mount } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { findButton } from './setupTests';
 import App from './App';
+import MenuBar from './components/MenuBar';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
@@ -76,19 +77,20 @@ describe('App tests', () => {
       expect(single.exists()).toBe(true);
     });
 
-    test('Buttons work', () => {
+    test('Buttons work (Single)', () => {
       const landingpage = findButton(app, /Glitch Single Image/i);
       expect(landingpage.exists()).toBe(true);
       landingpage.simulate('click');
       expect(app.state().mode).toBe('uploadSingle');
     });
 
-    test('Buttons work', () => {
+    test('Buttons work (Login exists)', () => {
       const menubar = app.find('#menuBar');
       expect(menubar.exists()).toBe(true);
       const button = findButton(menubar, /Login with Google/i);
       expect(button.exists()).toBe(true);
     });
+
     //
     // test('Has Options Menu', () => {
     //   const form = singleGlitch.find('#inputForm');
