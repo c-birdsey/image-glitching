@@ -377,6 +377,7 @@ class SingleGlitch extends Component {
 
     const profileButton = (
       <Button
+        id="profilebutton"
         color="danger"
         onClick={this.handleProfile}
         className="profile-button"

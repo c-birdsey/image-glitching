@@ -52,6 +52,23 @@ describe('Single Glitcher tests', () => {
       expect(singleGlitch.state().glitchControlled).toEqual('');
     });
 
+    // test('Testing Profile', () => {
+    //   singleGlitch.setState({loggedIn: true,
+    //   currentImage: testimg});
+    //   const button = findButton(singleGlitch, /Randomize/i);
+    //   button.simulate('click');
+    //   expect(singleGlitch.state().savedGlitches).toEqual([]);
+    //   const pin = findButton(singleGlitch, /Pin Glitch/i);
+    //   pin.simulate('click');
+    //   expect(singleGlitch.state().savedGlitches).toEqual([testimg]);
+    //   const img = singleGlitch.find('#savedGlitch');
+    //   expect(img.exists()).toBe(true);
+    //   img.simulate('click');
+    //   const buttonProf = singleGlitch.find('#profilebutton');
+    //   expect(buttonProf.exists()).toBe(true);
+    //   buttonProf.simulate('click');
+    // });
+
     test('Can Change to Back to Random Glitch', () => {
       const radio = singleGlitch.find('#controlled').first();
       expect(radio.exists()).toBe(true);
