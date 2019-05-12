@@ -149,7 +149,7 @@ class App extends Component {
     return (
       <div>
         {menuBar}
-        <SingleGlitch loggedIn={this.state.loggedIn} />
+        <SingleGlitch id="singleComp" loggedIn={this.state.loggedIn} />
       </div>
     );
   }

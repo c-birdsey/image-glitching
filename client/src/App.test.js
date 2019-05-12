@@ -42,7 +42,8 @@ describe('App tests', () => {
     });
 
     test('Properly handles change to library upload', () => {
-      app.setState({ loggedIn: true, mode: 'uploadMultiple' });
+      const button = findButton(app, /Glitch Library of Images/i);
+      button.simulate('click');
       const landingpage = findButton(app, /Glitch Single Image/i);
       expect(landingpage.exists()).toBe(false);
       const library = app.find('#libraryComp');
@@ -58,11 +59,21 @@ describe('App tests', () => {
     });
 
     test('Properly handles change to view documentation', () => {
-      app.setState({ loggedIn: true, mode: 'documentation' });
+      const button = findButton(app, /Documentation/i);
+      button.simulate('click');
       const landingpage = findButton(app, /Glitch Single Image/i);
       expect(landingpage.exists()).toBe(false);
       const doc = app.find('#documentationComp');
       expect(doc.exists()).toBe(true);
+    });
+
+    test('Properly handles change to single glitch', () => {
+      const button = findButton(app, /Glitch Single Image/i);
+      button.simulate('click');
+      const landingpage = findButton(app, /Glitch Single Image/i);
+      expect(landingpage.exists()).toBe(false);
+      const single = app.find('#singleComp');
+      expect(single.exists()).toBe(true);
     });
 
     test('Buttons work', () => {
@@ -70,6 +81,13 @@ describe('App tests', () => {
       expect(landingpage.exists()).toBe(true);
       landingpage.simulate('click');
       expect(app.state().mode).toBe('uploadSingle');
+    });
+
+    test('Buttons work', () => {
+      const menubar = app.find('#menuBar');
+      expect(menubar.exists()).toBe(true);
+      const button = findButton(menubar, /Login with Google/i);
+      expect(button.exists()).toBe(true);
     });
     //
     // test('Has Options Menu', () => {
