@@ -62,6 +62,16 @@ describe('Single Glitcher tests', () => {
         target: { name: 'sliderQuality', value: 92 }
       });
       expect(singleGlitch.state().quality).toBe(92);
+      const slider2 = singleGlitch.find('#glitchDistortion');
+      slider2.simulate('change', {
+        target: { name: 'sliderDistortion', value: 92 }
+      });
+      expect(singleGlitch.state().distortion).toBe(92);
+      const slider3 = singleGlitch.find('#glitchAmount');
+      slider3.simulate('change', {
+        target: { name: 'sliderAmount', value: 92 }
+      });
+      expect(singleGlitch.state().quality).toBe(92);
     });
 
     test('No Download Button Originally', () => {

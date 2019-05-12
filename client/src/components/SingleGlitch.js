@@ -267,6 +267,7 @@ class SingleGlitch extends Component {
               <input
                 id="glitchAmount"
                 className="slider"
+                name="sliderAmount"
                 disabled={this.state.glitchControlled}
                 type="range"
                 min="1"
@@ -315,6 +316,7 @@ class SingleGlitch extends Component {
               <input
                 className="slider"
                 id="glitchDistortion"
+                name="sliderDistortion"
                 disabled={this.state.glitchControlled}
                 type="range"
                 min="1"
