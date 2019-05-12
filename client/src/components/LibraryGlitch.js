@@ -1,5 +1,4 @@
 /* eslint-disable prefer-destructuring */
-
 import React, { Component } from 'react';
 import {
   Container,
@@ -65,64 +64,6 @@ class Glitch extends Component {
     }
   }
 
-  /*glitcher() {
-    const currentSaved = [];
-    const origArray = this.state.originalFiles;
-    origArray.forEach(function(elem) {
-      let data = elem;
-      const originalImage = data;
-      //convert to hex to find "0xFF DA", which marks the start of the actual image encoding
-      const hexString = Buffer.from(
-        data.slice(23, data.length),
-        'base64'
-      ).toString('hex');
-      let startOfImg = Math.floor(hexString.indexOf('ffda') * 1.3); //multiply by 1.3 just in case theres some extra buffer
-      //some images always have an index of 2087, even if it should be a larger number
-      if (startOfImg === 2087) {
-        startOfImg += startOfImg;
-      }
-      //if for some reason the tag is not found
-      if (startOfImg === -1) {
-        startOfImg = hexString.length / 10;
-      }
-
-      //distorition level determines how many times each operation happens
-      for (let i = 0; i < this.state.distortion; i++) {
-        //needs to be a multiple of 4 to keep valid hex format
-        const rand =
-          4 *
-          Math.floor(
-            (data.length / 10000) *
-              Math.floor(Math.floor(Math.random() * Math.floor(20)))
-          );
-        const whichGlitch = Math.floor(Math.random() * Math.floor(2));
-        //a random block of data that is used by Glitches 1 and 2
-        const dataBlock = data.slice(startOfImg, startOfImg + rand);
-
-        //deletion
-        if (whichGlitch === 0) {
-          data =
-            data.slice(0, startOfImg) +
-            data.slice(startOfImg + rand, data.length);
-
-          //move code around
-        } else if (whichGlitch === 1) {
-          data =
-            data.slice(0, startOfImg + rand * 2) +
-            dataBlock +
-            data.slice(startOfImg + rand * 2, data.length);
-        }
-      }
-      //save this img orig and glitch
-      const dataArray = [originalImage, data];
-      currentSaved.push(dataArray);
-    }, this);
-
-    //call callback with prop of glitched and orig imgs
-    console.log(currentSaved);
-    this.props.callback(currentSaved);
-  }*/
-
   //set state for spinner, call glitcher
   handleGlitch() {
     this.setState({ glitchLoading: true }, () => {
@@ -167,7 +108,7 @@ class Glitch extends Component {
     });
   }
 
-  //function to draw new image on canvas and creat valid png from pixels
+  //function to draw new image on canvas and create valid png from pixels
   renderImage(src64, width, height) {
     const promise = new Promise(resolve => {
       const canvas = document.createElement('canvas');
@@ -210,6 +151,7 @@ class Glitch extends Component {
           <FormGroup check className="options random">
             <Label check>
               <Input
+                className="random-radio"
                 type="radio"
                 name="options"
                 onChange={this.setRandom}
@@ -225,7 +167,12 @@ class Glitch extends Component {
         </FormGroup>
         <FormGroup check className="options controlled">
           <Label check>
-            <Input type="radio" name="options" onChange={this.setControlled} />
+            <Input
+              type="radio"
+              name="options"
+              onChange={this.setControlled}
+              className="control-radio"
+            />
             <b>Controlled:</b>
             <FormText color="muted">
               This will allow you to have more control over your glitch. Use the
@@ -311,7 +258,7 @@ class Glitch extends Component {
       previewImage = <img className="folder-icon" src={placeholder} alt="" />;
     }
     if (this.state.glitchLoading) {
-      loader = <Spinner color="primary" />;
+      loader = <Spinner className="loading-icon" color="primary" />;
     }
 
     let glitchButtonStatus = false;
