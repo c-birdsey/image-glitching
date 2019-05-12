@@ -52,6 +52,56 @@ describe('Single Glitcher tests', () => {
       expect(singleGlitch.state().glitchControlled).toEqual('');
     });
 
+    // test('Testing Profile', () => {
+    //   singleGlitch.setState({loggedIn: true,
+    //   currentImage: testimg});
+    //   const button = findButton(singleGlitch, /Randomize/i);
+    //   button.simulate('click');
+    //   expect(singleGlitch.state().savedGlitches).toEqual([]);
+    //   const pin = findButton(singleGlitch, /Pin Glitch/i);
+    //   pin.simulate('click');
+    //   expect(singleGlitch.state().savedGlitches).toEqual([testimg]);
+    //   const img = singleGlitch.find('#savedGlitch');
+    //   expect(img.exists()).toBe(true);
+    //   img.simulate('click');
+    //   const buttonProf = singleGlitch.find('#profilebutton');
+    //   expect(buttonProf.exists()).toBe(true);
+    //   buttonProf.simulate('click');
+    // });
+
+    test('Can Change to Back to Random Glitch', () => {
+      const radio = singleGlitch.find('#controlled').first();
+      expect(radio.exists()).toBe(true);
+      radio.simulate('change');
+      expect(singleGlitch.state().glitchControlled).toEqual('');
+      const radioRandom = singleGlitch.find('#randomize').first();
+      expect(radioRandom.exists()).toBe(true);
+      radioRandom.simulate('change');
+      expect(singleGlitch.state().glitchControlled).toEqual('disabled');
+    });
+
+    test('Sliders Change State', () => {
+      const radio = singleGlitch.find('#controlled').first();
+      expect(radio.exists()).toBe(true);
+      radio.simulate('change');
+      expect(singleGlitch.state().glitchControlled).toEqual('');
+      const slider = singleGlitch.find('#glitchQuality');
+      slider.simulate('change', {
+        target: { name: 'sliderQuality', value: 92 }
+      });
+      expect(singleGlitch.state().quality).toBe(92);
+      const slider2 = singleGlitch.find('#glitchDistortion');
+      slider2.simulate('change', {
+        target: { name: 'sliderDistortion', value: 92 }
+      });
+      expect(singleGlitch.state().distortion).toBe(92);
+      const slider3 = singleGlitch.find('#glitchAmount');
+      slider3.simulate('change', {
+        target: { name: 'sliderAmount', value: 92 }
+      });
+      expect(singleGlitch.state().quality).toBe(92);
+    });
+
     test('No Download Button Originally', () => {
       const button = findButton(singleGlitch, /Download Selected/i);
       expect(button.exists()).toBe(false);
