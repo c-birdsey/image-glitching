@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { findButton } from './setupTests';
 import App from './App';
-import MenuBar from './components/MenuBar';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
