@@ -52,6 +52,17 @@ describe('Single Glitcher tests', () => {
       expect(singleGlitch.state().glitchControlled).toEqual('');
     });
 
+    test('Can Change to Back to Random Glitch', () => {
+      const radio = singleGlitch.find('#controlled').first();
+      expect(radio.exists()).toBe(true);
+      radio.simulate('change');
+      expect(singleGlitch.state().glitchControlled).toEqual('');
+      const radioRandom = singleGlitch.find('#randomize').first();
+      expect(radioRandom.exists()).toBe(true);
+      radioRandom.simulate('change');
+      expect(singleGlitch.state().glitchControlled).toEqual('disabled');
+    });
+
     test('Sliders Change State', () => {
       const radio = singleGlitch.find('#controlled').first();
       expect(radio.exists()).toBe(true);

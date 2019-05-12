@@ -163,7 +163,7 @@ class SingleGlitch extends Component {
           this.setState({ savedGlitches: newSavedGlitches });
           // need to disable save for image after
           // it has been saved to a user's profile
-          console.log(response);
+          //console.log(response);
         })
         .catch(err => {
           console.log(err);
@@ -219,6 +219,7 @@ class SingleGlitch extends Component {
           <FormGroup check className="options">
             <Label check>
               <Input
+                id="randomize"
                 type="radio"
                 name="options"
                 onChange={() => {
