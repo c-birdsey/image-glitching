@@ -4,7 +4,7 @@
 exports.up = function(knex, Promise) {
   return knex.schema.createTable('Images', table => {
     table.increments('id').primary();
-    table.binary('data');
+    table.string('url').notNullable();
     table.string('createdAt').notNullable();
     table.integer('createdBy');
     table
