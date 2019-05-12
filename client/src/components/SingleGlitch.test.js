@@ -52,6 +52,18 @@ describe('Single Glitcher tests', () => {
       expect(singleGlitch.state().glitchControlled).toEqual('');
     });
 
+    test('Sliders Change State', () => {
+      const radio = singleGlitch.find('#controlled').first();
+      expect(radio.exists()).toBe(true);
+      radio.simulate('change');
+      expect(singleGlitch.state().glitchControlled).toEqual('');
+      const slider = singleGlitch.find('#glitchQuality');
+      slider.simulate('change', {
+        target: { name: 'sliderQuality', value: 92 }
+      });
+      expect(singleGlitch.state().quality).toBe(92);
+    });
+
     test('No Download Button Originally', () => {
       const button = findButton(singleGlitch, /Download Selected/i);
       expect(button.exists()).toBe(false);
