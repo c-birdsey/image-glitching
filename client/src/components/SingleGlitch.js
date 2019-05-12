@@ -23,6 +23,20 @@ function toBase64(url) {
   return base64;
 }
 
+//function to convert base64 to jpg
+function base64ToImage(image) {
+  const byteString = atob(image.split(',')[1]);
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i += 1) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  const newBlob = new Blob([ab], {
+    type: 'image/jpeg'
+  });
+  return newBlob;
+}
+
 //function to package images from array into zip for download
 //using jszip framework-- install with npm --save install jszip in client dir
 const downloadZip = props => {
@@ -135,26 +149,25 @@ class SingleGlitch extends Component {
 
   handleProfile() {
     this.state.selected.forEach(i => {
-      const now = new Date();
-      const newImage = {
-        data: this.state.savedGlitches[i],
-        createdAt: now.toISOString()
-      };
-      fetch('/api/images', {
+      const imgString = this.state.savedGlitches[i];
+      const imgFile = base64ToImage(imgString);
+      const formData = new FormData();
+      formData.append('image', imgFile);
+      fetch('/api/image', {
         method: 'POST',
-        body: JSON.stringify(newImage),
-        headers: new Headers({
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        })
+        body: formData
       })
         .then(response => {
-          if (response.ok) {
-            return response.json();
-          }
-          throw new Error(response.statusText);
+          const newSavedGlitches = this.state.savedGlitches;
+          newSavedGlitches.splice(i);
+          this.setState({ savedGlitches: newSavedGlitches });
+          // need to disable save for image after
+          // it has been saved to a user's profile
+          console.log(response);
         })
-        .catch(err => console.log(err)); // eslint-disable-line no-console
+        .catch(err => {
+          console.log(err);
+        });
     });
   }
 

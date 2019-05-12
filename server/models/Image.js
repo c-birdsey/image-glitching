@@ -13,7 +13,7 @@ class Image extends Model {
       required: ['data'],
       properties: {
         id: { type: 'integer' },
-        data: { type: 'binary' },
+        url: { type: 'string' },
         createdAt: { type: 'string', format: 'date-time' }
       }
     };
