@@ -9,7 +9,7 @@ exports.up = function(knex, Promise) {
     table.integer('image');
     table
       .foreign('image')
-      .references('Image.id')
+      .references('Images.id')
       .onDelete('SET NULL');
   });
 };

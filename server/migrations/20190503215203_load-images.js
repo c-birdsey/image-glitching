@@ -10,7 +10,7 @@ exports.up = function(knex, Promise) {
     table.integer('createdBy');
     table
       .foreign('createdBy')
-      .references('User.id')
+      .references('Users.id')
       .onDelete('SET NULL');
   });
 };
