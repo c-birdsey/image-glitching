@@ -24,7 +24,7 @@
   justify-content: center;
 }
 
-.butttonBar {
+.buttonBar {
   vertical-align: middle;
   float: right;
 }
@@ -35,8 +35,9 @@
   margin-right: 45px;
 }
 
-.buttons {
+.buttons-viewer {
   margin: 5px !important;
+  display: inline;
 }
 
 .row {

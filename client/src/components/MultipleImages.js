@@ -188,7 +188,7 @@ class Multiple extends Component {
         <Col xs={6} sm={6} md={5} className="text-right buttonBar">
           {this.state.selected.size === 0 && (
             <Button
-              className="buttons"
+              className="buttons-viewer"
               size="sm"
               color="primary"
               onClick={() => {
@@ -200,7 +200,7 @@ class Multiple extends Component {
           )}
           {this.state.selected.size === 0 && (
             <Button
-              className="buttons"
+              className="buttons-viewer"
               size="sm"
               color="primary"
               onClick={() => {
@@ -212,7 +212,7 @@ class Multiple extends Component {
           )}
           {this.props.loggedIn && this.state.selected.size === 0 && (
             <Button
-              className="buttons"
+              className="buttons-viewer"
               size="sm"
               color="primary"
               onClick={this.handleSaveSpinner}
@@ -223,7 +223,7 @@ class Multiple extends Component {
           {this.state.selected.size !== 0 && (
             <Button
               outline
-              className="buttons"
+              className="buttons-viewer"
               onClick={this.handleDownload}
               size="sm"
               color="primary"
@@ -234,7 +234,7 @@ class Multiple extends Component {
           {this.props.loggedIn && this.state.selected.size !== 0 && (
             <Button
               outline
-              className="buttons"
+              className="buttons-viewer"
               size="sm"
               color="primary"
               onClick={this.handleSaveSpinner}
