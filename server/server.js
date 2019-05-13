@@ -166,6 +166,15 @@ app.post(
   }
 );
 
+// removes an image from the server
+app.delete('/api/image/:id', authenticationMiddleware, (req, res, next) => {
+  Image.query()
+    .deleteById(req.params.id)
+    .then(result => {
+      res.sendStatus(200);
+    }, next);
+});
+
 // returns all of a user's saved images
 app.get('/profile/images', authenticationMiddleware, (req, res, next) => {
   Image.query()
@@ -177,12 +186,13 @@ app.get('/profile/images', authenticationMiddleware, (req, res, next) => {
 
 // creates a new comment
 app.post(
-  '/api/image:id/comments',
+  '/api/image/:id/comments',
   authenticationMiddleware,
   (req, res, next) => {
     const newComment = Object.assign({}, req.body, {
-      image: req.params.id
+      image: parseInt(req.params.id, 10)
     });
+    console.log(newComment);
     Comment.query()
       .insertAndFetch(newComment)
       .then(comment => {
@@ -193,7 +203,7 @@ app.post(
 
 // returns comments for an image
 app.get(
-  '/api/image:id/comments',
+  '/api/image/:id/comments',
   authenticationMiddleware,
   (req, res, next) => {
     Comment.query()
@@ -203,6 +213,15 @@ app.get(
       }, next);
   }
 );
+
+// removes a comment
+app.delete('/api/comments/:id', authenticationMiddleware, (req, res, next) => {
+  Comment.query()
+    .deleteById(req.params.id)
+    .then(result => {
+      res.sendStatus(200);
+    }, next);
+});
 
 app.post(
   '/login',

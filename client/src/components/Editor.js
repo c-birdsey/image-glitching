@@ -16,8 +16,8 @@ class Editor extends Component {
   handleSave() {
     const now = new Date();
     const newComment = {
-      content: this.state.content,
-      time: now.toISOString()
+      body: this.state.content,
+      createdAt: now.toISOString()
     };
     this.props.complete(newComment);
   }

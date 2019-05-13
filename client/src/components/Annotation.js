@@ -5,20 +5,6 @@ import Editor from './Editor';
 import { saveAs } from 'file-saver';
 import PropTypes from 'prop-types';
 
-export function Comment(props) {
-  const {
-    comment: { content, time }
-  } = props;
-
-  return (
-    <div className="comment-container">
-      <div className="comment-text">{content}</div>
-      <p className="comment-time">{new Date(time).toLocaleString()}</p>
-      <hr className="divider" />
-    </div>
-  );
-}
-
 function toBase64(url) {
   const base64 = url.replace(/^data:image\/[a-z]+;base64,/, '');
   return base64;
@@ -41,14 +27,8 @@ const downloadZip = props => {
 class Annotation extends Component {
   constructor(props) {
     super(props);
-
-    const example = {
-      content:
-        "Follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is The story follows the world of a human's body which is",
-      time: new Date('2019-01-01T00:00:00.000000Z')
-    };
     this.state = {
-      annotations: [example],
+      annotations: [],
       editing: false
     };
 
@@ -56,15 +36,63 @@ class Annotation extends Component {
     this.handleNew = this.handleNew.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
+    this.removeComment = this.removeComment.bind(this);
+  }
+
+  componentDidMount() {
+    fetch(`/api/image/${this.props.Picture.id}/comments`, {
+      headers: new Headers({ Accept: 'application/json' })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status_text);
+        }
+        return response.json();
+      })
+      .then(comments => {
+        this.setState({ annotations: comments });
+      })
+      .catch(err => console.log(err));
   }
 
   handleEditorReturn(newComment) {
     if (newComment) {
-      const newAnnotations = this.state.annotations;
-      newAnnotations.push(newComment);
-      this.setState({ annotations: newAnnotations });
+      fetch(`/api/image/${this.props.Picture.id}/comments`, {
+        method: 'POST',
+        body: JSON.stringify(newComment),
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.status_text);
+          }
+          return response.json();
+        })
+        .then(comment => {
+          const newAnnotations = this.state.annotations;
+          newAnnotations.push(comment);
+          this.setState({ annotations: newAnnotations });
+        })
+        .catch(err => console.log(err));
     }
     this.setState({ editing: false });
+  }
+
+  removeComment(oldComment) {
+    fetch(`/api/comments/${oldComment.id}`, { method: 'DELETE' })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status_text);
+        }
+        const newAnnotations = this.state.annotations.filter(
+          comment => comment.id !== oldComment.id
+        );
+        this.setState({ annotations: newAnnotations });
+      })
+      .catch(err => console.log(err));
   }
 
   handleNew() {
@@ -72,9 +100,10 @@ class Annotation extends Component {
   }
 
   handleDelete() {
-    console.log('delete from server');
+    this.props.deleteGlitch(this.props.Picture);
     this.props.Return();
   }
+
   handleDownload() {
     const toDownload = [];
     let allAnnotations = '';
@@ -91,9 +120,26 @@ class Annotation extends Component {
   render() {
     const { Return } = this.props;
     const { editing, annotations } = this.state;
-    let i = 0;
     const comments = annotations.map(element => {
-      return <Comment key={i++} comment={element} />;
+      return (
+        <div key={element.id} className="comment-container">
+          <div className="comment-text">{element.body}</div>
+          <div className="row">
+            <button
+              className="btn btn-link"
+              onClick={() => {
+                this.removeComment(element);
+              }}
+            >
+              Delete
+            </button>
+            <p className="comment-time">
+              {new Date(element.createdAt).toLocaleString()}
+            </p>
+          </div>
+          <hr className="divider" />
+        </div>
+      );
     });
 
     const returnButton = (
@@ -178,7 +224,8 @@ class Annotation extends Component {
 
 Annotation.propTypes = {
   Return: PropTypes.func.isRequired,
-  Picture: PropTypes.string.isRequired
+  Picture: PropTypes.object.isRequired,
+  deleteGlitch: PropTypes.func.isRequired
 };
 
 export default Annotation;

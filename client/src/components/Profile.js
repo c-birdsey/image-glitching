@@ -38,6 +38,8 @@ class Profile extends Component {
       currentGlitch: undefined,
       images: []
     };
+
+    this.deleteGlitch = this.deleteGlitch.bind(this);
   }
 
   componentDidMount() {
@@ -56,6 +58,18 @@ class Profile extends Component {
       .catch(err => console.log(err));
   }
 
+  deleteGlitch(glitch) {
+    fetch(`/api/image/${glitch.id}`, { method: 'DELETE' })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status_text);
+        }
+        const newImages = this.state.images.filter(img => img.id !== glitch.id);
+        this.setState({ images: newImages });
+      })
+      .catch(err => console.log(err));
+  }
+
   render() {
     if (this.state.currentGlitch) {
       return (
@@ -64,6 +78,7 @@ class Profile extends Component {
             id="annotateComp"
             Return={() => this.setState({ currentGlitch: undefined })}
             Picture={this.state.currentGlitch}
+            deleteGlitch={this.deleteGlitch}
           />
         </div>
       );
