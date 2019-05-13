@@ -85,24 +85,32 @@ class SingleGlitch extends Component {
   }
 
   handleShow() {
-    const file = document.querySelector('input').files[0];
-    if (file) {
-      // checks if files uploaded are images in the format jpeg | jpg |png
-      if (/\.(jpe?g|png)$/i.test(file.name)) {
-        const reader = new FileReader();
-        reader.addEventListener(
-          'load',
-          () => {
-            this.setState({ originalImage: reader.result });
-            this.setState({ currentImage: reader.result });
-            // clear any pinned glitches
-            const Selected = new Set();
-            this.setState({ savedGlitches: [] });
-            this.setState({ selected: Selected });
-          },
-          false
-        );
-        reader.readAsDataURL(file);
+    let response = true;
+    if (this.state.currentImage !== undefined) {
+      response = window.confirm(
+        'If you upload a new image your pinned glitches will be lost. Do you want to continue?'
+      );
+    }
+    if (response) {
+      const file = document.querySelector('input').files[0];
+      if (file) {
+        // checks if files uploaded are images in the format jpeg | jpg |png
+        if (/\.(jpe?g|png)$/i.test(file.name)) {
+          const reader = new FileReader();
+          reader.addEventListener(
+            'load',
+            () => {
+              this.setState({ originalImage: reader.result });
+              this.setState({ currentImage: reader.result });
+              // clear any pinned glitches
+              const Selected = new Set();
+              this.setState({ savedGlitches: [] });
+              this.setState({ selected: Selected });
+            },
+            false
+          );
+          reader.readAsDataURL(file);
+        }
       }
     }
   }
@@ -470,9 +478,9 @@ class SingleGlitch extends Component {
               <p className="pinned-descriptor">
                 Pinned glitches will appear below. You can select individual
                 images to either save to your profile, or download directly.
-                Once you save an image, it will disappear from this bar to 
-                indicate that it has been saved to your profile. If you 
-                navigate away from this page, these pinned glitches will be lost.
+                Once you save an image, it will disappear from this bar to
+                indicate that it has been saved to your profile. If you navigate
+                away from this page, these pinned glitches will be lost.
               </p>
             </legend>
             {imageswithCheck}
