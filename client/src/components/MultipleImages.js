@@ -19,7 +19,7 @@ function base64ToImage(image) {
 }
 
 //function to convert url to pure base64
-function toBase64(url) {
+export function toBase64(url) {
   const base64 = url.replace(/^data:image\/[a-z]+;base64,/, '');
   return base64;
 }

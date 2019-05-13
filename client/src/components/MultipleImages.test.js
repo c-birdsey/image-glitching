@@ -1,7 +1,9 @@
+//const { toBase64 } = require('./MultipleImages')
 import React from 'react';
 import { mount } from 'enzyme';
 import MultipleImages from './MultipleImages.js';
-import { sampleImages, findButton } from '../setupTests';
+import { sampleImages, findButton, sampleSrc } from '../setupTests';
+import { toBase64 } from './MultipleImages.js';
 
 describe('PropTypes in Glitched Library', () => {
   test('Has PropTypes defined', () => {
@@ -423,4 +425,33 @@ describe('Images and Buttons display plus functionality', () => {
       expect(backCallback).toHaveBeenCalledTimes(1);
     });
   });
+  describe('toBase64 tests', () => {
+    test('toBase64 removes beginning tag of URL', () => {
+      const tester = toBase64(sampleSrc);
+      expect(tester).not.toEqual(sampleSrc);
+    });
+
+    test('toBase64 returns something', () => {
+      const tester = toBase64(sampleSrc);
+      expect(tester).not.toBeUndefined();
+    });
+  });
+  // describe('handleSave tests', () => {
+  //   beforeEach(async () => {
+  //     multi = mount(
+  //       <MultipleImages
+  //         images={sampleImages}
+  //         back={backCallback}
+  //         loggedIn={false}
+  //       />
+  //     );
+  //   });
+  //   test('resets state', () =>{
+  //     let saveSet = new Set([sampleImage]);
+  //     multi.setState({'selected': saveSet});
+  //     handleSave();
+  //     let setReference = new Set();
+  //     expect(multi.state('selected')).toBe(setReference);
+  //   });
+  // });
 });
