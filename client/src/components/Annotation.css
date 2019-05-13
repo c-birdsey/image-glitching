@@ -56,6 +56,7 @@
   font-size: small;
   color: grey;
   text-align: right;
+  margin-bottom: 0 !important;
 }
 
 .add-button {
@@ -72,6 +73,15 @@
 
 .glitch-buttons {
   padding-left: 5px !important;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.glitch-time {
+  font-size: small;
+  color: grey;
+  margin-bottom: 0;
 }
 
 .anno-buttons {

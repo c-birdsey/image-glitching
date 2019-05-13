@@ -5,6 +5,19 @@ import { saveAs } from 'file-saver';
 import Checkbox from '@material-ui/core/Checkbox';
 import PropTypes from 'prop-types';
 
+function base64ToImage(image) {
+  const byteString = atob(image.split(',')[1]);
+  const ab = new ArrayBuffer(byteString.length);
+  const ia = new Uint8Array(ab);
+  for (let i = 0; i < byteString.length; i += 1) {
+    ia[i] = byteString.charCodeAt(i);
+  }
+  const newBlob = new Blob([ab], {
+    type: 'image/jpeg'
+  });
+  return newBlob;
+}
+
 //function to convert url to pure base64
 function toBase64(url) {
   const base64 = url.replace(/^data:image\/[a-z]+;base64,/, '');
@@ -70,40 +83,54 @@ class Multiple extends Component {
       for (let i = 0; i < this.state.imgArray.length; i += 1) {
         newSelected.add(i);
       }
-
       this.setState({ selected: newSelected });
     }
 
     this.state.selected.forEach(i => {
-      const now = new Date();
-      const newImage = {
-        data: this.state.imgArray[i],
-        createdAt: now.toISOString()
-      };
-      fetch('/api/images', {
+      const image = this.state.imgArray[i];
+      const originalString = image[0];
+      const glitchString = image[1];
+      const originalFile = base64ToImage(originalString);
+      const glitchFile = base64ToImage(glitchString);
+
+      const originalForm = new FormData();
+      originalForm.append('image', originalFile);
+      fetch('/api/image/original', {
         method: 'POST',
-        body: JSON.stringify(newImage),
-        headers: new Headers({
-          'Content-Type': 'application/json'
-        })
+        body: originalForm
       })
         .then(response => {
-          if (response.ok) {
-            return response.json();
+          if (!response.ok) {
+            throw new Error(response.status_text);
           }
-          throw new Error(response.status_text);
+          return response.json();
         })
-        .catch(err => console.log(err)); // eslint-disable-line no-console
+        .then(data => {
+          const glitchForm = new FormData();
+          glitchForm.append('original', data.url);
+          glitchForm.append('image', glitchFile);
+          fetch('/api/image/glitch', {
+            method: 'POST',
+            body: glitchForm
+          })
+            .then(res => {
+              if (!res.ok) {
+                throw new Error(res.status_text);
+              } else {
+                // TODO: Add confirmation message
+                this.props.back();
+              }
+            })
+            .catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
     });
-    console.log('saving');
-    this.setState({ selected: new Set() });
   }
 
   render() {
     const array = this.state.imgArray;
     let i = 0; //used for unique keys
     const images = array.map(elem => {
-      i++;
       return (
         <Container key={i.toString()} fluid>
           <Row className="displayRow">

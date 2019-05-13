@@ -14,6 +14,7 @@ class Image extends Model {
       properties: {
         id: { type: 'integer' },
         url: { type: 'string' },
+        original: { type: 'string' },
         createdAt: { type: 'string', format: 'date-time' }
       }
     };

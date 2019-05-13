@@ -140,19 +140,23 @@ class Annotation extends Component {
           <Col xs={12} md={10} lg={6} className="img-col">
             <h2>Original Image</h2>
             <div className="img-container">
-              <img className="pic" src={this.props.Picture} alt="" />
+              <img className="pic" src={this.props.Picture.original} alt="" />
             </div>
           </Col>
           <Col xs={12} md={10} lg={6} className="img-col">
             <h2>Glitched Image</h2>
             <div className="img-container">
-              <img className="pic" src={this.props.Picture} alt="" />
+              <img className="pic" src={this.props.Picture.url} alt="" />
             </div>
           </Col>
         </Row>
         <Row xs={12} md={12} lg={12} className="glitch-buttons">
           {returnButton}
           {deleteButton}
+          <p className="glitch-time ml-auto mr-3">
+            <span className="font-weight-bold">Created: </span>
+            {new Date(this.props.Picture.createdAt).toLocaleString()}
+          </p>
         </Row>
         <Row className="annotation-row">
           <Col xs={12} md={12} lg={12}>
