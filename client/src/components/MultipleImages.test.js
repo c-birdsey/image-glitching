@@ -21,13 +21,13 @@ describe('Images and Buttons display plus functionality', () => {
     });
 
     test('Glitched images are displayed', () => {
-      let img = multi.find('.glitched-1');
+      let img = multi.find('.glitched-0');
       expect(img.exists()).toBe(true);
 
-      img = multi.find('.glitched-3');
+      img = multi.find('.glitched-1');
       expect(img.exists()).toBe(true);
 
-      img = multi.find('.glitched-5');
+      img = multi.find('.glitched-2');
       expect(img.exists()).toBe(true);
     });
   });
@@ -52,7 +52,7 @@ describe('Images and Buttons display plus functionality', () => {
       // since sampleImages has three items, then there will be three glitched images with class name glitched-1, -3, -5.
 
       test('Disappearance of Back to Glitcher when image is selected/ clicked', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         expect(img.exists()).toBe(true);
         img.simulate('click');
 
@@ -61,7 +61,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Appearance of Back to Glitcher when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -77,7 +77,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Disappearance of Download All button when image is selected/ clicked', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         expect(img.exists()).toBe(true);
         img.simulate('click');
 
@@ -86,7 +86,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Appearance of Download All button when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -95,10 +95,10 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Download All button remains undisplayed when some images are still selected', () => {
-        let img = multi.find('.glitched-1');
+        let img = multi.find('.glitched-0');
         img.simulate('click');
 
-        img = multi.find('.glitched-3');
+        img = multi.find('.glitched-1');
         img.simulate('click');
 
         img.simulate('click');
@@ -115,7 +115,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Disappearance of Save All button when image is selected/ clicked', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         expect(img.exists()).toBe(true);
         img.simulate('click');
 
@@ -124,7 +124,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Appearance of Save All button when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -133,10 +133,10 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Save All button remains undisplayed when some images are still selected', () => {
-        let img = multi.find('.glitched-1');
+        let img = multi.find('.glitched-0');
         img.simulate('click');
 
-        img = multi.find('.glitched-3');
+        img = multi.find('.glitched-1');
         img.simulate('click');
 
         img.simulate('click');
@@ -153,7 +153,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Disappearance of Download Selected button when image is selected/ clicked', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         expect(img.exists()).toBe(true);
         img.simulate('click');
 
@@ -162,7 +162,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Appearance of Download Selected button when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -171,10 +171,10 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Download All button remains undisplayed when some images are still selected', () => {
-        let img = multi.find('.glitched-1');
+        let img = multi.find('.glitched-0');
         img.simulate('click');
 
-        img = multi.find('.glitched-3');
+        img = multi.find('.glitched-1');
         img.simulate('click');
 
         img.simulate('click');
@@ -191,7 +191,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Disappearance of Save Selected button when image is selected/ clicked', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         expect(img.exists()).toBe(true);
         img.simulate('click');
 
@@ -200,7 +200,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Appearance of Save Selected button when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -209,10 +209,10 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Save Selected button remains undisplayed when some images are still selected', () => {
-        let img = multi.find('.glitched-1');
+        let img = multi.find('.glitched-0');
         img.simulate('click');
 
-        img = multi.find('.glitched-3');
+        img = multi.find('.glitched-1');
         img.simulate('click');
 
         img.simulate('click');
@@ -238,7 +238,7 @@ describe('Images and Buttons display plus functionality', () => {
 
       // since sampleImages has three items, then there will be three glitched images with class name glitched-1, -3, -5.
       test('Disappearance of Back to Glitcher when image is selected/ clicked', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         expect(img.exists()).toBe(true);
         img.simulate('click');
 
@@ -247,7 +247,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Appearance of Back to Glitcher when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -263,7 +263,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Disappearance of Download All button when image is selected/ clicked', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         expect(img.exists()).toBe(true);
         img.simulate('click');
 
@@ -272,7 +272,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Appearance of Download All button when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -281,10 +281,10 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Download All button remains undisplayed when some images are still selected', () => {
-        let img = multi.find('.glitched-1');
+        let img = multi.find('.glitched-0');
         img.simulate('click');
 
-        img = multi.find('.glitched-3');
+        img = multi.find('.glitched-1');
         img.simulate('click');
 
         img.simulate('click');
@@ -310,7 +310,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Appearance of Save All button when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -319,10 +319,10 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Save All button remains undisplayed when some images are still selected', () => {
-        let img = multi.find('.glitched-1');
+        let img = multi.find('.glitched-0');
         img.simulate('click');
 
-        img = multi.find('.glitched-3');
+        img = multi.find('.glitched-1');
         img.simulate('click');
 
         img.simulate('click');
@@ -339,7 +339,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Disappearance of Download Selected button when image is selected/ clicked', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         expect(img.exists()).toBe(true);
         img.simulate('click');
 
@@ -348,7 +348,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Appearance of Download Selected button when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -357,10 +357,10 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Download All button remains undisplayed when some images are still selected', () => {
-        let img = multi.find('.glitched-1');
+        let img = multi.find('.glitched-0');
         img.simulate('click');
 
-        img = multi.find('.glitched-3');
+        img = multi.find('.glitched-1');
         img.simulate('click');
 
         img.simulate('click');
@@ -386,7 +386,7 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Disappearance of Save Selected button when image is selected/clicked again', () => {
-        const img = multi.find('.glitched-1');
+        const img = multi.find('.glitched-0');
         img.simulate('click');
         img.simulate('click');
 
@@ -395,10 +395,10 @@ describe('Images and Buttons display plus functionality', () => {
       });
 
       test('Save Selected button remains undisplayed when some images are still selected', () => {
-        let img = multi.find('.glitched-1');
+        let img = multi.find('.glitched-0');
         img.simulate('click');
 
-        img = multi.find('.glitched-3');
+        img = multi.find('.glitched-1');
         img.simulate('click');
 
         img.simulate('click');
