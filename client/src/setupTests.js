@@ -27,6 +27,7 @@ export const findButton = (comp, labelRegEx) => {
   }
   return button;
 };
+
 export const findButtonIcon = (comp, IconName) => {
   // Find <input type="button" ... />
   let button = comp.find(IconName);
@@ -39,4 +40,8 @@ export const findButtonIcon = (comp, IconName) => {
       );
   }
   return button;
+};
+
+export const flushPromises = () => {
+  return new Promise(resolve => setImmediate(resolve));
 };
