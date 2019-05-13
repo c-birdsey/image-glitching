@@ -125,6 +125,9 @@ class Multiple extends Component {
         })
         .catch(err => console.log(err));
     });
+
+    // removing all items in selected to avoid change in buttons selected.
+    this.setState({ selected: new Set() });
   }
 
   render() {
