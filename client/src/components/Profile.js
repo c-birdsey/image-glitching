@@ -69,6 +69,14 @@ class Profile extends Component {
       );
     }
 
+    let textPlaceholder;
+    if (this.state.images.length === 0) {
+      textPlaceholder = (
+        <p className="placeholder-title">
+          You have no saved images. Return to the home page to begin glitching.
+        </p>
+      );
+    }
     return (
       <div className="profile">
         <Nav tabs>
@@ -84,6 +92,7 @@ class Profile extends Component {
           <TabContent activeTab={this.state.activeTab}>
             <TabPane tabId="1">
               <h4 className="lib-title">Saved Glitches:</h4>
+              {textPlaceholder}
               <GlitchLib
                 select={element => this.setState({ currentGlitch: element })}
                 images={this.state.images}
