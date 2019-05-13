@@ -91,9 +91,9 @@ class Annotation extends Component {
   render() {
     const { Return } = this.props;
     const { editing, annotations } = this.state;
-
+    let i = 0;
     const comments = annotations.map(element => {
-      return <Comment comment={element} />;
+      return <Comment key={i++} comment={element} />;
     });
 
     const returnButton = (
