@@ -17,6 +17,7 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const { Model } = require('objection');
 const User = require('./models/User');
 const Image = require('./models/Image');
+const Comment = require('./models/Comment');
 
 Model.knex(knex);
 
@@ -135,13 +136,12 @@ const parser = multer({ storage });
 
 /* ============================================= */
 
-// saves an image to profile
+// saves glitched image to profile
 app.post(
   '/api/image/glitch',
   authenticationMiddleware,
   parser.single('image'),
   (req, res, next) => {
-    console.log(req.body);
     const newImage = {
       url: req.file.url,
       original: req.body.original,
@@ -156,44 +156,59 @@ app.post(
   }
 );
 
+// saves original image to cloudinary
 app.post(
   '/api/image/original',
   authenticationMiddleware,
   parser.single('image'),
   (req, res, next) => {
-    console.log(req.file.url);
     res.status(200).send({ url: req.file.url });
   }
 );
 
-// testing purposes only
-app.get('/images', (request, response, next) => {
-  Image.query().then(images => {
-    response.send(images);
-  }, next);
-});
-
 // returns all of a user's saved images
-app.get('/profile/images', (request, response, next) => {
+app.get('/profile/images', authenticationMiddleware, (req, res, next) => {
   Image.query()
-    .where('createdBy', request.user.id)
+    .where('createdBy', req.user.id)
     .then(images => {
-      response.send(images);
+      res.send(images);
     }, next);
 });
 
-// development purposes only
-app.get('/users', (request, response, next) => {
-  User.query().then(users => {
-    response.send(users);
-  }, next);
-});
+// creates a new comment
+app.post(
+  '/api/image:id/comments',
+  authenticationMiddleware,
+  (req, res, next) => {
+    const newComment = Object.assign({}, req.body, {
+      image: req.params.id
+    });
+    Comment.query()
+      .insertAndFetch(newComment)
+      .then(comment => {
+        res.send(comment);
+      }, next);
+  }
+);
+
+// returns comments for an image
+app.get(
+  '/api/image:id/comments',
+  authenticationMiddleware,
+  (req, res, next) => {
+    Comment.query()
+      .where('image', req.params.id)
+      .then(comments => {
+        res.send(comments);
+      }, next);
+  }
+);
 
 app.post(
   '/login',
   passport.authenticate('bearer', { session: true }),
-  (request, response, next) => {
-    response.sendStatus(200);
+  (req, res, next) => {
+    res.sendStatus(200);
   }
 );
 

@@ -23,7 +23,7 @@ class User extends Model {
 
   static get relationMappings() {
     return {
-      owner: {
+      images: {
         relation: Model.HasManyRelation,
         modelClass: Image,
         join: {
