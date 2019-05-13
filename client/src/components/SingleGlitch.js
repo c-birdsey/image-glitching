@@ -470,7 +470,9 @@ class SingleGlitch extends Component {
               <p className="pinned-descriptor">
                 Pinned glitches will appear below. You can select individual
                 images to either save to your profile, or download directly.
-                Once you leave this page, these glitches will be lost.
+                Once you save an image, it will disappear from this bar to 
+                indicate that it has been saved to your profile. If you 
+                navigate away from this page, these pinned glitches will be lost.
               </p>
             </legend>
             {imageswithCheck}
