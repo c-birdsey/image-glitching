@@ -125,6 +125,9 @@ class App extends Component {
             back={() => {
               this.setState({ mode: 'uploadMultiple' });
             }}
+            profile={() => {
+              this.setState({ mode: 'profile' });
+            }}
           />
         </div>
       );

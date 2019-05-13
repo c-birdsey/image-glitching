@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Button } from 'reactstrap';
+import { Container, Row, Col, Button, Spinner } from 'reactstrap';
 import './multiple.css';
 import { saveAs } from 'file-saver';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -50,12 +50,14 @@ class Multiple extends Component {
 
     this.state = {
       imgArray: this.props.images,
-      selected: Selected
+      selected: Selected,
+      saveLoading: false
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleDownload = this.handleDownload.bind(this);
     this.handleSave = this.handleSave.bind(this);
+    this.handleSaveSpinner = this.handleSaveSpinner.bind(this);
   }
 
   handleChange = i => () => {
@@ -74,6 +76,13 @@ class Multiple extends Component {
       downloadArray.push(this.state.imgArray[i])
     );
     downloadZip(downloadArray);
+  }
+
+  //set state for spinner, call glitcher
+  handleSaveSpinner() {
+    this.setState({ saveLoading: true }, () => {
+      this.handleSave();
+    });
   }
 
   handleSave() {
@@ -118,7 +127,7 @@ class Multiple extends Component {
                 throw new Error(res.status_text);
               } else {
                 // TODO: Add confirmation message
-                this.props.back();
+                this.props.profile();
               }
             })
             .catch(err => console.log(err));
@@ -164,6 +173,79 @@ class Multiple extends Component {
       );
     });
 
+    let loader;
+    if (this.state.saveLoading) {
+      loader = (
+        <Col xs={5} sm={5} md={4} className="text-right loaderBar">
+          <Spinner className="loading-icon" color="primary" />
+        </Col>
+      );
+    }
+
+    let buttons;
+    if (!this.state.saveLoading) {
+      buttons = (
+        <Col xs={6} sm={6} md={5} className="text-right buttonBar">
+          {this.state.selected.size === 0 && (
+            <Button
+              className="buttons"
+              size="sm"
+              color="primary"
+              onClick={() => {
+                this.props.back();
+              }}
+            >
+              Back to Glitcher
+            </Button>
+          )}
+          {this.state.selected.size === 0 && (
+            <Button
+              className="buttons"
+              size="sm"
+              color="primary"
+              onClick={() => {
+                downloadZip(this.state.imgArray);
+              }}
+            >
+              Download All
+            </Button>
+          )}
+          {this.props.loggedIn && this.state.selected.size === 0 && (
+            <Button
+              className="buttons"
+              size="sm"
+              color="primary"
+              onClick={this.handleSaveSpinner}
+            >
+              Save All
+            </Button>
+          )}
+          {this.state.selected.size !== 0 && (
+            <Button
+              outline
+              className="buttons"
+              onClick={this.handleDownload}
+              size="sm"
+              color="primary"
+            >
+              Download Selected
+            </Button>
+          )}
+          {this.props.loggedIn && this.state.selected.size !== 0 && (
+            <Button
+              outline
+              className="buttons"
+              size="sm"
+              color="primary"
+              onClick={this.handleSaveSpinner}
+            >
+              Save Selected
+            </Button>
+          )}
+        </Col>
+      );
+    }
+
     return (
       <Container className="multImages" fluid>
         <Row>
@@ -178,64 +260,8 @@ class Multiple extends Component {
               them to your glitch library, or download locally as a .zip file.
             </p>
           </Col>
-          <Col xs={6} sm={6} md={5} className="text-right buttonBar">
-            {this.state.selected.size === 0 && (
-              <Button
-                className="buttons"
-                size="sm"
-                color="primary"
-                onClick={() => {
-                  this.props.back();
-                }}
-              >
-                Back to Glitcher
-              </Button>
-            )}
-            {this.state.selected.size === 0 && (
-              <Button
-                className="buttons"
-                size="sm"
-                color="primary"
-                onClick={() => {
-                  downloadZip(this.state.imgArray);
-                }}
-              >
-                Download All
-              </Button>
-            )}
-            {this.props.loggedIn && this.state.selected.size === 0 && (
-              <Button
-                className="buttons"
-                size="sm"
-                color="primary"
-                onClick={this.handleSave}
-              >
-                Save All
-              </Button>
-            )}
-            {this.state.selected.size !== 0 && (
-              <Button
-                outline
-                className="buttons"
-                onClick={this.handleDownload}
-                size="sm"
-                color="primary"
-              >
-                Download Selected
-              </Button>
-            )}
-            {this.props.loggedIn && this.state.selected.size !== 0 && (
-              <Button
-                outline
-                className="buttons"
-                size="sm"
-                color="primary"
-                onClick={this.handleSave}
-              >
-                Save Selected
-              </Button>
-            )}
-          </Col>
+          {buttons}
+          {loader}
         </Row>
         {images}
       </Container>
@@ -246,6 +272,7 @@ class Multiple extends Component {
 Multiple.propTypes = {
   images: PropTypes.array.isRequired,
   back: PropTypes.func.isRequired,
+  profile: PropTypes.func.isRequired,
   loggedIn: PropTypes.bool.isRequired
 };
 

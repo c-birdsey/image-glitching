@@ -29,6 +29,12 @@
   float: right;
 }
 
+.loaderBar {
+  vertical-align: middle;
+  float: right;
+  margin-right: 45px;
+}
+
 .buttons {
   margin: 5px !important;
 }
