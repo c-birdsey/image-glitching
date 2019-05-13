@@ -49,13 +49,12 @@
 }
 
 .comment-container {
-  margin: 0 0 15px 0;
+  margin: 1rem 0 1rem 0;
 }
 
 .comment-time {
   font-size: small;
   color: grey;
-  text-align: right;
   margin-bottom: 0 !important;
 }
 
