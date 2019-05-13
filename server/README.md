@@ -1,4 +1,4 @@
-# Project Skeleton Server
+# Image Glitching Server
 
 ## Running
 
