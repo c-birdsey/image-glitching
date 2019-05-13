@@ -7,7 +7,7 @@ import { findButton, findButtonIcon } from '../setupTests';
 
 describe('MenuBar tests', () => {
   describe('Glitcher interface', () => {
-    let libGlitch;
+    let menuBar;
     let status;
     let loggedIn; //eslint-disable-line no-unused-vars
     let IconButton;
@@ -27,7 +27,7 @@ describe('MenuBar tests', () => {
       loggedIn = false;
 
       IconButton = 'IconButton';
-      libGlitch = mount(
+      menuBar = mount(
         <MenuBar
           loggedIn={status}
           profile={profileCallback}
@@ -40,14 +40,14 @@ describe('MenuBar tests', () => {
     });
 
     test(' Has Login button when logged out', () => {
-      let button = findButton(libGlitch, /Login with Google/i);
+      let button = findButton(menuBar, /Login with Google/i);
       expect(button.exists()).toBe(true);
-      button = findButton(libGlitch, /Logout/i);
+      button = findButton(menuBar, /Logout/i);
       expect(button.exists()).toBe(false);
     });
 
     test(' Has Logout button when logged in', () => {
-      libGlitch = mount(
+      menuBar = mount(
         <MenuBar
           loggedIn={true} //eslint-disable-line react/jsx-boolean-value
           profile={profileCallback}
@@ -56,19 +56,19 @@ describe('MenuBar tests', () => {
           logOut={logOutCallback}
         />
       );
-      let button = findButton(libGlitch, /Login with Google/i);
+      let button = findButton(menuBar, /Login with Google/i);
       expect(button.exists()).toBe(false);
-      button = findButton(libGlitch, /Logout/i);
+      button = findButton(menuBar, /Logout/i);
       expect(button.exists()).toBe(true);
     });
 
     test('Has Home Button', () => {
-      const button = findButtonIcon(libGlitch, IconButton);
+      const button = findButtonIcon(menuBar, IconButton);
       expect(button.exists()).toBe(true);
     });
 
     test('Has Home Button callback', () => {
-      const button = findButtonIcon(libGlitch, IconButton);
+      const button = findButtonIcon(menuBar, IconButton);
       button.simulate('click');
       expect(homeCallback).toHaveBeenCalledTimes(1);
     });
@@ -78,7 +78,7 @@ describe('MenuBar tests', () => {
     //in the practical.
 
     // test("handleGoogleLogout callback", ()=>{
-    //   libGlitch = mount(
+    //   menuBar = mount(
     //     <MenuBar
     //       loggedIn={true}
     //       profile={profileCallback}
@@ -87,22 +87,21 @@ describe('MenuBar tests', () => {
     //       logOut={logOutCallback}
     //     />
     //   );
-    //   const button = findButton(libGlitch, /Logout/i)
-    //   button.simulate('click')
+    //   menuBar.instance().handleGoogleLogout();
     //   expect(logOutCallback).toHaveBeenCalledTimes(1);
     // });
     //
     // test("handleGoogleLogin logs into the server", async () =>{
-    //   libGlitch.instance().setState({loggedIn: false});
-    //   expect(libGlitch.state('loggedIn')).toEqual(false);
-    //   console.log(libGlitch.instance().handleGoogleLogin());
-    //   libGlitch.handleGoogleLogin({tokenId:  pseudoServer.goodToken});
+    //   menuBar.instance().setState({loggedIn: false});
+    //   expect(menuBar.state('loggedIn')).toEqual(false);
+    //   console.log(menuBar.instance().handleGoogleLogin());
+    //   menuBar.handleGoogleLogin({tokenId:  pseudoServer.goodToken});
     //   await flushPromises();
-    //   expect(libGlitch.state('loggedIn')).toEqual(true);
+    //   expect(menuBar.state('loggedIn')).toEqual(true);
     // });
 
     test('handleGoogleLogout logs out', () => {
-      libGlitch = mount(
+      menuBar = mount(
         <MenuBar
           loggedIn={true} //eslint-disable-line react/jsx-boolean-value
           profile={profileCallback}
@@ -111,10 +110,10 @@ describe('MenuBar tests', () => {
           logOut={logOutCallback}
         />
       );
-      const button = findButton(libGlitch, /Logout/i);
+      const button = findButton(menuBar, /Logout/i);
       expect(button.exists()).toBe(true);
       button.simulate('click');
-      libGlitch.update();
+      menuBar.update();
       app.update();
       expect(app.state('loggedIn')).toEqual(false);
     });

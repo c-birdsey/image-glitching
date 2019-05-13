@@ -155,7 +155,7 @@ class Glitch extends Component {
                 type="radio"
                 name="options"
                 onChange={this.setRandom}
-                checked
+                onClick={this.setRandom}
               />
               <b>Random:</b>
               <FormText color="muted">
