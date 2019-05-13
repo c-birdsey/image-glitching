@@ -42,6 +42,31 @@ export const findButtonIcon = (comp, IconName) => {
   return button;
 };
 
+export const pseudoServer = {
+  stats: {},
+
+  goodToken: 'good',
+  badToken: 'bad',
+
+  login: function(options) {
+    if (!options || !(options.method === 'POST')) {
+      return this.error(400, 'Should only connect via POST');
+    }
+
+    if (!options.headers || !options.headers.Authorization) {
+      return this.error(400, 'Request should include authorization');
+    }
+
+    if (options.headers.Authorization === `Bearer ${this.goodToken}`) {
+      return {
+        ok: true
+      };
+    } else {
+      return this.error(403, 'Not authorized');
+    }
+  }
+};
+
 export const flushPromises = () => {
   return new Promise(resolve => setImmediate(resolve));
 };
