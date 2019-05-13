@@ -28,6 +28,19 @@ The `--prefix` option treats the supplied path as the package root. In this case
 npm install --save reactstrap --prefix client
 ```
 
+**Other required dependencies for the client application are as follows:** @material-ui/core, @material-ui/icons, file-saver, glitch-canvas, jszip, react-google-login and bootstrap. These can be installed with the following commands run in your client directory: 
+
+```
+npm install --save @material-ui/icons && npm install --save @material-ui/core
+npm install --save file-saver
+npm install --save glitch-canvas
+npm install --save file-saver
+npm install --save jszip
+npm install --save file-saver
+npm install --save react-google-login
+npm install --save bootstrap
+```
+
 ## Running the Application
 
 The combined application, client and server, can be run with `npm start` in the top-level directory. `npm start` launches the CRA development server on <http://localhost:3000> and the backend server on http://localhost:3001. By setting the `proxy` field in the client `package.json`, the client development server will proxy any unrecognized requests to the server. By default this starts the server in hot-reloading mode (like with the client application).
