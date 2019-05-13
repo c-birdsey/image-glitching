@@ -2,23 +2,21 @@ import React, { Component } from 'react';
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import './profile.css';
 import classnames from 'classnames';
-import square from './sqr.jpg';
-import example from './Glitch.png';
 import Annotation from './Annotation';
 
 export function GlitchLib(props) {
-  const { select } = props;
-  const array = [square, square, square, example, square, example, square];
+  const { select, images } = props;
+  //  const array = [square, square, square, example, square, example, square];
   let i = 0;
-  const grid = array.map(elem => {
+  const grid = images.map(image => {
     i++;
     return (
       <div key={i} className="gallery-item">
         <img
-          src={elem}
+          src={image.url}
           className="gallery-image"
           alt=""
-          onClick={() => select(elem)}
+          onClick={() => select(image)}
         />
       </div>
     );
@@ -37,8 +35,25 @@ class Profile extends Component {
 
     this.state = {
       activeTab: '1',
-      currentGlitch: undefined
+      currentGlitch: undefined,
+      images: []
     };
+  }
+
+  componentDidMount() {
+    fetch('/profile/images', {
+      headers: new Headers({ Accept: 'application/json' })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.status_text);
+        }
+        return response.json();
+      })
+      .then(images => {
+        this.setState({ images: images });
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
@@ -70,6 +85,7 @@ class Profile extends Component {
               <h4 className="lib-title">Saved Glitches:</h4>
               <GlitchLib
                 select={element => this.setState({ currentGlitch: element })}
+                images={this.state.images}
               />
             </TabPane>
           </TabContent>

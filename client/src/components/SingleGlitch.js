@@ -67,7 +67,8 @@ class SingleGlitch extends Component {
       savedGlitches: [],
       selected: Selected,
       glitchControlled: 'disabled',
-      origImage: undefined,
+      originalImage: undefined,
+      originalUrl: undefined,
       seed: 10
     };
 
@@ -92,8 +93,12 @@ class SingleGlitch extends Component {
         reader.addEventListener(
           'load',
           () => {
+            this.setState({ originalImage: reader.result });
             this.setState({ currentImage: reader.result });
-            this.setState({ origImage: reader.result });
+            // clear any pinned glitches
+            const Selected = new Set();
+            this.setState({ savedGlitches: [] });
+            this.setState({ selected: Selected });
           },
           false
         );
@@ -116,7 +121,7 @@ class SingleGlitch extends Component {
       iterations: this.state.distortion
     };
     const image = new Image();
-    image.src = this.state.origImage;
+    image.src = this.state.originalImage;
     image.onload = () => {
       glitch(glitchParams)
         .fromImage(image)
@@ -147,34 +152,64 @@ class SingleGlitch extends Component {
     return promise;
   }
 
-  handleProfile() {
+  // uploads pinned glitches to cloudinary
+  // saves glitched image in database
+  uploadSaved(original) {
     this.state.selected.forEach(i => {
       const imgString = this.state.savedGlitches[i];
       const imgFile = base64ToImage(imgString);
       const formData = new FormData();
       formData.append('image', imgFile);
-      fetch('/api/image', {
+      formData.append('original', original);
+      fetch('/api/image/glitch', {
         method: 'POST',
         body: formData
       })
         .then(response => {
-          const newSavedGlitches = this.state.savedGlitches;
-          newSavedGlitches.splice(i);
-          this.setState({ savedGlitches: newSavedGlitches });
-          // need to disable save for image after
-          // it has been saved to a user's profile
-          console.log(response);
+          if (!response.ok) {
+            throw new Error(response.status_text);
+          } else {
+            const newSaved = this.state.savedGlitches;
+            newSaved.splice(i);
+            this.setState({ savedGlitches: newSaved });
+          }
         })
-        .catch(err => {
-          console.log(err);
-        });
+        .catch(err => console.log(err));
     });
   }
 
+  handleProfile() {
+    // inital save of original image
+    // (only saves image on cloudinary & not db)
+    if (this.state.originalUrl === undefined) {
+      const ogString = this.state.originalImage;
+      const ogFile = base64ToImage(ogString);
+      const ogForm = new FormData();
+      ogForm.append('image', ogFile);
+      fetch('/api/image/original', {
+        method: 'POST',
+        body: ogForm
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.status_text);
+          }
+          return response.json();
+        })
+        .then(data => {
+          this.uploadSaved(data.url);
+          this.setState({ originalUrl: data.url });
+        })
+        .catch(err => console.log(err));
+    } else {
+      this.uploadSaved(this.state.originalUrl);
+    }
+  }
+
   handleSave() {
-    const newSavedGliches = this.state.savedGlitches;
-    newSavedGliches.push(this.state.currentImage);
-    this.setState({ savedGlitches: newSavedGliches });
+    const newSavedGlitches = this.state.savedGlitches;
+    newSavedGlitches.push(this.state.currentImage);
+    this.setState({ savedGlitches: newSavedGlitches });
   }
 
   handleDownload() {

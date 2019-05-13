@@ -12,6 +12,8 @@ const passport = require('passport');
 const BearerStrategy = require('passport-http-bearer').Strategy;
 const { OAuth2Client } = require('google-auth-library');
 
+const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
 const { Model } = require('objection');
 const User = require('./models/User');
 const Image = require('./models/Image');
@@ -28,17 +30,12 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Accept', 'X-Requested-With', 'Origin']
 };
 
-const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
 
-// development purposes
-const sessionSecret = 'foo4321!';
-
 app.use(
   session({
-    secret: sessionSecret,
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false
   })
@@ -127,7 +124,7 @@ const multer = require('multer');
 const cloudinary = require('cloudinary');
 const cloudinaryStorage = require('multer-storage-cloudinary');
 
-const folder = 'demo';
+const folder = 'images';
 
 const storage = cloudinaryStorage({
   cloudinary,
@@ -140,24 +137,41 @@ const parser = multer({ storage });
 
 // saves an image to profile
 app.post(
-  '/api/image',
+  '/api/image/glitch',
   authenticationMiddleware,
   parser.single('image'),
   (req, res, next) => {
-    req.files.forEach(file => {
-      const newImage = {
-        url: file.url,
-        createdAt: file.created_at,
-        createdBy: req.user.id
-      };
-      Image.query()
-        .insertAndFetch(newImage)
-        .then(uploadedImage => {
-          res.sendStatus(200);
-        }, next);
-    });
+    console.log(req.body);
+    const newImage = {
+      url: req.file.url,
+      original: req.body.original,
+      createdAt: req.file.created_at,
+      createdBy: req.user.id
+    };
+    Image.query()
+      .insertAndFetch(newImage)
+      .then(uploadedImage => {
+        res.sendStatus(200);
+      }, next);
   }
 );
+
+app.post(
+  '/api/image/original',
+  authenticationMiddleware,
+  parser.single('image'),
+  (req, res, next) => {
+    console.log(req.file.url);
+    res.status(200).send({ url: req.file.url });
+  }
+);
+
+// testing purposes only
+app.get('/images', (request, response, next) => {
+  Image.query().then(images => {
+    response.send(images);
+  }, next);
+});
 
 // returns all of a user's saved images
 app.get('/profile/images', (request, response, next) => {
