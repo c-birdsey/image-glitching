@@ -10,7 +10,6 @@
 /build
 
 # sqlite
-movies.db
 glitching.db
 
 # misc
@@ -21,3 +20,4 @@ yarn-debug.log*
 yarn-error.log*
 data
 *~
+
