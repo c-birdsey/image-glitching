@@ -8,7 +8,8 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText
+  FormText,
+  Spinner
 } from 'reactstrap';
 import './glitch.css';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -69,7 +70,8 @@ class SingleGlitch extends Component {
       glitchControlled: 'disabled',
       originalImage: undefined,
       originalUrl: undefined,
-      seed: 10
+      seed: 10,
+      saveLoading: false
     };
 
     this.handleShow = this.handleShow.bind(this);
@@ -82,6 +84,7 @@ class SingleGlitch extends Component {
     this.setControlled = this.setControlled.bind(this);
     this.renderImage = this.renderImage.bind(this);
     this.handleProfile = this.handleProfile.bind(this);
+    this.setLoading = this.setLoading.bind(this);
   }
 
   handleShow() {
@@ -181,9 +184,17 @@ class SingleGlitch extends Component {
             const newSaved = this.state.savedGlitches;
             newSaved.splice(i);
             this.setState({ savedGlitches: newSaved });
+            this.setState({ saveLoading: false });
           }
         })
         .catch(err => console.log(err));
+    });
+  }
+
+  //set state for spinner, call glitcher
+  setLoading() {
+    this.setState({ saveLoading: true }, () => {
+      this.handleProfile();
     });
   }
 
@@ -388,6 +399,7 @@ class SingleGlitch extends Component {
   }
 
   render() {
+    console.log(this.state.saveLoading);
     const { currentImage, savedGlitches, selected } = this.state;
     let imageswithCheck;
     if (savedGlitches) {
@@ -423,7 +435,7 @@ class SingleGlitch extends Component {
       <Button
         id="profilebutton"
         color="danger"
-        onClick={this.handleProfile}
+        onClick={this.setLoading}
         className="profile-button"
       >
         Save Selected to Profile
@@ -431,6 +443,11 @@ class SingleGlitch extends Component {
     );
 
     const options = this.OptionsForm();
+
+    let loader;
+    if (this.state.saveLoading) {
+      loader = <Spinner className="loading-icon" color="primary" />;
+    }
 
     return (
       <Container className="previewComponent">
@@ -487,6 +504,7 @@ class SingleGlitch extends Component {
             {imageswithCheck}
             {selected.size !== 0 && downloadButton}{' '}
             {this.props.loggedIn && selected.size !== 0 && profileButton}
+            {loader}
           </Col>
         </Row>
       </Container>
