@@ -5,8 +5,19 @@ import Editor from './Editor';
 import { saveAs } from 'file-saver';
 import PropTypes from 'prop-types';
 
-function toBase64(url) {
+/*function toBase64(url) {
   const base64 = url.replace(/^data:image\/[a-z]+;base64,/, '');
+  return base64;
+}*/
+
+function fromCloudinary(img) {
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  ctx.canvas.width = img.naturalWidth;
+  ctx.canvas.height = img.naturalHeight;
+  ctx.drawImage(img, 0, 0);
+  const dataURL = canvas.toDataURL();
+  const base64 = dataURL.replace(/^data:image\/(png|jpg);base64,/, '');
   return base64;
 }
 
@@ -14,7 +25,7 @@ const downloadZip = props => {
   const JSZip = require('jszip');
   const zip = new JSZip();
   const download = zip.folder('GlitchAndAnnotations');
-  const base64img = toBase64(props[0]);
+  const base64img = fromCloudinary(document.getElementById('glitch-tag'));
   download.file(`image.jpg`, base64img, { base64: true });
   download.file('Annotations/Annotations.txt', props[1], {
     type: 'text/plain;charset=utf-8'
@@ -109,8 +120,8 @@ class Annotation extends Component {
     let allAnnotations = '';
     this.state.annotations.forEach(entry => {
       allAnnotations +=
-        `Entry: ${entry.content}\n` +
-        `Edited: ${new Date(entry.time).toLocaleString()}\n \n`; //eslint-disable-line no-useless-concat
+        `Entry: ${entry.body}\n` +
+        `Edited: ${new Date(entry.createdAt).toLocaleString()}\n \n`; //eslint-disable-line no-useless-concat
     });
     toDownload.push(this.props.Picture);
     toDownload.push(allAnnotations);
@@ -192,7 +203,13 @@ class Annotation extends Component {
           <Col xs={12} md={10} lg={6} className="img-col">
             <h2>Glitched Image</h2>
             <div className="img-container">
-              <img className="pic" src={this.props.Picture.url} alt="" />
+              <img
+                id="glitch-tag"
+                crossOrigin="Anonymous"
+                className="pic"
+                src={this.props.Picture.url}
+                alt=""
+              />
             </div>
           </Col>
         </Row>
