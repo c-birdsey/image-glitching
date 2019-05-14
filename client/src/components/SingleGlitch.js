@@ -102,6 +102,7 @@ class SingleGlitch extends Component {
             () => {
               this.setState({ originalImage: reader.result });
               this.setState({ currentImage: reader.result });
+              this.setState({ originalUrl: undefined });
               // clear any pinned glitches
               const Selected = new Set();
               this.setState({ savedGlitches: [] });
