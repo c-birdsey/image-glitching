@@ -8,7 +8,25 @@ Launch server with `npm run start`. By default the application is available at <
 
 You should install the dependencies from the "top-level" package as described in its README or via `npm install` in this directory.
 
+```
+npm install --save express
+npm install --save cors
+npm install --save body-parser
+npm install --save knex
+npm install --save objection
+npm install --save express-session
+npm install --save passport
+npm install --save passport-http-bearer
+npm install --save google-auth-library
+npm install --save objection
+npm install --save multer
+npm install --save cloudinary
+npm install --save multer-storage-cloudinary
+```
+
 ## Development
+
+You should register for [Cloudinary](https:/https://cloudinary.com) and set the enviroment variable ```CLOUDINARY_URL``` appropriately.
 
 ### Testing with Jest
 
