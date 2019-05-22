@@ -18,7 +18,11 @@ describe('Images and Buttons display plus functionality', () => {
   describe('All Images are displayed', () => {
     beforeEach(async () => {
       multi = mount(
-        <MultipleImages images={sampleImages} back={backCallback} loggedIn />
+        <MultipleImages
+          images={sampleImages}
+          back={backCallback}
+          loggedIn={false}
+        />
       );
     });
 
