@@ -60,6 +60,21 @@ class Documentation extends Component {
               glitches.
             </p>
           </div>
+          <div>
+            <h2>Authors</h2>
+            <p>
+              A small team of Middlebury College Computer Science contributed to
+              this project. The students involved were: Calder Birdsey '20,
+              Brandon Choe '20, Will Frazier '19, Angel Ngulumbi '20, Trey
+              Oehmler '20, and Guanghan Pan '21.
+            </p>
+            {/* <p><b>Calder Birdsey: </b><i>notes here</i></p> 
+            <p><b>Brandon Choe: </b><i>notes here</i></p>
+            <p><b>Will Frazier: </b><i>notes here</i></p>
+            <p><b>Angel Ngulumbi: </b><i>notes here</i></p>
+            <p><b>Trey Oehmler: </b><i>notes here</i></p>
+            <p><b>Guanghan Pan: </b><i>notes here</i></p> */}
+          </div>
         </Col>
       </Container>
     );

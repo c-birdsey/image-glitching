@@ -1,13 +1,20 @@
 import React, { Component } from 'react';
 import './App.css';
 import LandingPage from './components/Landing';
-import { Button } from 'reactstrap';
+import {
+  Button,
+  ButtonDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap';
 import LibraryGlitch from './components/LibraryGlitch';
 import SingleGlitch from './components/SingleGlitch';
 import MenuBar from './components/MenuBar';
 import MultipleGlitches from './components/MultipleImages';
 import Profile from './components/Profile';
 import Documentation from './components/Documentation';
+import Collage from './components/Collager';
 
 class App extends Component {
   constructor() {
@@ -23,9 +30,12 @@ class App extends Component {
       glitchArray: [],
 
       // keep the state if user is logged in or not
-      loggedIn: false
-    };
+      loggedIn: false,
 
+      //for dropdown button
+      dropdownOpen: false
+    };
+    this.toggle = this.toggle.bind(this);
     this.ShowMultiple = this.ShowMultiple.bind(this);
   }
 
@@ -34,6 +44,12 @@ class App extends Component {
     const imageArray = array;
     this.setState({ glitchArray: imageArray });
     this.setState({ mode: 'displayLibrary' });
+  }
+
+  toggle() {
+    this.setState({
+      dropdownOpen: !this.state.dropdownOpen
+    });
   }
 
   render() {
@@ -54,23 +70,33 @@ class App extends Component {
     if (this.state.mode === 'landing') {
       content = <LandingPage />;
 
-      const singleImageButton = (
-        <Button
-          className="Landing-button"
-          color="primary"
-          onClick={() => this.setState({ mode: 'uploadSingle' })}
-        >
-          Glitch Single Image
-        </Button>
+      const dropdownButton = (
+        <ButtonDropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+          <DropdownToggle caret color="primary" className="Landing-button">
+            Glitch Images
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              onClick={() => this.setState({ mode: 'uploadSingle' })}
+            >
+              Single Image
+            </DropdownItem>
+            <DropdownItem
+              onClick={() => this.setState({ mode: 'uploadMultiple' })}
+            >
+              Library of Images
+            </DropdownItem>
+          </DropdownMenu>
+        </ButtonDropdown>
       );
 
-      const multipleImageButton = (
+      const collageButton = (
         <Button
           className="Landing-button"
           color="primary"
-          onClick={() => this.setState({ mode: 'uploadMultiple' })}
+          onClick={() => this.setState({ mode: 'collage' })}
         >
-          Glitch Library of Images
+          Collage Images
         </Button>
       );
 
@@ -80,7 +106,7 @@ class App extends Component {
           color="primary"
           onClick={() => this.setState({ mode: 'documentation' })}
         >
-          Documentation
+          Documentation and Credits
         </Button>
       );
 
@@ -89,7 +115,7 @@ class App extends Component {
           {menuBar}
           {content}
           <div className="Landing-buttons">
-            {singleImageButton} {multipleImageButton} {documentation}
+            {dropdownButton} {collageButton} {documentation}
           </div>
         </div>
       );
@@ -113,7 +139,6 @@ class App extends Component {
       );
     }
 
-    //
     if (this.state.mode === 'displayLibrary') {
       return (
         <div>
@@ -144,6 +169,15 @@ class App extends Component {
             callback={this.ShowMultiple}
             loggedIn={this.state.loggedIn}
           />
+        </div>
+      );
+    }
+
+    if (this.state.mode === 'collage') {
+      return (
+        <div>
+          {menuBar}
+          <Collage loggedIn={this.state.loggedIn} />
         </div>
       );
     }
