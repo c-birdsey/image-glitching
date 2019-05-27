@@ -238,7 +238,7 @@ describe('Images and Buttons display plus functionality', () => {
         <MultipleImages
           images={sampleImages}
           back={backCallback}
-          loggedIn={true}
+          loggedIn
           profile={profile}
         />
       );
