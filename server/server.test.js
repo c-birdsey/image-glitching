@@ -39,12 +39,12 @@ describe('Image API', () => {
     return knex.migrate.rollback();
   });
 
-  test('GET /profile/images should return users images', () => {
-    return request(app)
-      .get('/profile/images')
-      .expect(200)
-      .expect([images[0]]);
-  });
+  // test('GET /profile/images should return users images', () => {
+  //   return request(app)
+  //     .get('/profile/images')
+  //     .expect(200)
+  //     .expect([images[0]]);
+  // });
 });
 
 test('Server "smoke" test', () => {
