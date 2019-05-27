@@ -20,10 +20,10 @@ describe('App tests', () => {
     });
 
     test('Opens to front page', () => {
-      const singleButton = findButton(app, /Glitch Single Image/i);
-      expect(singleButton.exists()).toBe(true);
-      const libraryButton = findButton(app, /Glitch Library of Images/i);
-      expect(libraryButton.exists()).toBe(true);
+      const glitchButton = findButton(app, /Glitch Images/i);
+      expect(glitchButton.exists()).toBe(true);
+      const collageButton = findButton(app, /Collage Images/i);
+      expect(collageButton.exists()).toBe(true);
       const docButton = findButton(app, /Documentation/i);
       expect(docButton.exists()).toBe(true);
     });
@@ -35,51 +35,56 @@ describe('App tests', () => {
 
     test('Properly handles change to profile', () => {
       app.setState({ loggedIn: true, mode: 'profile' });
-      const landingpage = findButton(app, /Glitch Single Image/i);
+      const landingpage = findButton(app, /Glitch Images/i);
       expect(landingpage.exists()).toBe(false);
       const profile = app.find('#profileComp');
       expect(profile.exists()).toBe(true);
     });
 
     test('Properly handles change to library upload', () => {
-      const button = findButton(app, /Glitch Library of Images/i);
+      const button = findButton(app, /Glitch Images/i);
       button.simulate('click');
-      const landingpage = findButton(app, /Glitch Single Image/i);
-      expect(landingpage.exists()).toBe(false);
+      const buttonDropdown = findButton(app, /Library of Images/i);
+      expect(buttonDropdown.exists()).toBe(true);
+      buttonDropdown.simulate('click');
       const library = app.find('#libraryComp');
       expect(library.exists()).toBe(true);
     });
 
     test('Properly handles change to view multiple glitches', () => {
       app.setState({ loggedIn: true, mode: 'displayLibrary' });
-      const landingpage = findButton(app, /Glitch Single Image/i);
+      const landingpage = findButton(app, /Glitch Images/i);
       expect(landingpage.exists()).toBe(false);
       const library = app.find('#multiglitchComp');
       expect(library.exists()).toBe(true);
     });
 
     test('Properly handles change to view documentation', () => {
-      const button = findButton(app, /Documentation/i);
+      const button = findButton(app, /Documentation and Credits/i);
       button.simulate('click');
-      const landingpage = findButton(app, /Glitch Single Image/i);
+      const landingpage = findButton(app, /Glitch Images/i);
       expect(landingpage.exists()).toBe(false);
       const doc = app.find('#documentationComp');
       expect(doc.exists()).toBe(true);
     });
 
     test('Properly handles change to single glitch', () => {
-      const button = findButton(app, /Glitch Single Image/i);
+      const button = findButton(app, /Glitch Images/i);
       button.simulate('click');
-      const landingpage = findButton(app, /Glitch Single Image/i);
+      const buttonDropdown = findButton(app, /Single Image/i);
+      buttonDropdown.simulate('click');
+      const landingpage = findButton(app, /Glitch Images/i);
       expect(landingpage.exists()).toBe(false);
       const single = app.find('#singleComp');
       expect(single.exists()).toBe(true);
     });
 
     test('Buttons work (Single)', () => {
-      const landingpage = findButton(app, /Glitch Single Image/i);
-      expect(landingpage.exists()).toBe(true);
-      landingpage.simulate('click');
+      const button = findButton(app, /Glitch Images/i);
+      button.simulate('click');
+      const buttonDropdown = findButton(app, /Single Image/i);
+      expect(buttonDropdown.exists()).toBe(true);
+      buttonDropdown.simulate('click');
       expect(app.state().mode).toBe('uploadSingle');
     });
 

@@ -399,7 +399,6 @@ class SingleGlitch extends Component {
   }
 
   render() {
-    console.log(this.state.saveLoading);
     const { currentImage, savedGlitches, selected } = this.state;
     let imageswithCheck;
     if (savedGlitches) {

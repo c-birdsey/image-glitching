@@ -14,11 +14,17 @@ describe('PropTypes in Glitched Library', () => {
 describe('Images and Buttons display plus functionality', () => {
   let multi;
   const backCallback = jest.fn();
+  const profile = jest.fn();
 
   describe('All Images are displayed', () => {
     beforeEach(async () => {
       multi = mount(
-        <MultipleImages images={sampleImages} back={backCallback} loggedIn />
+        <MultipleImages
+          images={sampleImages}
+          back={backCallback}
+          loggedIn={false}
+          profile={profile}
+        />
       );
     });
 
@@ -41,6 +47,7 @@ describe('Images and Buttons display plus functionality', () => {
           images={sampleImages}
           back={backCallback}
           loggedIn={false}
+          profile={profile}
         />
       );
     });
@@ -228,7 +235,12 @@ describe('Images and Buttons display plus functionality', () => {
   describe('buttons display state when loggedIn and checkbox functionality(switching of buttons)', () => {
     beforeEach(async () => {
       multi = mount(
-        <MultipleImages images={sampleImages} back={backCallback} loggedIn />
+        <MultipleImages
+          images={sampleImages}
+          back={backCallback}
+          loggedIn
+          profile={profile}
+        />
       );
     });
 
@@ -415,7 +427,12 @@ describe('Images and Buttons display plus functionality', () => {
     beforeEach(async () => {
       backCallback.mockReset();
       multi = mount(
-        <MultipleImages images={sampleImages} back={backCallback} loggedIn />
+        <MultipleImages
+          images={sampleImages}
+          back={backCallback}
+          loggedIn
+          profile={profile}
+        />
       );
     });
 

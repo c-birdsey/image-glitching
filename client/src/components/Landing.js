@@ -24,6 +24,13 @@ const Landing = () => {
         entire library of images at once. You are also able to download your
         glitches locally.
       </p>
+      <p className="Landing-intro">
+        Our app currently supports the traditional form of image glitching via
+        data manipulation for single images as well as libraries of images. We
+        are currently working on implementing an alternative form of gliching,
+        called collaging, which will slice a image up into pieces and shuffle
+        the slices of the location.
+      </p>
     </div>
   );
 };

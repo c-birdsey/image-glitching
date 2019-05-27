@@ -1,0 +1,37 @@
+.placeholder {
+  text-align: center;
+  padding: 2rem;
+}
+
+.spinner {
+  text-align: center;
+}
+
+.count-display {
+  margin: 6px;
+  padding: 2px;
+  border: 1px solid black;
+  border-radius: 3px;
+  font-size: 12px;
+}
+
+.tile-input {
+  margin: 0 15px;
+}
+
+#canvas {
+  border: 1px solid red;
+}
+
+.buttonField {
+  display: block !important;
+}
+
+.collageButtons {
+  margin: 10px 0 10px 0;
+  display: block !important;
+}
+
+.slice-spinner {
+  margin-left: 10px;
+}
