@@ -45,9 +45,8 @@ describe('App tests', () => {
       const button = findButton(app, /Glitch Images/i);
       button.simulate('click');
       const buttonDropdown = findButton(app, /Library of Images/i);
+      expect(buttonDropdown.exists()).toBe(false);
       buttonDropdown.simulate('click');
-      const landingpage = findButton(app, /Glitch Images/i);
-      expect(landingpage.exists()).toBe(false);
       const library = app.find('#libraryComp');
       expect(library.exists()).toBe(true);
     });
